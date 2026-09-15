@@ -1,0 +1,7 @@
+# artefatti di lavoro locali (screenshot di review, config di sessione)
+.impeccable/review/
+.impeccable/mocks/
+.impeccable/questions/
+.claude/
+.vercel/
+node_modules/

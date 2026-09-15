@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>Ologenetica — Il tuo DNA interiore</title>
+<meta name="theme-color" content="#0b0f0b">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icons/icon-192.png" type="image/png">
+<link rel="stylesheet" href="holo/fonts.css">
+<link rel="stylesheet" href="holo/instrument.css">
+<style>
+.front{display:grid;grid-template-columns:minmax(0,340px) 1fr;gap:26px;align-items:center;margin:26px 24px 8px}
+@media(max-width:760px){.front{grid-template-columns:1fr;justify-items:center}}
+.front .txt2{min-width:0}
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:24px 24px}
+@media(max-width:700px){.cards{grid-template-columns:1fr}}
+.card{
+  border:1px solid var(--etch-hi);border-radius:4px;background:var(--panel-1);padding:16px 17px 17px;
+  text-decoration:none;color:var(--txt);display:block;position:relative;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.04);
+}
+.card:hover{border-color:var(--amber-dn)}
+.card .jack{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.14em;color:var(--panel-0);
+  display:inline-block;padding:2px 7px;border-radius:2px;font-weight:600}
+.card h3{font-family:var(--f-engr);font-weight:600;font-size:14px;letter-spacing:.2em;text-transform:uppercase;margin:0 0 8px;color:var(--txt);display:flex;align-items:center;gap:9px}
+.card p{font-size:13px;color:var(--dim);line-height:1.55;margin:0}
+.card .go{font-family:var(--f-mono);font-size:11px;color:var(--amber);margin-top:11px;display:block}
+.strip{margin:0 24px;border:1px solid var(--etch);border-radius:4px;background:var(--panel-1);padding:15px 18px}
+.strip p{font-size:13.5px;color:var(--dim);line-height:1.65;margin:0;max-width:86ch}
+.strip b{color:var(--txt);font-weight:600}
+.strip .amberb{color:var(--amber)}
+</style>
+</head>
+<body>
+<!--
+THESIS: il frontalino dello strumento — la home È lo strumento spento che aspetta una misura; rifiuta la landing a hero-card mistica.
+OWN-WORLD: mondo "Lo Spettrometro" condiviso (holo/instrument.css): quadrante inciso dei 64, moduli con prese etichettate CH·1/2/3.
+STORY: il visitatore capisce in un colpo d'occhio: c'è uno strumento, misura un profilo, si legge come un report.
+FIRST VIEWPORT: targa OLOGENETICA, quadrante dial a sinistra, titolo con OLOGENETICA accesa e spec mono a destra, tre moduli sotto.
+FORM: derivata dal mondo scelto (Lo Spettrometro, seed 84c75ad3) — frontalino.
+FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, DESIGN.md, and every shipping raster carrying its provenance.
+-->
+<div class="wrap">
+  <div class="topbar">
+    <a class="brand" href="index.html">
+      <svg class="dialmark" viewBox="0 0 22 22" fill="none" aria-hidden="true"><circle cx="11" cy="11" r="9" stroke-width="1.4"/><line x1="11" y1="11" x2="16.5" y2="6.5" stroke-width="1.4"/><line x1="11" y1="2" x2="11" y2="4.5" stroke-width="1"/><line x1="11" y1="17.5" x2="11" y2="20" stroke-width="1"/><line x1="2" y1="11" x2="4.5" y2="11" stroke-width="1"/><line x1="17.5" y1="11" x2="20" y2="11" stroke-width="1"/></svg>
+      Ologenetica</a>
+    <span id="langPick"></span>
+  </div>
+
+  <div class="front">
+    <div id="dial"></div>
+    <div class="txt2">
+      <h1 class="htitle"><span class="lit">OLOGENETICA</span></h1>
+      <div class="ksuper" id="ksuper"></div>
+      <p class="hsub" id="hsub"></p>
+      <div class="tickline"></div>
+    </div>
+  </div>
+
+  <div class="cards">
+    <a class="card" href="Profilo%20Ologenetico.html">
+      <h3><span class="jack" style="background:var(--amber)">CH·1</span> <span id="c1h"></span></h3>
+      <p id="c1p"></p>
+      <span class="go">→ MISURA</span>
+    </a>
+    <a class="card" href="Come%20si%20Legge.html">
+      <h3><span class="jack" style="background:var(--mint)">MAN</span> <span id="c2h"></span></h3>
+      <p id="c2p"></p>
+      <span class="go">→ MANUALE</span>
+    </a>
+    <a class="card" href="Compatibilit%C3%A0.html">
+      <h3><span class="jack" style="background:var(--mag)">A+B</span> <span id="c3h"></span></h3>
+      <p id="c3p"></p>
+      <span class="go">→ DUAL TRACE</span>
+    </a>
+    <a class="card" href="Chiavi.html">
+      <h3><span class="jack" style="background:var(--blu)">LIB</span> <span id="c4h"></span></h3>
+      <p id="c4p"></p>
+      <span class="go">→ 64</span>
+    </a>
+    <a class="card" href="Almanacco.html">
+      <h3><span class="jack" style="background:var(--amber)">CAL</span> <span id="c5h"></span></h3>
+      <p id="c5p"></p>
+      <span class="go">→ ICS</span>
+    </a>
+  </div>
+
+  <div class="strip"><p id="strip"></p></div>
+  <div class="footnote" id="foot"></div>
+</div>
+
+<script src="lang/i18n.js"></script>
+<script>
+(function(){
+  const $ = id => document.getElementById(id);
+  const UI = {
+    it:{ ksuper:"MOD. 64 · 64 CHIAVI · 11 SFERE · 3 SEQUENZE",
+      hsub:"Il tuo profilo ologenetico: la mappa che unisce I Ching, astrologia e l'impronta prenatale in 11 sfere della tua vita. Calcolo astronomico vero, lettura in stile report.",
+      c1h:"Il tuo profilo", c1p:"Data, ora e luogo di nascita → le tue 11 Chiavi nelle Sequenze di Attivazione, Venere e Perla, con report completo sfera per sfera.",
+      c2h:"Come si legge", c2p:"Ombra, Dono, Siddhi; le 6 Linee; gli 88° prima della nascita: tutto il metodo, spiegato semplice.",
+      c3h:"Compatibilità", c3p:"Due profili sovrapposti: Chiavi gemelle, specchi a 180°, ponti di Linea. Dove vi riconoscete, dove vi completate.",
+      strip:"<b>Cos'è?</b> Ogni Chiave è uno dei 64 esagrammi dell'I Ching proiettato sulla ruota zodiacale (settori di 5,625°). La tua nascita — e i tre mesi che l'hanno preceduta — fissano 11 di queste Chiavi nelle sfere del tuo profilo: lavoro, relazioni, prosperità. Ognuna ha uno spettro: <b class='amberb'>Ombra → Dono → Siddhi</b>. La lettura è una contemplazione, non un oroscopo.",
+      foot:"Sistema ispirato al Profilo Ologenetico (Gene Keys di Richard Rudd — I Ching + astrologia + Human Design) · effemeridi astronomy-engine · strumento contemplativo e simbolico, senza validazione scientifica · testi originali.",
+      c4h:"Le 64 Chiavi", c4p:"La biblioteca completa: ogni Chiave con spettro, essenza, anello di codoni e Chiave specchio.",
+      c5h:"Almanacco", c5p:"Il calendario solare delle 64 Chiavi, con file ICS da importare nel tuo calendario.",
+      goes:["→ MISURA","→ MANUALE","→ DUAL TRACE","→ 64","→ ICS"] },
+    en:{ ksuper:"MOD. 64 · 64 KEYS · 11 SPHERES · 3 SEQUENCES",
+      hsub:"Your hologenetic profile: the map that weaves the I Ching, astrology and the prenatal imprint into 11 spheres of your life. Real astronomical calculation, report-style reading.",
+      c1h:"Your profile", c1p:"Date, time and place of birth → your 11 Keys across the Activation, Venus and Pearl Sequences, with a full sphere-by-sphere report.",
+      c2h:"How to read it", c2p:"Shadow, Gift, Siddhi; the 6 Lines; the 88° before birth: the whole method, explained simply.",
+      c3h:"Compatibility", c3p:"Two profiles overlaid: twin Keys, 180° mirrors, Line bridges. Where you recognize each other, where you complete each other.",
+      strip:"<b>What is it?</b> Each Key is one of the 64 I Ching hexagrams projected onto the zodiac wheel (5.625° sectors). Your birth — and the three months before it — fix 11 of these Keys into the spheres of your profile: work, relationships, prosperity. Each has a spectrum: <b class='amberb'>Shadow → Gift → Siddhi</b>. The reading is a contemplation, not a horoscope.",
+      foot:"Inspired by the Hologenetic Profile (Gene Keys by Richard Rudd — I Ching + astrology + Human Design) · astronomy-engine ephemerides · a contemplative, symbolic tool with no scientific validation · original texts.",
+      c4h:"The 64 Keys", c4p:"The full library: every Key with its spectrum, essence, codon ring and mirror Key.",
+      c5h:"Almanac", c5p:"The solar calendar of the 64 Keys, with an ICS file to import into your calendar.",
+      goes:["→ MEASURE","→ MANUAL","→ DUAL TRACE","→ 64","→ ICS"] },
+    fr:{ ksuper:"MOD. 64 · 64 CLÉS · 11 SPHÈRES · 3 SÉQUENCES",
+      hsub:"Ton profil hologénétique : la carte qui tisse le Yi King, l'astrologie et l'empreinte prénatale en 11 sphères de ta vie. Calcul astronomique réel, lecture façon rapport.",
+      c1h:"Ton profil", c1p:"Date, heure et lieu de naissance → tes 11 Clés dans les Séquences d'Activation, de Vénus et de la Perle, avec un rapport complet sphère par sphère.",
+      c2h:"Comment lire", c2p:"Ombre, Don, Siddhi ; les 6 Lignes ; les 88° avant la naissance : toute la méthode, expliquée simplement.",
+      c3h:"Compatibilité", c3p:"Deux profils superposés : Clés jumelles, miroirs à 180°, ponts de Ligne. Là où vous vous reconnaissez, là où vous vous complétez.",
+      strip:"<b>Qu'est-ce que c'est ?</b> Chaque Clé est l'un des 64 hexagrammes du Yi King projeté sur la roue zodiacale (secteurs de 5,625°). Ta naissance — et les trois mois qui l'ont précédée — fixent 11 de ces Clés dans les sphères de ton profil : travail, relations, prospérité. Chacune a un spectre : <b class='amberb'>Ombre → Don → Siddhi</b>. La lecture est une contemplation, pas un horoscope.",
+      foot:"Inspiré du Profil Hologénétique (Gene Keys de Richard Rudd — Yi King + astrologie + Human Design) · éphémérides astronomy-engine · outil contemplatif et symbolique, sans validation scientifique · textes originaux.",
+      c4h:"Les 64 Clés", c4p:"La bibliothèque complète : chaque Clé avec son spectre, son essence, son anneau de codons et sa Clé miroir.",
+      c5h:"Almanach", c5p:"Le calendrier solaire des 64 Clés, avec un fichier ICS à importer dans ton calendrier.",
+      goes:["→ MESURE","→ MANUEL","→ DUAL TRACE","→ 64","→ ICS"] },
+    es:{ ksuper:"MOD. 64 · 64 LLAVES · 11 ESFERAS · 3 SECUENCIAS",
+      hsub:"Tu perfil hologenético: el mapa que une el I Ching, la astrología y la impronta prenatal en 11 esferas de tu vida. Cálculo astronómico real, lectura estilo informe.",
+      c1h:"Tu perfil", c1p:"Fecha, hora y lugar de nacimiento → tus 11 Llaves en las Secuencias de Activación, Venus y Perla, con informe completo esfera por esfera.",
+      c2h:"Cómo se lee", c2p:"Sombra, Don, Siddhi; las 6 Líneas; los 88° antes del nacimiento: todo el método, explicado fácil.",
+      c3h:"Compatibilidad", c3p:"Dos perfiles superpuestos: Llaves gemelas, espejos a 180°, puentes de Línea. Dónde os reconocéis, dónde os completáis.",
+      strip:"<b>¿Qué es?</b> Cada Llave es uno de los 64 hexagramas del I Ching proyectado sobre la rueda zodiacal (sectores de 5,625°). Tu nacimiento — y los tres meses anteriores — fijan 11 de estas Llaves en las esferas de tu perfil: trabajo, relaciones, prosperidad. Cada una tiene un espectro: <b class='amberb'>Sombra → Don → Siddhi</b>. La lectura es una contemplación, no un horóscopo.",
+      foot:"Inspirado en el Perfil Hologenético (Gene Keys de Richard Rudd — I Ching + astrología + Human Design) · efemérides astronomy-engine · herramienta contemplativa y simbólica, sin validación científica · textos originales.",
+      c4h:"Las 64 Llaves", c4p:"La biblioteca completa: cada Llave con su espectro, esencia, anillo de codones y Llave espejo.",
+      c5h:"Almanaque", c5p:"El calendario solar de las 64 Llaves, con archivo ICS para importar en tu calendario.",
+      goes:["→ MEDIR","→ MANUAL","→ DUAL TRACE","→ 64","→ ICS"] },
+    pt:{ ksuper:"MOD. 64 · 64 CHAVES · 11 ESFERAS · 3 SEQUÊNCIAS",
+      hsub:"Seu perfil hologenético: o mapa que une o I Ching, a astrologia e a impressão pré-natal em 11 esferas da sua vida. Cálculo astronômico real, leitura em estilo de relatório.",
+      c1h:"Seu perfil", c1p:"Data, hora e local de nascimento → suas 11 Chaves nas Sequências de Ativação, Vênus e Pérola, com relatório completo esfera por esfera.",
+      c2h:"Como ler", c2p:"Sombra, Dom, Siddhi; as 6 Linhas; os 88° antes do nascimento: todo o método, explicado de forma simples.",
+      c3h:"Compatibilidade", c3p:"Dois perfis sobrepostos: Chaves gêmeas, espelhos a 180°, pontes de Linha. Onde vocês se reconhecem, onde se completam.",
+      strip:"<b>O que é?</b> Cada Chave é um dos 64 hexagramas do I Ching projetado na roda zodiacal (setores de 5,625°). Seu nascimento — e os três meses anteriores — fixam 11 dessas Chaves nas esferas do seu perfil: trabalho, relações, prosperidade. Cada uma tem um espectro: <b class='amberb'>Sombra → Dom → Siddhi</b>. A leitura é uma contemplação, não um horóscopo.",
+      foot:"Inspirado no Perfil Hologenético (Gene Keys de Richard Rudd — I Ching + astrologia + Human Design) · efemérides astronomy-engine · ferramenta contemplativa e simbólica, sem validação científica · textos originais.",
+      c4h:"As 64 Chaves", c4p:"A biblioteca completa: cada Chave com seu espectro, essência, anel de códons e Chave espelho.",
+      c5h:"Almanaque", c5p:"O calendário solar das 64 Chaves, com arquivo ICS para importar no seu calendário.",
+      goes:["→ MEDIR","→ MANUAL","→ DUAL TRACE","→ 64","→ ICS"] }
+  };
+  const langOf = () => window.ZI18N ? window.ZI18N.get() : "it";
+
+  // quadrante decorativo dei 64 (statico)
+  const WHEEL = [41,19,13,49,30,55,37,63,22,36,25,17,21,51,42,3,27,24,2,23,8,20,16,35,45,12,15,52,39,53,62,56,31,33,7,4,29,59,40,64,47,6,46,18,48,57,32,50,28,44,1,43,14,34,9,5,26,11,10,58,38,54,61,60];
+  function dialSVG(){
+    const size=320, cx=size/2, cy=size/2, rOut=148, rIn=116, rNum=132;
+    const D2R=Math.PI/180, SEC=360/64, ANC=302;
+    const ang = lon => 90 - lon;
+    const pt = (r,a)=>[cx + r*Math.cos(a*D2R), cy - r*Math.sin(a*D2R)];
+    let s=`<svg viewBox="0 0 ${size} ${size}" style="width:100%;max-width:340px;height:auto" role="img" aria-label="dial 64">`;
+    s+=`<circle cx="${cx}" cy="${cy}" r="${rOut+6}" fill="#0d110d" stroke="#49564a" stroke-width="1.5"/>`;
+    s+=`<circle cx="${cx}" cy="${cy}" r="${rOut}" fill="#121712" stroke="#2c352c" stroke-width="1"/>`;
+    s+=`<circle cx="${cx}" cy="${cy}" r="${rIn}" fill="#0b0f0b" stroke="#2c352c" stroke-width="1"/>`;
+    for(let i=0;i<64;i++){
+      const lon0 = ANC + i*SEC;
+      const [x0,y0]=pt(rOut,ang(lon0)), [x1,y1]=pt(rIn,ang(lon0));
+      s+=`<line x1="${x0.toFixed(1)}" y1="${y0.toFixed(1)}" x2="${x1.toFixed(1)}" y2="${y1.toFixed(1)}" stroke="#2c352c" stroke-width="1"/>`;
+      const [nx,ny]=pt(rNum,ang(lon0+SEC/2));
+      s+=`<text x="${nx.toFixed(1)}" y="${(ny+2.4).toFixed(1)}" text-anchor="middle" font-size="6.6" font-family="Azeret Mono,monospace" fill="#93a08f">${WHEEL[i]}</text>`;
+    }
+    // ago acceso sull'esagramma 41 (l'ancora della ruota)
+    const [ax,ay]=pt(rIn-4,ang(302+2.8));
+    s+=`<line x1="${cx}" y1="${cy}" x2="${ax.toFixed(1)}" y2="${ay.toFixed(1)}" stroke="#ffb454" stroke-width="1.6"/>`;
+    s+=`<circle cx="${cx}" cy="${cy}" r="30" fill="#121712" stroke="#49564a" stroke-width="1"/>`;
+    s+=`<text x="${cx}" y="${cy+1}" text-anchor="middle" font-size="14" font-family="Azeret Mono,monospace" font-weight="600" fill="#ffb454">64</text>`;
+    s+=`<text x="${cx}" y="${cy+14}" text-anchor="middle" font-size="6.5" font-family="Azeret Mono,monospace" fill="#93a08f">KEYS</text>`;
+    s+=`</svg>`;
+    return s;
+  }
+  document.getElementById("dial").innerHTML = dialSVG();
+
+  function applyLang(){
+    const u = UI[langOf()] || UI.it;
+    $("ksuper").textContent = u.ksuper; $("hsub").textContent = u.hsub;
+    $("c1h").textContent = u.c1h; $("c1p").textContent = u.c1p;
+    $("c2h").textContent = u.c2h; $("c2p").textContent = u.c2p;
+    $("c3h").textContent = u.c3h; $("c3p").textContent = u.c3p;
+    $("c4h").textContent = u.c4h; $("c4p").textContent = u.c4p;
+    $("c5h").textContent = u.c5h; $("c5p").textContent = u.c5p;
+    document.querySelectorAll(".card .go").forEach((el,i)=>{ el.textContent = u.goes[i]; });
+    $("strip").innerHTML = u.strip; $("foot").textContent = u.foot;
+    if(window.ZI18N) window.ZI18N.decorate();
+  }
+  if(window.ZI18N) window.ZI18N.mount($("langPick"));
+  window.addEventListener("zlangchange", applyLang);
+  applyLang();
+})();
+</script>
+</body>
+</html>

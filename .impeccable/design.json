@@ -1,0 +1,171 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-08-18T12:00:00Z",
+  "title": "Design System: Ologenetica",
+  "extensions": {
+    "colorMeta": {
+      "panel-deep": { "role": "neutral", "displayName": "Panel Deep (chassis enamel)", "canonical": "#0b0f0b", "tonalRamp": ["oklch(10% 0.01 150)", "oklch(15% 0.01 150)", "oklch(25% 0.01 150)", "oklch(35% 0.01 150)", "oklch(50% 0.01 150)", "oklch(65% 0.01 150)", "oklch(80% 0.01 150)", "oklch(95% 0.01 150)"] },
+      "module-face": { "role": "neutral", "displayName": "Module Face", "canonical": "#121712", "tonalRamp": ["oklch(12% 0.012 150)", "oklch(18% 0.012 150)", "oklch(28% 0.012 150)", "oklch(38% 0.012 150)", "oklch(52% 0.012 150)", "oklch(66% 0.012 150)", "oklch(80% 0.012 150)", "oklch(94% 0.012 150)"] },
+      "module-raised": { "role": "neutral", "displayName": "Module Raised", "canonical": "#1a211a", "tonalRamp": ["oklch(14% 0.014 150)", "oklch(21% 0.014 150)", "oklch(31% 0.014 150)", "oklch(41% 0.014 150)", "oklch(54% 0.014 150)", "oklch(67% 0.014 150)", "oklch(81% 0.014 150)", "oklch(94% 0.014 150)"] },
+      "recess": { "role": "neutral", "displayName": "Recess (input wells)", "canonical": "#080b08", "tonalRamp": ["oklch(8% 0.01 150)", "oklch(14% 0.01 150)", "oklch(24% 0.01 150)", "oklch(34% 0.01 150)", "oklch(48% 0.01 150)", "oklch(64% 0.01 150)", "oklch(79% 0.01 150)", "oklch(94% 0.01 150)"] },
+      "etch": { "role": "neutral", "displayName": "Etch (interior engraving line)", "canonical": "#2c352c", "tonalRamp": ["oklch(16% 0.015 150)", "oklch(24% 0.015 150)", "oklch(33% 0.015 150)", "oklch(43% 0.015 150)", "oklch(55% 0.015 150)", "oklch(68% 0.015 150)", "oklch(81% 0.015 150)", "oklch(94% 0.015 150)"] },
+      "etch-lit": { "role": "neutral", "displayName": "Etch Lit (light-catching edge)", "canonical": "#49564a", "tonalRamp": ["oklch(18% 0.018 150)", "oklch(27% 0.018 150)", "oklch(38% 0.018 150)", "oklch(48% 0.018 150)", "oklch(59% 0.018 150)", "oklch(70% 0.018 150)", "oklch(82% 0.018 150)", "oklch(94% 0.018 150)"] },
+      "text": { "role": "neutral", "displayName": "Text (printed prose)", "canonical": "#cdd5c8", "tonalRamp": ["oklch(20% 0.01 150)", "oklch(32% 0.01 150)", "oklch(44% 0.01 150)", "oklch(56% 0.01 150)", "oklch(68% 0.01 150)", "oklch(78% 0.01 150)", "oklch(87% 0.01 150)", "oklch(95% 0.01 150)"] },
+      "engraved-dim": { "role": "neutral", "displayName": "Engraved Dim (labels)", "canonical": "#93a08f", "tonalRamp": ["oklch(18% 0.02 150)", "oklch(28% 0.02 150)", "oklch(39% 0.02 150)", "oklch(50% 0.02 150)", "oklch(61% 0.02 150)", "oklch(70% 0.02 150)", "oklch(82% 0.02 150)", "oklch(93% 0.02 150)"] },
+      "phosphor-amber": { "role": "primary", "displayName": "Phosphor Amber (the working ink; the only glow)", "canonical": "#ffb454", "tonalRamp": ["oklch(20% 0.06 70)", "oklch(31% 0.08 70)", "oklch(42% 0.10 70)", "oklch(53% 0.12 70)", "oklch(64% 0.13 70)", "oklch(74% 0.135 70)", "oklch(83% 0.13 70)", "oklch(93% 0.08 70)"] },
+      "amber-dimmed": { "role": "primary", "displayName": "Amber Down (phosphor at rest)", "canonical": "#b97f33", "tonalRamp": ["oklch(18% 0.05 70)", "oklch(28% 0.07 70)", "oklch(38% 0.09 70)", "oklch(48% 0.10 70)", "oklch(58% 0.11 70)", "oklch(68% 0.11 70)", "oklch(80% 0.10 70)", "oklch(92% 0.06 70)"] },
+      "phosphor-mint": { "role": "secondary", "displayName": "Phosphor Mint (Siddhi / OK; matte)", "canonical": "#93e2b4", "tonalRamp": ["oklch(20% 0.05 155)", "oklch(31% 0.07 155)", "oklch(42% 0.08 155)", "oklch(53% 0.09 155)", "oklch(64% 0.09 155)", "oklch(75% 0.09 155)", "oklch(85% 0.09 155)", "oklch(94% 0.05 155)"] },
+      "venus-magenta": { "role": "secondary", "displayName": "Venus Magenta (CH·2 channel ink)", "canonical": "#e2a3da", "tonalRamp": ["oklch(20% 0.06 330)", "oklch(31% 0.08 330)", "oklch(42% 0.09 330)", "oklch(53% 0.10 330)", "oklch(64% 0.10 330)", "oklch(74% 0.10 330)", "oklch(84% 0.09 330)", "oklch(94% 0.05 330)"] },
+      "pearl-blue": { "role": "secondary", "displayName": "Pearl Blue (CH·3 channel ink)", "canonical": "#86c8e8", "tonalRamp": ["oklch(20% 0.05 230)", "oklch(31% 0.06 230)", "oklch(42% 0.07 230)", "oklch(53% 0.08 230)", "oklch(64% 0.08 230)", "oklch(74% 0.08 230)", "oklch(84% 0.07 230)", "oklch(94% 0.04 230)"] },
+      "alarm": { "role": "tertiary", "displayName": "Alarm (always with a printed sign)", "canonical": "#ff8266", "tonalRamp": ["oklch(20% 0.08 35)", "oklch(31% 0.11 35)", "oklch(42% 0.13 35)", "oklch(52% 0.15 35)", "oklch(62% 0.16 35)", "oklch(72% 0.16 35)", "oklch(83% 0.12 35)", "oklch(93% 0.07 35)"] }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display (engraved title)", "purpose": "Page titles; uppercase, tracked .12em; one word lit amber via .lit." },
+      "engraved-heading": { "displayName": "Engraved Heading", "purpose": "Module h2 headings; uppercase, tracked .24em, followed by a tick-scale rule; channel chip inlined." },
+      "label": { "displayName": "Label", "purpose": "Form field and checkbox labels; Saira 600 11px, tracked .18em, uppercase." },
+      "readout": { "displayName": "Readout", "purpose": "Big amber key numbers (NN.line) on cards and the profile line plate; Azeret Mono 600, glowing." },
+      "spec-mono": { "displayName": "Spec Line", "purpose": "MOD.-style super-titles, tags, hints, plates, footnotes; all measured values; tabular-nums in tables." },
+      "body": { "displayName": "Body", "purpose": "Libre Franklin prose, 13.5-14px, lh 1.6-1.66, width-capped 64-80ch. The only lowercase register." }
+    },
+    "shadows": [
+      { "name": "chassis-drop", "value": "0 0 0 1px #000, 0 18px 40px rgba(0,0,0,.55), inset 0 1px 0 rgba(255,255,255,.05)", "purpose": "The .wrap chassis only; the one deep drop shadow in the world." },
+      { "name": "recess-inset", "value": "inset 0 2px 5px rgba(0,0,0,.6)", "purpose": "Every recessed well: inputs, data plates, code displays, step counters." },
+      { "name": "face-highlight", "value": "inset 0 1px 0 rgba(255,255,255,.04)", "purpose": "Raised enamel faces (panels, index cards): light catching the top edge." },
+      { "name": "keycap-throw", "value": "0 3px 0 #6b4a17", "purpose": "The MISURA keycap's mechanical throw; collapses to 0 1px 0 when pressed (:active + translateY(2px), no transition)." },
+      { "name": "dropdown-float", "value": "0 10px 24px rgba(0,0,0,.6)", "purpose": "Autocomplete list only; the single interior element allowed to float." },
+      { "name": "phosphor-glow", "value": "0 0 6px rgba(255,180,84,.35)", "purpose": "--glow: text-shadow on amber readouts and the input focus halo. Amber only; the world's single luminous effect." }
+    ],
+    "motion": [],
+    "breakpoints": [
+      { "name": "chassis-compact", "value": "560px" },
+      { "name": "guide-grids", "value": "640px" },
+      { "name": "sphere-grid", "value": "660px" },
+      { "name": "duo-and-cards", "value": "700px" },
+      { "name": "key-library-grid", "value": "720px" },
+      { "name": "front-split", "value": "760px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "MISURA Keycap Button",
+      "kind": "button",
+      "refersTo": "button-go",
+      "description": "The primary action: an amber mechanical keycap that presses down instantly on :active. No transition, ever.",
+      "html": "<button class=\"ds-btn-go\">MISURA IL PROFILO</button>",
+      "css": ".ds-btn-go{width:100%;font-family:'Saira Semi Condensed',system-ui,sans-serif;font-weight:700;font-size:15px;letter-spacing:.28em;text-transform:uppercase;color:#0b0f0b;background:#ffb454;border:1px solid #6b4a17;border-radius:3px;padding:13px;cursor:pointer;box-shadow:0 3px 0 #6b4a17,0 0 6px rgba(255,180,84,.35)} .ds-btn-go:active{transform:translateY(2px);box-shadow:0 1px 0 #6b4a17} .ds-btn-go:focus-visible{outline:1px solid #ffb454;outline-offset:2px}"
+    },
+    {
+      "name": "Recessed Input Well",
+      "kind": "input",
+      "refersTo": "input-well",
+      "description": "Data entry as a machined well: amber mono text in a recess with inset shadow; focus adds the phosphor glow.",
+      "html": "<label class=\"ds-lbl\">Data di nascita</label><input class=\"ds-inp\" value=\"18/08/1990\">",
+      "css": ".ds-lbl{display:block;margin-bottom:6px;font-family:'Saira Semi Condensed',system-ui,sans-serif;font-weight:600;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:#93a08f} .ds-inp{width:100%;font-family:'Azeret Mono',ui-monospace,monospace;font-weight:500;font-size:15px;padding:10px 12px;border:1px solid #49564a;border-radius:3px;background:#080b08;color:#ffb454;caret-color:#ffb454;outline:none;box-shadow:inset 0 2px 5px rgba(0,0,0,.6)} .ds-inp::placeholder{color:#5d6a5c} .ds-inp:focus{border-color:#ffb454;box-shadow:inset 0 2px 5px rgba(0,0,0,.6),0 0 6px rgba(255,180,84,.35)}"
+    },
+    {
+      "name": "Nav Pushbuttons",
+      "kind": "nav",
+      "refersTo": "nav-pill",
+      "description": "Grouped squared keys in one etched border; the active page is the amber-lit pushbutton. Hover brightens text only.",
+      "html": "<nav class=\"ds-nav\"><a class=\"ds-pill ds-on\" href=\"#\">Profilo</a><a class=\"ds-pill\" href=\"#\">Come si legge</a><a class=\"ds-pill\" href=\"#\">Compatibilità</a></nav>",
+      "css": ".ds-nav{display:inline-flex;border:1px solid #49564a;border-radius:3px;overflow:hidden} .ds-pill{font-family:'Saira Semi Condensed',system-ui,sans-serif;font-weight:600;font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;padding:7px 13px;background:#1a211a;color:#93a08f;text-decoration:none;display:inline-block;border-left:1px solid #2c352c} .ds-pill:first-child{border-left:none} .ds-pill:hover{color:#cdd5c8} .ds-pill.ds-on{background:#ffb454;color:#0b0f0b} .ds-pill.ds-on:hover{color:#0b0f0b}"
+    },
+    {
+      "name": "Channel Chips",
+      "kind": "chip",
+      "refersTo": "channel-chip",
+      "description": "CH·1/2/3 sequence chips: mono text printed panel-deep on the channel ink, always inlined inside a heading.",
+      "html": "<span class=\"ds-ch ds-c-att\">CH·1</span> <span class=\"ds-ch ds-c-ven\">CH·2</span> <span class=\"ds-ch ds-c-per\">CH·3</span>",
+      "css": ".ds-ch{font-family:'Azeret Mono',ui-monospace,monospace;font-size:10.5px;letter-spacing:.06em;color:#0b0f0b;padding:2px 7px;border-radius:2px;font-weight:600} .ds-c-att{background:#ffb454} .ds-c-ven{background:#e2a3da} .ds-c-per{background:#86c8e8}"
+    },
+    {
+      "name": "Calibrated Band",
+      "kind": "custom",
+      "refersTo": "sphere-card",
+      "description": "The signature: the Ombra→Dono→Siddhi spectrum as a fixed three-zone strip under a tick scale. Hatch / glowing amber / matte mint.",
+      "html": "<div class=\"ds-band\"><div class=\"ds-scale\"></div><div class=\"ds-zones\"><div class=\"ds-zone ds-z-o\"><span class=\"ds-zlab\">Ombra</span><span class=\"ds-zval\">Repressione</span></div><div class=\"ds-zone ds-z-d\"><span class=\"ds-zlab\">Dono</span><span class=\"ds-zval\">Freschezza</span></div><div class=\"ds-zone ds-z-s\"><span class=\"ds-zlab\">Siddhi</span><span class=\"ds-zval\">Bellezza</span></div></div></div>",
+      "css": ".ds-band{border:1px solid #2c352c;border-radius:2px;overflow:hidden;background:#1a211a;min-width:260px} .ds-scale{height:5px;border-bottom:1px solid #2c352c;background:repeating-linear-gradient(90deg,#49564a 0 1px,transparent 1px 7px)} .ds-zones{display:flex} .ds-zone{flex:1;padding:6px 8px 7px;min-width:0} .ds-zone+.ds-zone{border-left:1px solid #2c352c} .ds-zlab{font-family:'Saira Semi Condensed',system-ui,sans-serif;font-weight:600;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:#93a08f;display:block} .ds-zval{font-family:'Libre Franklin',system-ui,sans-serif;font-size:12px;font-weight:600;display:block;margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis} .ds-z-o{background:repeating-linear-gradient(45deg,transparent 0 5px,rgba(0,0,0,.30) 5px 8px)} .ds-z-o .ds-zval{color:#cdd5c8} .ds-z-d .ds-zval{color:#ffb454;text-shadow:0 0 6px rgba(255,180,84,.35)} .ds-z-s .ds-zval{color:#93e2b4}"
+    },
+    {
+      "name": "OK Readout Chip",
+      "kind": "chip",
+      "refersTo": "input-well",
+      "description": "Confirmed-state mark: the word OK in matte mint inside a 1px mint border. A printed readout, never a glyph icon.",
+      "html": "<span class=\"ds-hint\"><span class=\"ds-ok\">OK</span> Napoli, Campania</span>",
+      "css": ".ds-hint{font-family:'Azeret Mono',ui-monospace,monospace;font-size:11px;color:#93a08f} .ds-ok{color:#93e2b4;font-weight:600;letter-spacing:.08em;border:1px solid #93e2b4;border-radius:2px;padding:0 4px;margin-right:3px}"
+    },
+    {
+      "name": "Threshold Alarm Module",
+      "kind": "card",
+      "refersTo": "module-panel",
+      "description": "The alarm grammar: state as printed sign, not color alone — an 8px 45° hatched band above the alarm-colored engraved heading.",
+      "html": "<div class=\"ds-soglia\"><h3>Soglia oraria 17 → 25</h3><p>Con un'ora di nascita spostata di pochi minuti, una sfera cambierebbe Chiave.</p></div>",
+      "css": ".ds-soglia{border:1px solid #ff8266;border-radius:3px;background:#121712;overflow:hidden} .ds-soglia::before{content:\"\";display:block;height:8px;background:repeating-linear-gradient(45deg,#ff8266 0 8px,transparent 8px 16px);opacity:.8;border-bottom:1px solid #ff8266} .ds-soglia h3{font-family:'Saira Semi Condensed',system-ui,sans-serif;font-weight:600;font-size:12.5px;letter-spacing:.2em;text-transform:uppercase;color:#ff8266;margin:0;padding:12px 16px 0} .ds-soglia p{font-family:'Libre Franklin',system-ui,sans-serif;font-size:13.5px;color:#cdd5c8;line-height:1.6;margin:8px 0 0;padding:0 16px 14px}"
+    },
+    {
+      "name": "Module Panel with Engraved Heading",
+      "kind": "card",
+      "refersTo": "module-panel",
+      "description": "The section container: module face with top inset highlight; heading in engraved caps with inlined channel chip and a flexed tick-scale rule.",
+      "html": "<section class=\"ds-panel\"><h2 class=\"ds-h2\"><span class=\"ds-ch2\">CH·2</span> Sequenza di Venere</h2><p class=\"ds-p\">Le relazioni come circuito di misura: quattro sfere sul canale magenta.</p></section>",
+      "css": ".ds-panel{border:1px solid #49564a;background:#121712;border-radius:4px;padding:20px 20px 18px;box-shadow:inset 0 1px 0 rgba(255,255,255,.04)} .ds-h2{font-family:'Saira Semi Condensed',system-ui,sans-serif;font-weight:600;font-size:13px;letter-spacing:.24em;text-transform:uppercase;color:#93a08f;margin:0 0 14px;display:flex;align-items:center;gap:10px} .ds-h2::after{content:\"\";flex:1;height:5px;border-bottom:1px solid #2c352c;background:repeating-linear-gradient(90deg,#2c352c 0 1px,transparent 1px 8px);background-position:bottom;background-size:auto 4px;background-repeat:repeat-x} .ds-ch2{font-family:'Azeret Mono',ui-monospace,monospace;font-size:10.5px;letter-spacing:.06em;color:#0b0f0b;padding:2px 7px;border-radius:2px;font-weight:600;background:#e2a3da} .ds-p{font-family:'Libre Franklin',system-ui,sans-serif;font-size:14px;color:#cdd5c8;line-height:1.66;margin:0}"
+    },
+    {
+      "name": "Key Library Card",
+      "kind": "card",
+      "refersTo": "key-card",
+      "description": "The Chiavi catalogue entry: glowing key-number readout beside the spectrum spec row, then the calibrated band, essence, and a mono ring/partner footer. No channel border — a library Key belongs to no sequence.",
+      "html": "<div class=\"ds-kcard\"><div class=\"ds-khead\"><span class=\"ds-knum\">37</span><span class=\"ds-kspec\">Debolezza · Uguaglianza · Tenerezza</span></div><div class=\"ds-kt\">La Chiave della famiglia: il calore che tiene insieme un cerchio di persone.</div><div class=\"ds-kmeta\">Anello: <b>Anello dei Segreti</b> — la trasmissione intima<br>Partner di programmazione: <a href=\"#\">40 · Volontà</a></div></div>",
+      "css": ".ds-kcard{border:1px solid #2c352c;border-radius:3px;background:#121712;padding:14px 15px} .ds-khead{display:flex;align-items:baseline;gap:12px} .ds-knum{font-family:'Azeret Mono',ui-monospace,monospace;font-weight:600;font-size:30px;color:#ffb454;text-shadow:0 0 6px rgba(255,180,84,.35);line-height:1} .ds-kspec{font-family:'Azeret Mono',ui-monospace,monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#b97f33} .ds-kt{font-family:'Libre Franklin',system-ui,sans-serif;font-size:13px;color:#cdd5c8;line-height:1.55;margin-top:9px} .ds-kmeta{font-family:'Azeret Mono',ui-monospace,monospace;font-size:10.5px;color:#93a08f;margin-top:9px;border-top:1px solid #2c352c;padding-top:8px;line-height:1.8} .ds-kmeta b{color:#cdd5c8;font-weight:600} .ds-kmeta a{color:#ffb454;text-decoration:none}"
+    },
+    {
+      "name": "Almanac Today Module",
+      "kind": "card",
+      "refersTo": "today-module",
+      "description": "The live plate: amber-dimmed border marks it as current; OGGI badge chip, glowing key readout, engraved spectrum words and dim prose.",
+      "html": "<div class=\"ds-today\"><span class=\"ds-badge\">OGGI</span><span class=\"ds-tk\">33</span><div class=\"ds-tt\"><b>Dimenticanza · Consapevolezza · Rivelazione</b><div>La Chiave del ritiro: il passo indietro che trasforma l'esperienza in memoria.</div></div></div>",
+      "css": ".ds-today{border:1px solid #b97f33;border-radius:3px;background:#1a211a;padding:14px 16px;display:flex;gap:16px;align-items:center;flex-wrap:wrap} .ds-badge{font-family:'Azeret Mono',ui-monospace,monospace;font-size:10.5px;letter-spacing:.16em;color:#0b0f0b;background:#ffb454;padding:2px 8px;border-radius:2px;font-weight:600} .ds-tk{font-family:'Azeret Mono',ui-monospace,monospace;font-weight:600;font-size:33px;color:#ffb454;text-shadow:0 0 6px rgba(255,180,84,.35);line-height:1} .ds-tt{flex:1;min-width:240px} .ds-tt b{font-family:'Saira Semi Condensed',system-ui,sans-serif;font-weight:600;font-size:13px;letter-spacing:.16em;text-transform:uppercase;color:#cdd5c8} .ds-tt div{font-family:'Libre Franklin',system-ui,sans-serif;font-size:13.5px;color:#93a08f;line-height:1.55;margin-top:3px}"
+    }
+  ],
+  "narrative": {
+    "northStar": "Lo Spettrometro",
+    "overview": "The whole site is one physical object: a 1960s–70s laboratory measuring instrument in green-black enamel. The page background is the deep enamel chassis; every section is a bolted-on module face; interactive controls sit on raised faces; inputs and data plates are recessed wells with inset shadows. Text is either engraved into the panel (Saira Semi Condensed caps, tracked), lit on a phosphor display (Azeret Mono in amber), or printed in a technical manual's prose face (Libre Franklin). The profile is not narrated — it is measured: the CTA says \"Misura\", numbers are readouts, sequences are channels (CH·1/2/3), and the report reads like a calibration certificate. Every ink is flat; the only repeating-linear-gradients are tick scales and 45° hatching — engravings, not gradients. The only luminous effect in the world is the amber phosphor glow. Nothing moves: zero CSS animations and zero transitions (hard product constraint).",
+    "keyCharacteristics": [
+      "One dark enamel object; depth is physical (recessed vs. raised), never floating.",
+      "Flat inks; the amber phosphor text-shadow is the single glow in the world.",
+      "Tick scales everywhere: heading rules, hero underline, band scales, SVG dials.",
+      "State is always a printed mark plus color, never color alone.",
+      "Three channel inks — amber, magenta, blue — one per sequence, everywhere consistent.",
+      "Completely static: no animations, no transitions."
+    ],
+    "rules": [
+      { "name": "The Flat Ink Rule", "body": "No decorative gradients, ever. repeating-linear-gradient is permitted only to draw tick scales and 45° hatching — engraved marks with hard 1px edges, never a tonal blend.", "section": "colors" },
+      { "name": "The One Phosphor Rule", "body": "Only amber glows. --glow appears on amber text readouts, the MISURA keycap, and the input focus halo — nowhere else. Mint, magenta, blue, and alarm are always matte.", "section": "colors" },
+      { "name": "The Channel Ink Rule", "body": "A sequence owns its ink everywhere it appears: heading chip, card top-border (2px solid), report mark, dial marker, legend dot. Attivazione = amber (CH·1), Venere = magenta (CH·2), Perla = blue (CH·3).", "section": "colors" },
+      { "name": "The Stepped Opacity Rule", "body": "Intensity and phase are drawn as the owning ink at a stepped opacity — never as a new hex. The personal-cycles timeline draws the three Venus-cycle phases as magenta (#e2a3da) at opacity 0.85 / 0.55 / 0.3 and the three Line-6 life phases as amber (#ffb454) fills at 0.25 / 0.5 / 0.8 inside a 1px amber-dimmed outline; the almanac's current-ingress row tints its cells with amber at 7% (rgba(255,180,84,.07)). Any future \"how much / which phase\" reading uses the same device: one channel ink, opacity as the scale.", "section": "colors" },
+      { "name": "The Three Registers Rule", "body": "Saira = engraved (uppercase + tracked, never body copy), Azeret Mono = measured (numbers, specs, tags, plates), Libre Franklin = printed prose (the only lowercase register). Never mix registers within one role.", "section": "typography" },
+      { "name": "The Lit Word Rule", "body": "Exactly one amber-lit word per page title, marked with .lit (amber + glow); the rest of the title stays engraved in --txt.", "section": "typography" },
+      { "name": "The Machined Depth Rule", "body": "Interactive wells are recessed (inset shadow, --recess); structural surfaces are raised (top inset highlight). No ambient drop shadows on interior elements — only the chassis and the autocomplete float.", "section": "elevation" }
+    ],
+    "dos": [
+      "Do compose every new surface from holo/instrument.css tokens; page-scoped <style> blocks may extend the world but only via var(--…) — no new hex values, fonts, or radii.",
+      "Do inline channel chips and jack chips inside their headings (h2/h3/.card h3), never as detached badges (finish-review fix, kept).",
+      "Do print state as a mark plus color: the mint-bordered \"OK\" text chip, the ⨯ error prefix, the hatched alarm band, the hatched Ombra zone. A future state needs its printed sign designed before its color.",
+      "Do route every user-facing string through the language packs (window.HOLO_LANGS via holo/keys.XX.js, window.HOLO_GUIDE via holo/guide.XX.js, window.HOLO_EXTRA via holo/extra.XX.js — the LIS/rings/timeline/almanac/poster layer — plus per-page UI dicts) and re-render on the zlangchange event from lang/i18n.js — no hardcoded single-language UI text, IT/EN/FR/ES/PT-BR all first-class. Engine code (holo/engine.js) stays language-free: it returns ids and numbers; packs supply every word.",
+      "Do self-host all fonts through holo/fonts.css + fonts/*.woff2; no external font or asset requests (the site also ships noindex on every page).",
+      "Do keep prose width-capped (64–80ch) and give any wide element its own overflow-x:auto container.",
+      "Do draw new instrument graphics in the established SVG grammar (etched circles, radial ticks, mono numerals, amber needle, square channel markers) using the token hex values; time-based charts follow the timeline's axis grammar (etched line, 7-year ticks, phase bands per The Stepped Opacity Rule, amber OGGI needle).",
+      "Do register every new page in the PWA layer: link manifest.json and the icons, set <meta name=\"theme-color\" content=\"#0b0f0b\">, and add the page (and any new assets) to the CORE list in sw.js, bumping its cache version (holo-vN). The service worker is cache-first, same-origin GET only, registered https-only from lang/i18n.js; a surface missing from CORE breaks the offline instrument. Shipped raster icons carry their provenance in a PNG tEXt chunk.",
+      "Do keep every export user-triggered from the amber keycap and fully client-side (Blob + object URL, revoked after use): ICS as plain text, posters as canvas re-drawn from world tokens after document.fonts.ready. No export ever contacts a server."
+    ],
+    "donts": [
+      "Don't animate. No CSS animation, no transition, anywhere — state changes are instantaneous, like a real switch. This is a hard product constraint, not a style preference.",
+      "Don't use gradients as color. Repeating tick/hatch patterns are the only permitted gradients; any tonal blend breaks the enamel.",
+      "Don't glow anything but amber, and only via --glow; mint, magenta, blue, and alarm stay matte.",
+      "Don't use glyph icons or emoji as UI signs; the world's signs are typographic (OK, ⨯, →, ·, CH·1) or drawn SVG instruments. (The ✓ glyph was removed in the finish review.)",
+      "Don't exceed the radius ladder (6/4/3/2/1px); no pills, no circles in HTML.",
+      "Don't invent a new hex for intensity, phase, or \"current\" states — scale the owning channel ink by opacity instead (The Stepped Opacity Rule). New opacities may be chosen; new colors may not.",
+      "Don't revert to the anti-references: no starry-sky/gold-serif astro styling, no comic-pop (zodiac-zine) elements, no heart/quiz iconography on the compatibility surface."
+    ]
+  }
+}

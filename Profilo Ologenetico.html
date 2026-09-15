@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>Ologenetica — Profilo Ologenetico</title>
+<meta name="theme-color" content="#0b0f0b">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icons/icon-192.png" type="image/png">
+<link rel="stylesheet" href="holo/fonts.css">
+<link rel="stylesheet" href="holo/instrument.css">
+</head>
+<body>
+<!--
+THESIS: il profilo come lettura di uno strumento di precisione — ogni Chiave una banda di frequenza; rifiuta il layout astro-app (notte stellata, serif dorato) e il fumetto del gemello zodiac.
+OWN-WORLD: pannello smaltato verde-nero (#0b0f0b/#121712), fosforo ambra #ffb454 e menta #93e2b4, canali magenta/blu; incisioni Saira SemiCondensed caps tracked, letture Azeret Mono, prosa Libre Franklin; scale a tacche ovunque; inchiostri piatti — unico bagliore il fosforo; stato = segno, non colore; rampa calibrata Ombra→Dono→Siddhi.
+STORY: inserisci i dati, ottieni una misura: il profilo è una lettura calibrata da contemplare, non un oroscopo.
+FIRST VIEWPORT: targa strumento in alto (OLOGENETICA · nav a canali), titolo inciso con OLOGENETICO acceso in ambra, riga spec mono, pannello di controllo dati-nascita con pulsante MISURA sotto.
+FORM: candidato 4 della lista grounded (Lo Spettrometro), seed 84c75ad3.
+FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, DESIGN.md, and every shipping raster carrying its provenance.
+-->
+<div class="wrap">
+  <div class="topbar">
+    <a class="brand" href="index.html" title="Home">
+      <svg class="dialmark" viewBox="0 0 22 22" fill="none" aria-hidden="true"><circle cx="11" cy="11" r="9" stroke-width="1.4"/><line x1="11" y1="11" x2="16.5" y2="6.5" stroke-width="1.4"/><line x1="11" y1="2" x2="11" y2="4.5" stroke-width="1"/><line x1="11" y1="17.5" x2="11" y2="20" stroke-width="1"/><line x1="2" y1="11" x2="4.5" y2="11" stroke-width="1"/><line x1="17.5" y1="11" x2="20" y2="11" stroke-width="1"/></svg>
+      Ologenetica</a>
+    <div class="topright">
+      <div class="nav">
+        <a class="pill on" data-k="profilo" href="Profilo%20Ologenetico.html">Profilo</a>
+        <a class="pill" data-k="chiavi" href="Chiavi.html">Chiavi</a>
+        <a class="pill" data-k="almanacco" href="Almanacco.html">Almanacco</a>
+        <a class="pill" data-k="guida" href="Come%20si%20Legge.html">Come si legge</a>
+        <a class="pill" data-k="match" href="Compatibilit%C3%A0.html">Compatibilità</a>
+      </div>
+      <span id="langPick"></span>
+    </div>
+  </div>
+
+  <div class="hero">
+    <h1 class="htitle" id="htitle">PROFILO <span class="lit">OLOGENETICO</span></h1>
+    <div class="ksuper" id="ksuper"></div>
+    <p class="hsub" id="hsub"></p>
+    <div class="tickline"></div>
+  </div>
+
+  <!-- FORM -->
+  <div class="panel" id="formPanel">
+    <h2 id="formTitle"></h2>
+    <div class="field">
+      <label id="lblName"></label>
+      <input class="inp" id="fName" autocomplete="off">
+    </div>
+    <div class="row">
+      <div class="field">
+        <label id="lblDate"></label>
+        <input class="inp" id="fDate" type="date" min="1900-01-01" max="2030-12-31">
+      </div>
+      <div class="field">
+        <label id="lblTime"></label>
+        <input class="inp" id="fTime" type="time">
+        <label class="check"><input type="checkbox" id="fNoTime"> <span id="lblNoTime"></span></label>
+      </div>
+    </div>
+    <div class="field">
+      <label id="lblPlace"></label>
+      <input class="inp" id="fPlace" autocomplete="off">
+      <div class="ac" id="acBox"></div>
+      <div class="hint" id="placeHint"></div>
+    </div>
+    <button class="btn-go" id="goBtn"></button>
+    <div class="err" id="errBox"></div>
+  </div>
+
+  <!-- RESULT -->
+  <div id="result" style="display:none">
+    <div class="panel">
+      <h2 id="resTitle"></h2>
+      <p class="summary" id="resSummary"></p>
+      <div class="birthdata" id="birthData"></div>
+      <div class="bigline" id="bigline"></div>
+      <div class="modetoggle">
+        <button class="modebtn on" id="modeSimple"></button>
+        <button class="modebtn" id="modeReport"></button>
+      </div>
+      <div class="sharelbl" id="shareLbl"></div>
+      <div class="sharebar" id="shareBar"></div>
+    </div>
+
+    <!-- SINTESI -->
+    <div id="viewSimple">
+      <div class="panel">
+        <h2 id="attTitle"></h2>
+        <p class="seqsub" id="attSub"></p>
+        <div class="sgrid" id="seqAtt"></div>
+      </div>
+      <div class="panel">
+        <h2 id="venTitle"></h2>
+        <p class="seqsub" id="venSub"></p>
+        <div class="sgrid" id="seqVen"></div>
+      </div>
+      <div class="panel">
+        <h2 id="perTitle"></h2>
+        <p class="seqsub" id="perSub"></p>
+        <div class="sgrid" id="seqPer"></div>
+      </div>
+    </div>
+
+    <!-- REPORT COMPLETO -->
+    <div id="viewReport" style="display:none">
+      <div class="panel"><h2 id="rAttTitle"></h2><div id="repAtt"></div></div>
+      <div class="panel"><h2 id="rVenTitle"></h2><div id="repVen"></div></div>
+      <div class="panel"><h2 id="rPerTitle"></h2><div id="repPer"></div></div>
+      <div class="soglia" id="sogliaBox" style="display:none"></div>
+      <div class="panel">
+        <h2 id="structTitle"></h2>
+        <div id="structBody"></div>
+      </div>
+      <div class="panel">
+        <h2 id="tlTitle"></h2>
+        <p class="seqsub" id="tlSub"></p>
+        <div class="wheelwrap" id="tlBody" style="overflow-x:auto"></div>
+        <p class="seqsub" id="tlNow" style="margin:10px 0 0"></p>
+      </div>
+      <div class="panel">
+        <h2 id="rnTitle"></h2>
+        <p class="seqsub" id="rnSub"></p>
+        <div id="rnBody"></div>
+      </div>
+      <div class="panel">
+        <h2 id="yrTitle"></h2>
+        <p class="seqsub" id="yrSub"></p>
+        <div id="yrBody"></div>
+      </div>
+      <div class="panel">
+        <h2 id="tableTitle"></h2>
+        <div style="overflow-x:auto"><table class="stable" id="posTable"></table></div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <h2 id="wxTitle"></h2>
+      <p class="seqsub" id="wxSub"></p>
+      <div id="wxBody"></div>
+    </div>
+
+    <div class="panel">
+      <h2 id="wheelTitle"></h2>
+      <p class="seqsub" id="wheelSub"></p>
+      <div class="wheelwrap" id="wheel"></div>
+      <div class="legend" id="legend"></div>
+      <button class="btn-go" id="posterBtn" style="margin-top:16px"></button>
+    </div>
+  </div>
+
+  <div class="footnote" id="foot"></div>
+</div>
+
+<script src="lang/i18n.js"></script>
+<script src="lib/astronomy.browser.min.js"></script>
+<script src="lib/cities.js"></script>
+<script src="holo/keys.it.js"></script>
+<script src="holo/keys.en.js"></script>
+<script src="holo/keys.fr.js"></script>
+<script src="holo/keys.es.js"></script>
+<script src="holo/keys.pt.js"></script>
+<script src="holo/extra.it.js"></script>
+<script src="holo/extra.en.js"></script>
+<script src="holo/extra.fr.js"></script>
+<script src="holo/extra.es.js"></script>
+<script src="holo/extra.pt.js"></script>
+<script src="holo/engine.js"></script>
+<script src="holo/compat.js"></script>
+<script>
+(function(){
+  const $ = id => document.getElementById(id);
+  // canali dello strumento: una sequenza = un canale
+  const CH = {
+    attivazione: { hex:"#ffb454", chip:"c-att", n:"CH·1" },
+    venere:      { hex:"#e2a3da", chip:"c-ven", n:"CH·2" },
+    perla:       { hex:"#86c8e8", chip:"c-per", n:"CH·3" }
+  };
+  const LOCALE = { it:"it-IT", en:"en-GB", fr:"fr-FR", es:"es-ES", pt:"pt-BR" };
+  const fill = window.HOLOMATCH.fill;
+  const langOf = () => window.ZI18N ? window.ZI18N.get() : "it";
+  const D = () => window.HOLO_LANGS[langOf()] || window.HOLO_LANGS.it;
+  const E = () => (window.HOLO_EXTRA && (window.HOLO_EXTRA[langOf()] || window.HOLO_EXTRA.it)) || null;
+  function fmtD(d){ try{ return new Intl.DateTimeFormat(LOCALE[langOf()]||"it-IT",{dateStyle:"medium"}).format(d); }catch(e){ return ""; } }
+  let chosenPlace = null, curR = null, curName = "", curStab = null, curDS = null, viewMode = "simple";
+
+  const UI = {
+    it:{ ksuper:"MOD. 64 · 11 SFERE · 3 SEQUENZE · EFFEMERIDI REALI", htitle:["PROFILO ","OLOGENETICO"],
+      hsub:"Inserisci quando e dove sei nato: lo strumento misura le tue 11 Chiavi — le Sequenze di Attivazione, di Venere e della Perla — dalla posizione esatta di Sole, Terra, Luna, Venere, Marte e Giove.",
+      formTitle:"Dati di nascita", lblName:"Nome (facoltativo)", phName:"Come ti chiami?",
+      lblDate:"Data di nascita", lblTime:"Ora di nascita", lblNoTime:"Non conosco l'ora",
+      lblPlace:"Luogo di nascita", phPlace:"Cerca una città… es. Napoli", placeHint:"Scrivi e scegli dalla lista (serve per il fuso orario).",
+      go:"Misura il profilo", modeSimple:"Sintesi", modeReport:"Report completo",
+      resMine:"Lettura del profilo", resName:n=>`Lettura — ${n}`,
+      sumTpl:"Il tuo Life's Work è la Chiave {label} — ombra: {o} → dono: {d} → siddhi: {s}. Le tue 11 sfere: {labels}.",
+      styleTpl:"Il tuo stile: Linea {line} — {name}",
+      repPrefix:"Report — ", tableTitle:"Posizioni esatte",
+      wheelTitle:"Il quadrante delle 64 Chiavi", wheelSub:"La ruota zodiacale divisa in 64 settori (uno per esagramma): i marcatori segnano dove cadono le tue 11 sfere.",
+      errDate:"Inserisci la data di nascita.", errTime:"Inserisci l'ora di nascita (o spunta «non la conosco»).",
+      errPlace:"Scegli la città dalla lista.", errCalc:"Qualcosa è andato storto nel calcolo.",
+      shareLbl:"Link condivisibile", copy:"Copia link", copied:"Copiato — OK", shareSys:"Condividi",
+      nav:{profilo:"Profilo",chiavi:"Chiavi",almanacco:"Almanacco",guida:"Come si legge",match:"Compatibilità"},
+      foot:"Effemeridi astronomy-engine · Personalità = nascita, Design = 88° di arco solare prima (~3 mesi) · Ancoraggio: esagramma 41 a 2°00′ Acquario.<br>Sistema ispirato al Profilo Ologenetico (Gene Keys di Richard Rudd — I Ching + astrologia + Human Design). Strumento contemplativo e simbolico: nessun rapporto con la genetica, nessuna validazione scientifica. Testi originali. <a href='Come%20si%20Legge.html'>Come funziona il calcolo →</a>" },
+    en:{ ksuper:"MOD. 64 · 11 SPHERES · 3 SEQUENCES · REAL EPHEMERIS", htitle:["HOLOGENETIC ","PROFILE"],
+      hsub:"Tell us when and where you were born: the instrument measures your 11 Keys — the Activation, Venus and Pearl Sequences — from the exact positions of the Sun, Earth, Moon, Venus, Mars and Jupiter.",
+      formTitle:"Birth data", lblName:"Name (optional)", phName:"What's your name?",
+      lblDate:"Date of birth", lblTime:"Time of birth", lblNoTime:"I don't know the time",
+      lblPlace:"Place of birth", phPlace:"Search a city… e.g. Naples", placeHint:"Type and pick from the list (needed for the timezone).",
+      go:"Measure the profile", modeSimple:"Overview", modeReport:"Full report",
+      resMine:"Profile reading", resName:n=>`Reading — ${n}`,
+      sumTpl:"Your Life's Work is Key {label} — shadow: {o} → gift: {d} → siddhi: {s}. Your 11 spheres: {labels}.",
+      styleTpl:"Your style: Line {line} — {name}",
+      repPrefix:"Report — ", tableTitle:"Exact positions",
+      wheelTitle:"The dial of the 64 Keys", wheelSub:"The zodiac wheel divided into 64 sectors (one per hexagram): the markers show where your 11 spheres fall.",
+      errDate:"Enter your date of birth.", errTime:"Enter your time of birth (or tick «I don't know it»).",
+      errPlace:"Pick the city from the list.", errCalc:"Something went wrong in the calculation.",
+      shareLbl:"Shareable link", copy:"Copy link", copied:"Copied — OK", shareSys:"Share",
+      nav:{profilo:"Profile",chiavi:"Keys",almanacco:"Almanac",guida:"How to read it",match:"Compatibility"},
+      foot:"astronomy-engine ephemerides · Personality = birth, Design = 88° of solar arc earlier (~3 months) · Anchor: hexagram 41 at 2°00′ Aquarius.<br>Inspired by the Hologenetic Profile (Gene Keys by Richard Rudd — I Ching + astrology + Human Design). A contemplative, symbolic tool: no relation to genetics, no scientific validation. Original texts. <a href='Come%20si%20Legge.html'>How the calculation works →</a>" },
+    fr:{ ksuper:"MOD. 64 · 11 SPHÈRES · 3 SÉQUENCES · ÉPHÉMÉRIDES RÉELLES", htitle:["PROFIL ","HOLOGÉNÉTIQUE"],
+      hsub:"Dis-nous quand et où tu es né : l'instrument mesure tes 11 Clés — les Séquences d'Activation, de Vénus et de la Perle — à partir des positions exactes du Soleil, de la Terre, de la Lune, de Vénus, de Mars et de Jupiter.",
+      formTitle:"Données de naissance", lblName:"Prénom (facultatif)", phName:"Comment tu t'appelles ?",
+      lblDate:"Date de naissance", lblTime:"Heure de naissance", lblNoTime:"Je ne connais pas l'heure",
+      lblPlace:"Lieu de naissance", phPlace:"Cherche une ville… ex. Naples", placeHint:"Écris et choisis dans la liste (nécessaire pour le fuseau horaire).",
+      go:"Mesurer le profil", modeSimple:"Synthèse", modeReport:"Rapport complet",
+      resMine:"Lecture du profil", resName:n=>`Lecture — ${n}`,
+      sumTpl:"Ton Life's Work est la Clé {label} — ombre : {o} → don : {d} → siddhi : {s}. Tes 11 sphères : {labels}.",
+      styleTpl:"Ton style : Ligne {line} — {name}",
+      repPrefix:"Rapport — ", tableTitle:"Positions exactes",
+      wheelTitle:"Le cadran des 64 Clés", wheelSub:"La roue zodiacale divisée en 64 secteurs (un par hexagramme) : les marqueurs montrent où tombent tes 11 sphères.",
+      errDate:"Entre ta date de naissance.", errTime:"Entre ton heure de naissance (ou coche « je ne la connais pas »).",
+      errPlace:"Choisis la ville dans la liste.", errCalc:"Un souci est survenu dans le calcul.",
+      shareLbl:"Lien partageable", copy:"Copier le lien", copied:"Copié — OK", shareSys:"Partager",
+      nav:{profilo:"Profil",chiavi:"Clés",almanacco:"Almanach",guida:"Comment lire",match:"Compatibilité"},
+      foot:"Éphémérides astronomy-engine · Personnalité = naissance, Design = 88° d'arc solaire avant (~3 mois) · Ancrage : hexagramme 41 à 2°00′ Verseau.<br>Inspiré du Profil Hologénétique (Gene Keys de Richard Rudd — Yi King + astrologie + Human Design). Outil contemplatif et symbolique : aucun rapport avec la génétique, aucune validation scientifique. Textes originaux. <a href='Come%20si%20Legge.html'>Comment fonctionne le calcul →</a>" },
+    es:{ ksuper:"MOD. 64 · 11 ESFERAS · 3 SECUENCIAS · EFEMÉRIDES REALES", htitle:["PERFIL ","HOLOGENÉTICO"],
+      hsub:"Dinos cuándo y dónde naciste: el instrumento mide tus 11 Llaves — las Secuencias de Activación, de Venus y de la Perla — a partir de las posiciones exactas del Sol, la Tierra, la Luna, Venus, Marte y Júpiter.",
+      formTitle:"Datos de nacimiento", lblName:"Nombre (opcional)", phName:"¿Cómo te llamas?",
+      lblDate:"Fecha de nacimiento", lblTime:"Hora de nacimiento", lblNoTime:"No sé la hora",
+      lblPlace:"Lugar de nacimiento", phPlace:"Busca una ciudad… ej. Nápoles", placeHint:"Escribe y elige de la lista (necesario para la zona horaria).",
+      go:"Medir el perfil", modeSimple:"Síntesis", modeReport:"Informe completo",
+      resMine:"Lectura del perfil", resName:n=>`Lectura — ${n}`,
+      sumTpl:"Tu Life's Work es la Llave {label} — sombra: {o} → don: {d} → siddhi: {s}. Tus 11 esferas: {labels}.",
+      styleTpl:"Tu estilo: Línea {line} — {name}",
+      repPrefix:"Informe — ", tableTitle:"Posiciones exactas",
+      wheelTitle:"El dial de las 64 Llaves", wheelSub:"La rueda zodiacal dividida en 64 sectores (uno por hexagrama): los marcadores muestran dónde caen tus 11 esferas.",
+      errDate:"Introduce tu fecha de nacimiento.", errTime:"Introduce tu hora de nacimiento (o marca «no la sé»).",
+      errPlace:"Elige la ciudad de la lista.", errCalc:"Algo salió mal en el cálculo.",
+      shareLbl:"Enlace para compartir", copy:"Copiar enlace", copied:"Copiado — OK", shareSys:"Compartir",
+      nav:{profilo:"Perfil",chiavi:"Llaves",almanacco:"Almanaque",guida:"Cómo se lee",match:"Compatibilidad"},
+      foot:"Efemérides astronomy-engine · Personalidad = nacimiento, Diseño = 88° de arco solar antes (~3 meses) · Ancla: hexagrama 41 a 2°00′ Acuario.<br>Inspirado en el Perfil Hologenético (Gene Keys de Richard Rudd — I Ching + astrología + Human Design). Herramienta contemplativa y simbólica: sin relación con la genética ni validación científica. Textos originales. <a href='Come%20si%20Legge.html'>Cómo funciona el cálculo →</a>" },
+    pt:{ ksuper:"MOD. 64 · 11 ESFERAS · 3 SEQUÊNCIAS · EFEMÉRIDES REAIS", htitle:["PERFIL ","HOLOGENÉTICO"],
+      hsub:"Diga quando e onde você nasceu: o instrumento mede suas 11 Chaves — as Sequências de Ativação, de Vênus e da Pérola — a partir das posições exatas do Sol, da Terra, da Lua, de Vênus, de Marte e de Júpiter.",
+      formTitle:"Dados de nascimento", lblName:"Nome (opcional)", phName:"Qual é o seu nome?",
+      lblDate:"Data de nascimento", lblTime:"Hora de nascimento", lblNoTime:"Não sei a hora",
+      lblPlace:"Local de nascimento", phPlace:"Busque uma cidade… ex. São Paulo", placeHint:"Digite e escolha da lista (necessário para o fuso horário).",
+      go:"Medir o perfil", modeSimple:"Síntese", modeReport:"Relatório completo",
+      resMine:"Leitura do perfil", resName:n=>`Leitura — ${n}`,
+      sumTpl:"Seu Life's Work é a Chave {label} — sombra: {o} → dom: {d} → siddhi: {s}. Suas 11 esferas: {labels}.",
+      styleTpl:"Seu estilo: Linha {line} — {name}",
+      repPrefix:"Relatório — ", tableTitle:"Posições exatas",
+      wheelTitle:"O dial das 64 Chaves", wheelSub:"A roda zodiacal dividida em 64 setores (um por hexagrama): os marcadores mostram onde caem suas 11 esferas.",
+      errDate:"Informe sua data de nascimento.", errTime:"Informe sua hora de nascimento (ou marque «não sei»).",
+      errPlace:"Escolha a cidade da lista.", errCalc:"Algo deu errado no cálculo.",
+      shareLbl:"Link compartilhável", copy:"Copiar link", copied:"Copiado — OK", shareSys:"Compartilhar",
+      nav:{profilo:"Perfil",chiavi:"Chaves",almanacco:"Almanaque",guida:"Como ler",match:"Compatibilidade"},
+      foot:"Efemérides astronomy-engine · Personalidade = nascimento, Design = 88° de arco solar antes (~3 meses) · Âncora: hexagrama 41 a 2°00′ Aquário.<br>Inspirado no Perfil Hologenético (Gene Keys de Richard Rudd — I Ching + astrologia + Human Design). Ferramenta contemplativa e simbólica: sem relação com a genética, sem validação científica. Textos originais. <a href='Come%20si%20Legge.html'>Como funciona o cálculo →</a>" }
+  };
+  const U = () => UI[langOf()] || UI.it;
+
+  // --- autocomplete città ---
+  const acBox = $("acBox"), fPlace = $("fPlace");
+  let acItems = [], acSel = -1;
+  function renderAc(list){
+    acItems = list; acSel = -1;
+    if(!list.length){ acBox.classList.remove("show"); return; }
+    acBox.innerHTML = list.map((c,i)=>
+      `<div class="ac-item" data-i="${i}">${c.name} <small>· ${c.area}</small></div>`).join("");
+    acBox.classList.add("show");
+    acBox.querySelectorAll(".ac-item").forEach(el=>{
+      el.onclick = ()=> pickPlace(acItems[+el.dataset.i]);
+    });
+  }
+  function pickPlace(c){
+    chosenPlace = c; fPlace.value = c.name;
+    acBox.classList.remove("show");
+    $("placeHint").innerHTML = `<span class="ok">OK</span> ${c.name}, ${c.area}`;
+  }
+  fPlace.addEventListener("input", ()=>{
+    chosenPlace = null; $("placeHint").textContent = U().placeHint;
+    renderAc(window.CITY.search(fPlace.value, 8));
+  });
+  fPlace.addEventListener("keydown", e=>{
+    if(!acBox.classList.contains("show")) return;
+    if(e.key==="ArrowDown"){acSel=Math.min(acSel+1,acItems.length-1);e.preventDefault();}
+    else if(e.key==="ArrowUp"){acSel=Math.max(acSel-1,0);e.preventDefault();}
+    else if(e.key==="Enter"){ if(acSel>=0){pickPlace(acItems[acSel]);e.preventDefault();} return;}
+    else return;
+    acBox.querySelectorAll(".ac-item").forEach((el,i)=>el.classList.toggle("sel",i===acSel));
+  });
+  document.addEventListener("click", e=>{ if(!fPlace.contains(e.target)&&!acBox.contains(e.target)) acBox.classList.remove("show"); });
+  $("fNoTime").addEventListener("change", e=>{
+    $("fTime").disabled = e.target.checked;
+    if(e.target.checked) $("fTime").value="";
+  });
+
+  function showErr(m){ const e=$("errBox"); e.textContent=m; e.classList.add("show"); }
+
+  $("goBtn").addEventListener("click", ()=>{
+    $("errBox").classList.remove("show");
+    const dateStr = $("fDate").value;
+    if(!dateStr) return showErr(U().errDate);
+    const [y,mo,d] = dateStr.split("-").map(Number);
+    const noTime = $("fNoTime").checked;
+    let hour=null, minute=null;
+    if(!noTime){
+      const t = $("fTime").value;
+      if(!t) return showErr(U().errTime);
+      [hour,minute] = t.split(":").map(Number);
+    }
+    let tz = null;
+    if(chosenPlace) tz = chosenPlace.tz;
+    else if(fPlace.value.trim()) return showErr(U().errPlace);
+    else tz = Intl.DateTimeFormat().resolvedOptions().timeZone || "UTC";
+
+    try{
+      curR = window.HOLO.compute({year:y,month:mo,day:d,hour,minute,tz});
+      curStab = window.HOLO.stability({year:y,month:mo,day:d,hour,minute,tz});
+      curDS = noTime ? window.HOLO.dayStability({year:y,month:mo,day:d,tz}) : null;
+    }
+    catch(ex){ console.error(ex); return showErr(U().errCalc); }
+    curName = $("fName").value.trim();
+    updateShareUrl();
+    render();
+    $("result").style.display="block";
+    if(!window.__autorun) $("result").scrollIntoView();
+  });
+
+  // --- link condivisibile: l'URL diventa la misura ---
+  function updateShareUrl(){
+    try{
+      const q = new URLSearchParams();
+      q.set("lang", langOf());
+      q.set("d", $("fDate").value);
+      if(!$("fNoTime").checked && $("fTime").value) q.set("t", $("fTime").value);
+      if(chosenPlace) q.set("city", chosenPlace.name);
+      const n = $("fName").value.trim(); if(n) q.set("n", n);
+      q.set("run","1");
+      history.replaceState(null, "", location.pathname + "?" + q.toString());
+    }catch(e){}
+  }
+  function renderShare(){
+    const u = U();
+    $("shareLbl").textContent = u.shareLbl;
+    let h = `<input class="inp surl" id="shareUrl" readonly value="${location.href.replace(/"/g,"&quot;")}">` +
+      `<button class="sbtn" id="copyBtn" type="button">${u.copy}</button>`;
+    if(navigator.share) h += `<button class="sbtn" id="sysShareBtn" type="button">${u.shareSys}</button>`;
+    $("shareBar").innerHTML = h;
+    $("copyBtn").onclick = async ()=>{
+      const val = $("shareUrl").value;
+      try{ await navigator.clipboard.writeText(val); }
+      catch(e){ $("shareUrl").select(); try{ document.execCommand("copy"); }catch(_){} }
+      $("copyBtn").textContent = u.copied; $("copyBtn").classList.add("done");
+    };
+    const sb = $("sysShareBtn");
+    if(sb) sb.onclick = ()=>{ navigator.share({ url: $("shareUrl").value }).catch(()=>{}); };
+  }
+
+  // --- helpers di lingua ---
+  const bodyName = s => D().BODIES[s.body];
+  const calcName = s => s.calc === "design" ? D().LBL.design : D().LBL.natale;
+  const signName = s => D().SIGNS[s.signIdx];
+  const sphereName = s => D().SPHERES[s.k].n;
+  function fmtDT(iso, tz){
+    try{
+      return new Intl.DateTimeFormat(LOCALE[langOf()]||"it-IT",
+        { dateStyle:"long", timeStyle:"short", timeZone: tz }).format(new Date(iso));
+    }catch(e){ return iso; }
+  }
+
+  // Nella Sequenza della Perla, Core e Life's Work tornano come Vocation e Brand
+  function perlaName(s, seqCtx){
+    if(seqCtx !== "perla") return null;
+    if(s.k === "nucleo") return { n: "Vocation", eq: "= Core" };
+    if(s.k === "lavoro") return { n: "Brand", eq: "= Life's Work" };
+    return null;
+  }
+
+  // la rampa calibrata Ombra→Dono→Siddhi
+  function bandHTML(K){
+    const L = D().LBL;
+    return `<div class="band"><div class="scale"></div><div class="zones">
+      <div class="zone z-o"><span class="zlab">${L.ombra}</span><span class="zval" title="${K.o}">${K.o}</span></div>
+      <div class="zone z-d"><span class="zlab">${L.dono}</span><span class="zval" title="${K.d}">${K.d}</span></div>
+      <div class="zone z-s"><span class="zlab">${L.siddhi}</span><span class="zval" title="${K.s}">${K.s}</span></div>
+    </div></div>`;
+  }
+
+  // --- card sfera (sintesi) ---
+  function scard(s, seqCtx){
+    const K = D().KEYS[s.key], L = D().LINES[s.line], SP = D().SPHERES[s.k];
+    const ov = perlaName(s, seqCtx);
+    const dsMark = curDS ? " · " + (curDS[s.k].stable ? E().DS.certain : E().DS.variable) : "";
+    return `<div class="scard" style="border-top:2px solid ${CH[seqCtx || s.seq].hex}">
+      <div class="sdeg">${s.degText} ${signName(s)}</div>
+      <div class="stag">${bodyName(s)} · ${calcName(s)}${SP.age ? " · " + SP.age : ""}${ov ? " · " + ov.eq : ""}${dsMark}</div>
+      <div class="skey">${s.key}<small>.${s.line}</small></div>
+      <div class="sname">${ov ? ov.n : SP.n}</div>
+      <div class="sdesc">${SP.d}</div>
+      ${bandHTML(K)}
+      <div class="sessenza">${K.t}</div>
+      <div class="sline"><b>${D().LBL.linea} ${s.line}</b> — ${L.n}: ${L.brevis}</div>
+    </div>`;
+  }
+
+  // --- sezione report estesa ---
+  function repSection(s, seqCtx){
+    const K = D().KEYS[s.key], L = D().LINES[s.line], SP = D().SPHERES[s.k];
+    const ov = perlaName(s, seqCtx);
+    const ch = CH[seqCtx || s.seq];
+    return `<div class="rep" style="border-top:2px solid ${ch.hex}">
+      <h3><span class="rep-mark ${ch.chip} ch">${ch.n}</span> ${ov ? ov.n : SP.n} <small>${s.label}</small></h3>
+      <div class="rtag">${bodyName(s)} ${calcName(s)} · ${s.degText} ${signName(s)}${ov ? " · " + ov.eq : ""}</div>
+      <div class="rspec">${K.o} · ${K.d} · ${K.s}</div>
+      <p><b>${SP.d}</b> ${K.long}</p>
+      <p>${L.long}</p>
+      ${E() && E().LIS[s.k] && E().LIS[s.k][s.line] ? `<p class="lis">${E().LIS[s.k][s.line]}</p>` : ""}
+      <p class="ctx">${SP.ctx}</p>
+    </div>`;
+  }
+
+  function seqIntro(seqK){
+    const S = D().SEQ[seqK];
+    return `<div class="seqintro"><span class="ss">${S.sub}</span>${S.d}</div>`;
+  }
+
+  // --- sintesi strutturale ---
+  function structHTML(R){
+    const A = window.HOLO.analyze(R);
+    const K = D().KEYS, ST = D().STRUCT;
+    const rows = [];
+    const g = k => K[k].d, o = k => K[k].o;
+    rows.push(fill(ST.croce, {
+      ps:R.croce.ps, pe:R.croce.pe, ds:R.croce.ds, de:R.croce.de,
+      giftPS:g(R.croce.ps), giftPE:g(R.croce.pe), giftDS:g(R.croce.ds), giftDE:g(R.croce.de)
+    }));
+    rows.push(fill(ST.asse, { a:R.croce.ps, b:R.croce.pe, giftA:g(R.croce.ps), shadowB:o(R.croce.pe) }));
+    A.doubles.forEach(dd => rows.push(fill(ST.double, {
+      key:dd.key, n:dd.n, gift:g(dd.key), shadow:o(dd.key),
+      spheres: dd.spheres.map(k=>D().SPHERES[k].n).join(" + ")
+    })));
+    A.mirrors.forEach(m => rows.push(fill(ST.mirror, {
+      keyA:m.keyA, keyB:m.keyB, giftA:g(m.keyA), giftB:g(m.keyB),
+      sphereA:D().SPHERES[m.a].n, sphereB:D().SPHERES[m.b].n
+    })));
+    if(A.domLine) rows.push(fill(ST.domLine, {
+      n:A.domLine.n, line:A.domLine.line, hint:ST.lineHints[A.domLine.line]
+    }));
+    if(A.starts.length >= 2){
+      const keysTxt = A.starts.map(k=>`${k} (${g(k)})`).join(", ");
+      const endsTxt = A.ends.map(k=>`${k} (${g(k)})`).join(", ");
+      rows.push(fill(A.ends.length ? ST.starts : ST.startsNoEnds, {
+        keys:keysTxt, n:A.startSpheresN, ends:endsTxt,
+        unconscious: A.startsUnconscious ? ST.startsUnconscious : ""
+      }));
+    }
+    return rows.map(r=>`<div class="structrow">${r}</div>`).join("");
+  }
+
+  // --- soglia oraria ---
+  function sogliaHTML(R){
+    if(!curStab || !curStab.length) return "";
+    const s = curStab[0];
+    if(s.minutes > 30) return "";
+    const sphere = D().SPHERES[R.spheres.find(x=>x.k===s.k).k].n;
+    const mins = Math.round(s.thresholdLocalMin);
+    const time = String(Math.floor(mins/60)%24).padStart(2,"0") + ":" + String(mins%60).padStart(2,"0");
+    return `<h3>${fill(D().LBL.sogliaTitle, {from:s.from, to:s.to})}</h3>
+      <p>${fill(D().LBL.sogliaText, {sphere, time, from:s.from, to:s.to})}</p>
+      <p>${D().LBL.sogliaStable}</p>`;
+  }
+
+  function chTitle(seqK){
+    return `<span class="ch ${CH[seqK].chip}">${CH[seqK].n}</span> ${D().SEQ[seqK].n}`;
+  }
+
+  function render(){
+    if(!curR) return;
+    const R = curR, u = U(), lw = R.byK.lavoro;
+    $("resTitle").textContent = curName ? u.resName(curName) : u.resMine;
+    const K = D().KEYS[lw.key];
+    $("resSummary").innerHTML = fill(u.sumTpl, {
+      label:`<b>${lw.label}</b>`, o:`<b>${K.o}</b>`, d:`<b>${K.d}</b>`, s:`<b>${K.s}</b>`,
+      labels: R.spheres.map(s=>`<b>${s.label}</b>`).join(" · ")
+    }) + (R.hasTime ? "" : ` <i>${
+      curDS ? fill(E().DS.note, {
+        stable: Object.values(curDS).filter(v=>v.stable).length,
+        variable: Object.values(curDS).filter(v=>!v.stable).length
+      }) : D().LBL.noTimeWarn}</i>`);
+    const tz = R.input.tz || "UTC";
+    $("birthData").innerHTML =
+      `${D().LBL.nascita}&nbsp; ${fmtDT(R.utc, tz)}${chosenPlace ? " · " + chosenPlace.name : ""}<br>` +
+      `UT&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ${fmtDT(R.utc, "UTC")}<br>` +
+      `${D().LBL.designDate}&nbsp; ${fmtDT(R.designUtc, "UTC")} UT<br>` +
+      `${D().LBL.linee}&nbsp;&nbsp; <b>${R.profileLines[0]}/${R.profileLines[1]}</b> · ${D().LBL.croce} <b>${R.croce.ps}/${R.croce.pe} | ${R.croce.ds}/${R.croce.de}</b>`;
+    const L = D().LINES[lw.line];
+    $("bigline").innerHTML = `
+      <div class="num">${R.profileLines[0]}/${R.profileLines[1]}</div>
+      <div class="who"><b>${fill(u.styleTpl,{line:lw.line,name:L.n})}</b>
+      <div>${L.long}</div></div>`;
+    // sintesi
+    $("attTitle").innerHTML = chTitle("attivazione"); $("attSub").textContent = D().SEQ.attivazione.d;
+    $("venTitle").innerHTML = chTitle("venere"); $("venSub").textContent = D().SEQ.venere.d;
+    $("perTitle").innerHTML = chTitle("perla"); $("perSub").textContent = D().SEQ.perla.d;
+    $("seqAtt").innerHTML = R.seq.attivazione.map(s=>scard(s,"attivazione")).join("");
+    $("seqVen").innerHTML = R.seq.venere.map(s=>scard(s,"venere")).join("");
+    $("seqPer").innerHTML = R.seq.perla.map(s=>scard(s,"perla")).join("");
+    // report
+    $("rAttTitle").innerHTML = u.repPrefix + D().SEQ.attivazione.n;
+    $("rVenTitle").innerHTML = u.repPrefix + D().SEQ.venere.n;
+    $("rPerTitle").innerHTML = u.repPrefix + D().SEQ.perla.n;
+    $("repAtt").innerHTML = seqIntro("attivazione") + R.seq.attivazione.map(s=>repSection(s,"attivazione")).join("");
+    $("repVen").innerHTML = seqIntro("venere") + R.seq.venere.map(s=>repSection(s,"venere")).join("");
+    $("repPer").innerHTML = seqIntro("perla") + R.seq.perla.map(s=>repSection(s,"perla")).join("");
+    const sg = sogliaHTML(R);
+    $("sogliaBox").style.display = sg ? "block" : "none";
+    if(sg) $("sogliaBox").innerHTML = `<div>${sg}</div>`;
+    $("structTitle").textContent = D().LBL.strutturaTitle;
+    $("structBody").innerHTML = structHTML(R);
+    $("tableTitle").textContent = u.tableTitle;
+    $("posTable").innerHTML =
+      `<tr><th>${D().LBL.tSfera}</th><th>${D().LBL.tPianeta}</th><th>${D().LBL.tChiave}</th><th>${D().LBL.tPosizione}</th></tr>` +
+      R.spheres.map(s=>`<tr><td>${sphereName(s)}</td><td>${bodyName(s)} ${calcName(s)}</td>
+        <td class="lbl">${s.label}</td><td class="num">${s.degText} ${signName(s)}</td></tr>`).join("");
+    $("wheel").innerHTML = wheelSVG(R);
+    $("legend").innerHTML = ["attivazione","venere","perla"].map(k=>
+      `<span><span class="dot" style="background:${CH[k].hex}"></span> ${CH[k].n} ${D().SEQ[k].n}</span>`).join("");
+    renderTimeline(R); renderRings(R); renderYear(R); renderWeather(R);
+    $("posterBtn").textContent = E().PST.btn;
+    renderShare();
+    applyMode();
+  }
+
+  /* ---- timeline dei cicli ---- */
+  function renderTimeline(R){
+    const T = window.HOLO.timeline(R), X = E().TL;
+    $("tlTitle").textContent = X.title; $("tlSub").textContent = X.sub;
+    $("tlBody").innerHTML = timelineSVG(T, X);
+    const parts = [];
+    if(T.ageNow < 7) parts.push(X.phases.sq);
+    else if(T.ageNow < 14) parts.push(X.phases.eq);
+    else if(T.ageNow < 21) parts.push(X.phases.iq);
+    else parts.push(X.phases.adult);
+    if(T.line6) parts.push(T.ageNow < 30 ? X.phases.l6p1 : T.ageNow < 50 ? X.phases.l6p2 : X.phases.l6p3);
+    $("tlNow").textContent = fill(X.nowTpl, { age: Math.floor(T.ageNow), phase: parts.join(" ") });
+  }
+  function timelineSVG(T, X){
+    const W=780, PAD=42, SPAN=84, y0=34;
+    const line6 = !!T.line6;
+    const H = line6 ? 158 : 122;
+    const px = age => PAD + Math.min(age,SPAN)/SPAN*(W-2*PAD);
+    let s = `<svg viewBox="0 0 ${W} ${H}" style="width:100%;max-width:820px;min-width:560px;height:auto">`;
+    // asse con tacche ogni 7 anni
+    s += `<line x1="${PAD}" y1="${H-26}" x2="${W-PAD}" y2="${H-26}" stroke="#49564a" stroke-width="1"/>`;
+    for(let a=0;a<=SPAN;a+=7){
+      s += `<line x1="${px(a)}" y1="${H-26}" x2="${px(a)}" y2="${H-32}" stroke="#49564a" stroke-width="1"/>`;
+      if(a%14===0) s += `<text x="${px(a)}" y="${H-12}" text-anchor="middle" font-size="9" font-family="Azeret Mono,monospace" fill="#93a08f">${a}</text>`;
+    }
+    // cicli di Venere (0-7-14-21): inchiostro di canale a passi di opacità
+    const segOp = { sq:0.85, eq:0.55, iq:0.3 };
+    T.segs.forEach(g=>{
+      s += `<rect x="${px(g.from)}" y="${y0}" width="${px(g.to)-px(g.from)}" height="13" fill="#e2a3da" opacity="${segOp[g.k]}" stroke="#0b0f0b" stroke-width="1"/>`;
+      s += `<text x="${(px(g.from)+px(g.to))/2}" y="${y0-6}" text-anchor="middle" font-size="8.5" font-family="Azeret Mono,monospace" fill="#93a08f">${X.segs[g.k]}</text>`;
+    });
+    // fasi della Linea 6
+    if(line6){
+      T.line6.forEach(g=>{
+        s += `<rect x="${px(g.from)}" y="${y0+34}" width="${px(g.to)-px(g.from)}" height="13" fill="none" stroke="#b97f33" stroke-width="1"/>`;
+        s += `<rect x="${px(g.from)}" y="${y0+34}" width="${px(g.to)-px(g.from)}" height="13" fill="#ffb454" opacity="${g.k==='l6p1'?0.25:g.k==='l6p2'?0.5:0.8}"/>`;
+        s += `<text x="${(px(g.from)+px(g.to))/2}" y="${y0+58}" text-anchor="middle" font-size="8.5" font-family="Azeret Mono,monospace" fill="#93a08f">${X.line6[g.k]}</text>`;
+      });
+    }
+    // ritorni di Saturno
+    T.marks.forEach(m=>{
+      s += `<line x1="${px(m.age)}" y1="${y0-14}" x2="${px(m.age)}" y2="${H-26}" stroke="#93e2b4" stroke-width="1" stroke-dasharray="3 3"/>`;
+      s += `<text x="${px(m.age)}" y="${y0-18}" text-anchor="middle" font-size="8" font-family="Azeret Mono,monospace" fill="#93e2b4">${X.marks[m.k]}</text>`;
+    });
+    // ago di oggi
+    if(T.ageNow > 0 && T.ageNow < SPAN){
+      s += `<line x1="${px(T.ageNow)}" y1="${y0-4}" x2="${px(T.ageNow)}" y2="${H-26}" stroke="#ffb454" stroke-width="2"/>`;
+      s += `<text x="${px(T.ageNow)}" y="${H-2}" text-anchor="middle" font-size="9" font-weight="600" font-family="Azeret Mono,monospace" fill="#ffb454">${X.now}</text>`;
+    }
+    return s + "</svg>";
+  }
+
+  /* ---- anelli di codoni ---- */
+  function renderRings(R){
+    const X = E().RN, RD = E().RINGS;
+    const rings = window.HOLO.rings(R);
+    $("rnTitle").textContent = X.title; $("rnSub").textContent = X.sub;
+    $("rnBody").innerHTML = rings.map(r=>{
+      const info = RD[r.id];
+      const hits = r.hits.map(h=>fill(X.hitTpl, {
+        key: h.key, sphere: h.spheres.map(k=>D().SPHERES[k].n).join(" + ")
+      })).join(" · ");
+      const others = r.keys.filter(k=>!r.hits.some(h=>h.key===k));
+      return `<div class="structrow"><b>${info.n}</b> — ${info.t}<br>
+        <span style="font-family:var(--f-mono);font-size:12px">${hits}</span>${others.length ?
+        ` <span style="font-family:var(--f-mono);font-size:12px;color:var(--dim)">· ${X.ofRing} ${others.join(", ")}</span>` : ""}</div>`;
+    }).join("") + `<p class="seqsub" style="margin:6px 0 0">${fill(X.touched,{n:rings.length})}</p>`;
+  }
+
+  /* ---- l'anno solare ---- */
+  function renderYear(R){
+    const X = E().YR;
+    const sr = window.HOLO.solarReturn(R);
+    $("yrTitle").textContent = X.title; $("yrSub").textContent = X.sub;
+    let h = `<div class="birthdata" style="margin:0 0 12px">${fill(X.returnAt,{year:sr.year, date:fmtD(sr.date)})}</div>`;
+    h += sr.bodies.map(b=>{
+      const line = fill(X.inKey, {body:bodyNameOf(b.body), key:b.key, gift:D().KEYS[b.key].d});
+      const hits = b.hits.map(hh=>fill(hh.type==="same"?X.hitSame:X.hitMirror, {sphere:D().SPHERES[hh.sphere].n})).join(" ");
+      return `<div class="structrow">${line} ${hits ? `<b>${hits}</b>` : `<span style="color:var(--dim)">— ${X.quiet}</span>`}</div>`;
+    }).join("");
+    $("yrBody").innerHTML = h;
+  }
+  const bodyNameOf = b => D().BODIES[b];
+
+  /* ---- meteo del profilo ---- */
+  function renderWeather(R){
+    const X = E().WX;
+    const tr = window.HOLO.transits(R);
+    $("wxTitle").textContent = X.title; $("wxSub").textContent = X.sub;
+    const any = tr.some(t=>t.hits.length);
+    $("wxBody").innerHTML = tr.map(t=>{
+      const line = fill(X.inKey, {body:bodyNameOf(t.body), key:t.key+"."+t.line, gift:D().KEYS[t.key].d});
+      const hits = t.hits.map(h=>fill(h.type==="same"?X.hitSame:X.hitMirror, {sphere:D().SPHERES[h.sphere].n})).join(" · ");
+      return `<div class="structrow">${line}${hits ? ` — <b>${hits}</b>` : ""}${t.body==="moon" ?
+        `<br><span style="color:var(--dim);font-size:12px">${X.moonNote}</span>` : ""}</div>`;
+    }).join("") + (any ? "" : `<p class="seqsub" style="margin:6px 0 0">${X.noHits}</p>`);
+  }
+
+  /* ---- poster del quadrante (PNG, tutto client-side) ---- */
+  $("posterBtn").addEventListener("click", async ()=>{
+    if(!curR) return;
+    const btn = $("posterBtn"); const old = btn.textContent;
+    btn.textContent = E().PST.making;
+    try{ await makePoster(curR); }catch(e){ console.error(e); }
+    btn.textContent = old;
+  });
+  async function makePoster(R){
+    await document.fonts.ready;
+    const W=1080, H=1440;
+    const c = document.createElement("canvas"); c.width=W; c.height=H;
+    const x = c.getContext("2d");
+    x.fillStyle="#0b0f0b"; x.fillRect(0,0,W,H);
+    x.strokeStyle="#49564a"; x.lineWidth=2; x.strokeRect(26,26,W-52,H-52);
+    x.strokeStyle="#2c352c"; x.lineWidth=1; x.strokeRect(40,40,W-80,H-80);
+    x.textAlign="center";
+    try{ x.letterSpacing = "14px"; }catch(e){}
+    x.fillStyle="#cdd5c8"; x.font="700 56px 'Saira Semi Condensed'";
+    x.fillText("OLOGENETICA", W/2, 128);
+    try{ x.letterSpacing = "6px"; }catch(e){}
+    x.fillStyle="#93a08f"; x.font="500 20px 'Azeret Mono'";
+    x.fillText(E().PST.subtitle, W/2, 166);
+    try{ x.letterSpacing = "0px"; }catch(e){}
+    // nome + dati
+    x.fillStyle="#ffb454"; x.font="600 26px 'Azeret Mono'";
+    const tz = R.input.tz || "UTC";
+    x.fillText((curName ? curName + " · " : "") + fmtDT(R.utc, tz), W/2, 214);
+    // quadrante
+    const cx=W/2, cy=640, rOut=340, rIn=268, rNum=304, rMark=238;
+    const D2R=Math.PI/180, ang=lon=>90-lon;
+    const pt=(r,a)=>[cx + r*Math.cos(a*D2R), cy - r*Math.sin(a*D2R)];
+    x.beginPath(); x.arc(cx,cy,rOut+14,0,7); x.fillStyle="#0d110d"; x.fill();
+    x.strokeStyle="#49564a"; x.lineWidth=2.5; x.stroke();
+    x.beginPath(); x.arc(cx,cy,rOut,0,7); x.fillStyle="#121712"; x.fill();
+    x.strokeStyle="#2c352c"; x.lineWidth=1.5; x.stroke();
+    x.beginPath(); x.arc(cx,cy,rIn,0,7); x.fillStyle="#0b0f0b"; x.fill();
+    x.strokeStyle="#2c352c"; x.stroke();
+    const SEC=window.HOLO.SECTOR, ANC=window.HOLO.ANCHOR;
+    x.font="500 15px 'Azeret Mono'"; x.fillStyle="#93a08f";
+    for(let i=0;i<64;i++){
+      const lon0=ANC+i*SEC;
+      const [x0,y0]=pt(rOut,ang(lon0)), [x1,y1]=pt(rIn,ang(lon0));
+      x.beginPath(); x.moveTo(x0,y0); x.lineTo(x1,y1); x.strokeStyle="#2c352c"; x.lineWidth=1; x.stroke();
+      const [nx,ny]=pt(rNum,ang(lon0+SEC/2));
+      x.fillText(String(window.HOLO.WHEEL[i]), nx, ny+5);
+    }
+    R.spheres.forEach(sp=>{
+      const hex=CH[sp.seq].hex;
+      const [mx,my]=pt(rMark,ang(sp.lonDeg));
+      const [lx,ly]=pt(rIn,ang(sp.lonDeg));
+      x.beginPath(); x.moveTo(lx,ly); x.lineTo(mx,my); x.strokeStyle=hex; x.lineWidth=2.5; x.stroke();
+      x.fillStyle=hex; x.fillRect(mx-8,my-8,16,16);
+      x.strokeStyle="#0b0f0b"; x.lineWidth=2; x.strokeRect(mx-8,my-8,16,16);
+    });
+    x.beginPath(); x.arc(cx,cy,64,0,7); x.fillStyle="#121712"; x.fill();
+    x.strokeStyle="#49564a"; x.lineWidth=1.5; x.stroke();
+    x.fillStyle="#ffb454"; x.font="600 30px 'Azeret Mono'"; x.fillText("64", cx, cy+4);
+    x.fillStyle="#93a08f"; x.font="500 14px 'Azeret Mono'"; x.fillText("KEYS", cx, cy+30);
+    // le 11 sfere in tre colonne canale
+    const cols = { attivazione:200, venere:540, perla:880 };
+    const heads = { attivazione:"CH·1", venere:"CH·2", perla:"CH·3" };
+    let yy = { attivazione:1078, venere:1078, perla:1078 };
+    ["attivazione","venere","perla"].forEach(sq=>{
+      x.fillStyle=CH[sq].hex; x.font="600 20px 'Azeret Mono'";
+      x.fillText(heads[sq]+" "+D().SEQ[sq].n.toUpperCase().slice(0,22), cols[sq], yy[sq]); yy[sq]+=34;
+    });
+    R.spheres.forEach(sp=>{
+      const col = cols[sp.seq];
+      x.fillStyle="#cdd5c8"; x.font="500 19px 'Azeret Mono'";
+      x.fillText(D().SPHERES[sp.k].n.toUpperCase()+"  "+sp.label, col, yy[sp.seq]); yy[sp.seq]+=30;
+    });
+    // piede
+    x.fillStyle="#93a08f"; x.font="500 18px 'Azeret Mono'";
+    x.fillText(`${E().PST.linee} ${R.profileLines[0]}/${R.profileLines[1]}   ·   ${E().PST.croce} ${R.croce.ps}/${R.croce.pe} | ${R.croce.ds}/${R.croce.de}`, W/2, 1330);
+    x.fillStyle="#49564a"; x.font="500 14px 'Azeret Mono'";
+    x.fillText("ologenetica · mod. 64", W/2, 1368);
+    await new Promise(res=>{
+      c.toBlob(b=>{
+        const a=document.createElement("a");
+        a.href=URL.createObjectURL(b);
+        a.download="ologenetica-quadrante.png";
+        a.click(); setTimeout(()=>URL.revokeObjectURL(a.href), 5000); res();
+      }, "image/png");
+    });
+  }
+
+  function applyMode(){
+    const rep = viewMode === "report";
+    $("modeSimple").classList.toggle("on", !rep);
+    $("modeReport").classList.toggle("on", rep);
+    $("viewSimple").style.display = rep ? "none" : "block";
+    $("viewReport").style.display = rep ? "block" : "none";
+  }
+  $("modeSimple").onclick = ()=>{ viewMode="simple"; applyMode(); };
+  $("modeReport").onclick = ()=>{ viewMode="report"; applyMode(); };
+
+  // il quadrante: dial inciso su pannello scuro
+  function wheelSVG(R){
+    const size=340, cx=size/2, cy=size/2, rOut=158, rIn=124, rNum=141, rMark=110, rTick=118;
+    const D2R=Math.PI/180;
+    const ang = lon => 90 - lon;
+    const pt = (r,a)=>[cx + r*Math.cos(a*D2R), cy - r*Math.sin(a*D2R)];
+    let s=`<svg viewBox="0 0 ${size} ${size}" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:380px;height:auto;overflow:visible" role="img" aria-label="dial">`;
+    s+=`<circle cx="${cx}" cy="${cy}" r="${rOut+6}" fill="#0d110d" stroke="#49564a" stroke-width="1.5"/>`;
+    s+=`<circle cx="${cx}" cy="${cy}" r="${rOut}" fill="#121712" stroke="#2c352c" stroke-width="1"/>`;
+    s+=`<circle cx="${cx}" cy="${cy}" r="${rIn}" fill="#0b0f0b" stroke="#2c352c" stroke-width="1"/>`;
+    const SEC = window.HOLO.SECTOR, ANC = window.HOLO.ANCHOR;
+    for(let i=0;i<64;i++){
+      const lon0 = ANC + i*SEC;
+      const [x0,y0]=pt(rOut,ang(lon0)), [x1,y1]=pt(rIn,ang(lon0));
+      s+=`<line x1="${x0.toFixed(1)}" y1="${y0.toFixed(1)}" x2="${x1.toFixed(1)}" y2="${y1.toFixed(1)}" stroke="#2c352c" stroke-width="1"/>`;
+      const [nx,ny]=pt(rNum,ang(lon0+SEC/2));
+      s+=`<text x="${nx.toFixed(1)}" y="${(ny+2.4).toFixed(1)}" text-anchor="middle" font-size="7" font-family="Azeret Mono,monospace" fill="#93a08f">${window.HOLO.WHEEL[i]}</text>`;
+      for(let l=1;l<6;l++){
+        const [tx0,ty0]=pt(rIn,ang(lon0+l*SEC/6)), [tx1,ty1]=pt(rTick,ang(lon0+l*SEC/6));
+        s+=`<line x1="${tx0.toFixed(1)}" y1="${ty0.toFixed(1)}" x2="${tx1.toFixed(1)}" y2="${ty1.toFixed(1)}" stroke="#2c352c" stroke-width="0.5"/>`;
+      }
+    }
+    R.spheres.forEach(sp=>{
+      const hex = CH[sp.seq].hex;
+      const [mx,my]=pt(rMark,ang(sp.lonDeg));
+      const [lx,ly]=pt(rIn,ang(sp.lonDeg));
+      s+=`<line x1="${lx.toFixed(1)}" y1="${ly.toFixed(1)}" x2="${mx.toFixed(1)}" y2="${my.toFixed(1)}" stroke="${hex}" stroke-width="1.2"/>`;
+      s+=`<rect x="${(mx-3.4).toFixed(1)}" y="${(my-3.4).toFixed(1)}" width="6.8" height="6.8" fill="${hex}" stroke="#0b0f0b" stroke-width="1"/>`;
+    });
+    s+=`<circle cx="${cx}" cy="${cy}" r="30" fill="#121712" stroke="#49564a" stroke-width="1"/>`;
+    s+=`<text x="${cx}" y="${cy+1}" text-anchor="middle" font-size="14" font-family="Azeret Mono,monospace" font-weight="600" fill="#ffb454">64</text>`;
+    s+=`<text x="${cx}" y="${cy+14}" text-anchor="middle" font-size="6.5" font-family="Azeret Mono,monospace" fill="#93a08f">KEYS</text>`;
+    s+=`</svg>`;
+    return s;
+  }
+
+  // --- applica lingua ---
+  function applyLang(){
+    const u = U();
+    $("htitle").innerHTML = `${u.htitle[0]}<span class="lit">${u.htitle[1]}</span>`;
+    $("ksuper").textContent = u.ksuper; $("hsub").textContent = u.hsub;
+    $("formTitle").textContent = u.formTitle;
+    $("lblName").textContent = u.lblName; $("fName").placeholder = u.phName;
+    $("lblDate").textContent = u.lblDate; $("lblTime").textContent = u.lblTime; $("lblNoTime").textContent = u.lblNoTime;
+    $("lblPlace").textContent = u.lblPlace; $("fPlace").placeholder = u.phPlace;
+    if(!chosenPlace) $("placeHint").textContent = u.placeHint;
+    $("goBtn").textContent = u.go;
+    $("modeSimple").textContent = u.modeSimple; $("modeReport").textContent = u.modeReport;
+    $("wheelTitle").textContent = u.wheelTitle; $("wheelSub").textContent = u.wheelSub;
+    $("foot").innerHTML = u.foot;
+    document.querySelectorAll(".pill[data-k]").forEach(p=>{ if(u.nav[p.dataset.k]) p.textContent = u.nav[p.dataset.k]; });
+    if(curR) render();
+  }
+  if(window.ZI18N) window.ZI18N.mount($("langPick"));
+  window.addEventListener("zlangchange", applyLang);
+  applyLang();
+
+  // --- link condivisibile: ?d=YYYY-MM-DD&t=HH:MM&city=Nome&n=Nome&view=report&run=1 ---
+  try{
+    const q = new URLSearchParams(location.search);
+    if(q.get("run") === "1" && q.get("d")){
+      window.__autorun = true;
+      $("fDate").value = q.get("d");
+      if(q.get("t")) $("fTime").value = q.get("t");
+      else { $("fNoTime").checked = true; $("fTime").disabled = true; }
+      if(q.get("n")) $("fName").value = q.get("n");
+      if(q.get("city")){
+        const hits = window.CITY.search(q.get("city"), 1);
+        if(hits.length) pickPlace(hits[0]);
+      }
+      if(q.get("view") === "report") viewMode = "report";
+      $("goBtn").click();
+    }
+  }catch(e){}
+})();
+</script>
+</body>
+</html>

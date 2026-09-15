@@ -1,0 +1,278 @@
+/* ============================================================
+   OLOGENETICA · PAQUETE DE IDIOMA — ESPAÑOL
+   Cada Llave: o=Sombra, d=Don, s=Siddhi, t=esencia breve,
+   long=lectura extendida (2-4 frases, estilo informe).
+   LINES: n=nombre, brevis=síntesis, t=frase, long=lectura extendida.
+   SPHERES: por llave-esfera { n=nombre, d=descripción, ctx=lectura
+   de la Llave DENTRO de esa esfera }.
+   Las plantillas usan marcadores {asi}: los rellena fill() en las páginas.
+   Textos originales. Sistema inspirado en el Perfil Hologenético
+   (Gene Keys de Richard Rudd: I Ching + astrología + Human Design).
+   ============================================================ */
+(function () {
+
+  const KEYS = {
+    1:  { o: "Entropía", d: "Frescura", s: "Belleza", t: "La energía creativa en estado puro: atraviesa los momentos grises y resurge creando belleza de la nada.",
+      long: "La 1 es la Llave de la creatividad individual: la urgencia de expresar algo que antes no existía. La sombra es la entropía — los ciclos grises en los que la energía se estanca y todo parece sin propósito; combatirlos los alarga, atravesarlos los transforma. El don es la frescura: quien acepta sus propios inviernos creativos resurge con una expresión que renueva el aire a su alrededor." },
+    2:  { o: "Desorientación", d: "Orientación", s: "Unidad", t: "La brújula interior: sabe hacia dónde va la vida incluso cuando no hay ningún mapa.",
+      long: "El 2 es la brújula: conoce la dirección sin saber explicarla. En sombra se pierde el contacto: te desorientas y pides el rumbo a los demás, adaptándote a mapas que no son tuyos. El don es la orientación — confiar en tu propio norte interno y dejar que las decisiones se alineen solas." },
+    3:  { o: "Caos", d: "Innovación", s: "Inocencia", t: "Ve el orden escondido dentro del desorden y lo transforma en algo que antes no existía.",
+      long: "El 3 está en el umbral de lo nuevo: todo lo que nace pasa por aquí, desordenado por naturaleza. La sombra es el caos padecido: la vida como emergencia continua. El don es la innovación — usar el desorden como materia prima y encontrar la combinación que nadie había probado. Las rutinas perfectas lo apagan: necesita mutación." },
+    4:  { o: "Intolerancia", d: "Comprensión", s: "Perdón", t: "La mente que busca respuestas: cuando deja de juzgar, empieza a entender de verdad.",
+      long: "El 4 es la mente que formula respuestas: lógica veloz, explicaciones listas. La sombra es la intolerancia: confundir la propia respuesta con la única y despachar a quien no la ve. El don es la comprensión — la misma lucidez puesta al servicio de las preguntas de los demás, con la paciencia de quien sabe que toda respuesta es provisional." },
+    5:  { o: "Impaciencia", d: "Paciencia", s: "Atemporalidad", t: "El ritmo natural de las cosas: confiar en los tiempos de la vida en vez de forzarlos.",
+      long: "El 5 custodia los ritmos naturales: sabe que cada cosa tiene su estación. La sombra es la impaciencia — forzar los tiempos, vivir por delante del presente, desgastarse en la espera. El don es la paciencia verdadera: no resignación sino confianza activa en los ciclos. Actuar cuando toca, y ni un minuto antes." },
+    6:  { o: "Conflicto", d: "Diplomacia", s: "Paz", t: "El arte de transformar los roces en encuentros: la piel emocional que siente la atmósfera de cada sala.",
+      long: "El 6 es la piel emocional del perfil: siente la atmósfera de cada sala y el punto exacto donde las personas chocan. La sombra es el conflicto: reactividad a flor de piel, muros levantados para defenderse. El don es la diplomacia — usar la misma sensibilidad para bajar las defensas ajenas y transformar los roces en encuentros." },
+    7:  { o: "División", d: "Guía", s: "Virtud", t: "El liderazgo que señala el rumbo sin imponerlo: los demás lo siguen porque confían.",
+      long: "El 7 es el guía que opera desde el flanco: ve el rumbo del grupo antes que el grupo. La sombra es la división — imponer la dirección, crear facciones, mandar por inseguridad. El don es la guía auténtica: señalar el camino y dejar que los demás elijan recorrerlo. Es la autoridad que no necesita galones." },
+    8:  { o: "Mediocridad", d: "Estilo", s: "Exquisitez", t: "El valor de hacer las cosas a tu manera: la contribución que nadie más puede dar.",
+      long: "La 8 es la Llave de la contribución individual: traer al mundo algo que sea inconfundiblemente propio. La sombra se llama mediocridad y no significa poca calidad: significa conformidad — limar lo que tienes de particular para no perder la pertenencia. El don es el estilo: la firma reconocible que da a los demás permiso para ser particulares a su vez." },
+    9:  { o: "Inercia", d: "Determinación", s: "Invencibilidad", t: "La fuerza de los pequeños pasos: poner la energía en el detalle justo hasta que lo grande se cumple solo.",
+      long: "El 9 es la potencia del detalle: dedicarse a las pequeñas cosas que hacen triunfar las grandes. La sombra es la inercia: dispersarse en lo minúsculo equivocado, o aplazar por agotamiento. El don es la determinación — elegir el detalle justo y quedarse ahí hasta que el cuadro entero se compone solo." },
+    10: { o: "Obsesión por uno mismo", d: "Naturalidad", s: "Ser", t: "Amarse tal como se es: cuando deja de interpretar un papel, todo se simplifica.",
+      long: "El 10 es el amor propio: el comportamiento que nace de ser simplemente lo que se es. La sombra es la obsesión por uno mismo — interpretar un personaje, corregirse sin parar, buscarse en los ojos ajenos. El don es la naturalidad: cuando deja de interpretarse, la vida alrededor se simplifica de un modo casi sospechoso." },
+    11: { o: "Oscuridad", d: "Idealismo", s: "Luz", t: "Un flujo continuo de imágenes y sueños que piden convertirse en historias y visiones compartidas.",
+      long: "El 11 es el productor de imágenes: ideas, sueños y visiones en flujo continuo. La sombra es la oscuridad: acumular imágenes sin elegir nunca una, confundir el fantasear con el vivir. El don es el idealismo — dar forma a las imágenes y ofrecerlas como historias que encienden a los demás. No todas las visiones son para realizarlas: la mayoría son para contarlas." },
+    12: { o: "Vanidad", d: "Selectividad", s: "Pureza", t: "Habla solo cuando cuenta: la voz que, en el momento justo, toca el corazón de quien escucha.",
+      long: "El 12 es la voz rara: habla poco y toca en profundidad. La sombra es la vanidad — usar la expresión para ser admirado, o callar por orgullo herido. El don es la selectividad: el discernimiento de cuándo hablar, con quién y con qué palabras. La misma frase, en el momento justo, cambia un día; en el momento equivocado, cae en el vacío." },
+    13: { o: "Discordia", d: "Discernimiento", s: "Empatía", t: "El oyente nato: recoge las historias de todos y custodia su memoria.",
+      long: "El 13 es el oído del mundo: la gente le cuenta cosas que no dice a nadie. La sombra es la discordia — escuchar filtrando con la propia vara, acumular secretos como pesos o como armas. El don es el discernimiento: distinguir en las historias lo que importa, custodiarlo y devolverlo como memoria compartida." },
+    14: { o: "Transigencia", d: "Competencia", s: "Munificencia", t: "El talento que solo prospera cuando trabaja por lo que ama: entonces los recursos llegan.",
+      long: "El 14 es la riqueza como consecuencia: energía que fructifica cuando trabaja por lo que ama. La sombra es la transigencia — vender tus horas a lo que no te enciende, y llamarlo realismo. El don es la competencia: cuando dirección interior y trabajo coinciden, los recursos llegan como subproducto, no como objetivo." },
+    15: { o: "Aridez", d: "Magnetismo", s: "Florecimiento", t: "El amor por la variedad de la vida: un imán natural para personas y experiencias de todo tipo.",
+      long: "La 15 es la Llave del extremo: ritmos irregulares, periodos llenos y periodos vacíos, la oscilación como norma y no como avería. La sombra es la aridez — vivir los periodos apagados como fracaso personal y forzarse hacia una regularidad que a esta Llave no le pertenece. El don es el magnetismo: aceptado el ritmo, los picos se vuelven irresistibles y los vacíos se vuelven preparación. El daño no lo hace la oscilación: lo hace la lucha contra la oscilación." },
+    16: { o: "Indiferencia", d: "Versatilidad", s: "Maestría", t: "El entusiasmo que, repetido con dedicación cada día, se transforma en arte.",
+      long: "El 16 es el entusiasmo hecho oficio: identifica un talento y se lanza. La sombra es la indiferencia — saltar de entusiasmo en entusiasmo sin profundizar en ninguno. El don es la versatilidad: la repetición diaria que transforma el impulso en maestría. Diez mil horas que no pesan, porque el gesto es amado." },
+    17: { o: "Opinión", d: "Previsión", s: "Omnisciencia", t: "El ojo que ve el cuadro grande antes que los demás y sabe adónde llevará el camino.",
+      long: "El 17 es el ojo que organiza el futuro: ve patrones y trayectorias antes que los demás. La sombra es la opinión — atrincherarse tras el propio punto de vista y defenderlo como una identidad. El don es la previsión: ofrecer la propia visión como servicio, sabiendo que una predicción solo es útil si alguien puede usarla." },
+    18: { o: "Juicio", d: "Integridad", s: "Perfección", t: "La mirada que nota enseguida lo que no funciona: corrige para mejorar, no para herir.",
+      long: "El 18 es el corrector: ve al instante lo que no funciona, en un sistema o en una persona. La sombra es el juicio — la crítica que hiere, dirigida a los demás o vuelta hacia dentro como autocrítica crónica. El don es la integridad: la misma precisión usada para reparar lo que se ama, no para condenarlo." },
+    19: { o: "Codependencia", d: "Sensibilidad", s: "Sacrificio", t: "Antenas finísimas para las necesidades de los demás: siente lo que hace falta antes de que se pida.",
+      long: "El 19 es el sensor de las necesidades: siente lo que los demás necesitan — comida, contacto, reconocimiento — antes de que se pida. La sombra es la codependencia: hacerse indispensable, comprar cercanía con los cuidados. El don es la sensibilidad: tocar las necesidades verdaderas sin ahogarse en ellas, siendo una persona y no una función." },
+    20: { o: "Superficialidad", d: "Autoconfianza", s: "Presencia", t: "El aquí y ahora: la capacidad de actuar en el momento exacto en que hace falta, sin dudar.",
+      long: "El 20 es el presente puro: para esta Llave solo existe el aquí y ahora. La sombra es la superficialidad — actividad continua sin consciencia, palabras que salen antes que el pensamiento. El don es la autoconfianza: la acción perfectamente sincronizada con el momento, sin ensayos generales. La presencia que no necesita prepararse." },
+    21: { o: "Control", d: "Autoridad", s: "Valor", t: "El coraje de tomar las riendas: gobierna recursos y territorios con corazón noble.",
+      long: "El 21 es el guardián: defiende un perímetro — recursos, territorio, personas. La sombra es el control ejercido sobre las personas: microgestión, un agarre que asfixia. El don es la autoridad — asumir responsabilidad real sobre algo y responder por ello. El antídoto del control no es soltarlo todo: es delegar autoridad de verdad, lo único que el control no sabe hacer." },
+    22: { o: "Deshonor", d: "Gentileza", s: "Gracia", t: "La gentileza que sigue siendo gentil incluso dentro de las emociones más fuertes: una elegancia del alma.",
+      long: "El 22 es la gracia bajo presión: la gentileza que atraviesa las emociones más violentas. La sombra es el deshonor — cuando la ola emocional arrasa, se dicen las palabras que no se pueden retirar. El don es la gentileza: sentirlo todo, hasta el fondo, y elegir de todos modos el gesto que honra al otro." },
+    23: { o: "Complejidad", d: "Simplicidad", s: "Quintaesencia", t: "El don de decir lo justo con las palabras más simples: corta lo superfluo.",
+      long: "El 23 es la simplificación: poner en palabras lo que los demás no logran formular. La sombra es la complejidad — explicar demasiado, envolver el pensamiento en capas y no ser entendido; o hablar a destiempo, cosechando rechazo en vez de comprensión. El don: decir la cosa en una frase, en el momento justo, y parar. Cada frase de más empuja al 23 hacia la sombra." },
+    24: { o: "Adicción", d: "Invención", s: "Silencio", t: "La mente que vuelve sobre los mismos pensamientos hasta que, en una pausa de silencio, encuentra el giro.",
+      long: "El 24 es la mente que vuelve: rumia los mismos pensamientos buscando una salida. La sombra es la adicción — el bucle que gira en vacío: pensamientos, sustancias, personas, cualquier cosa que prometa cerrar el círculo. El don es la invención: en la pausa entre una vuelta y otra, cuando la mente calla un instante, entra la idea nueva." },
+    25: { o: "Constricción", d: "Aceptación", s: "Amor universal", t: "El corazón que aprende a amar sin condiciones: cada herida se convierte en una apertura.",
+      long: "El 25 es el amor sin objeto: la capacidad de amar lo que hay, no lo que se querría. La sombra es la constricción — el corazón que se cierra tras las heridas y raciona el afecto. El don es la aceptación: cada herida atravesada ensancha el espacio interno, hasta que el amor deja de elegir destinatarios." },
+    26: { o: "Orgullo", d: "Ingeniosidad", s: "Invisibilidad", t: "El vendedor nato: sabe llegar adonde quiere con astucia, oportunidad y una sonrisa.",
+      long: "El 26 es el arte del atajo: sabe vender, convencer, acortar el camino. La sombra es el orgullo — doblar la verdad para inflar la propia imagen. El don es la ingeniosidad: la misma astucia puesta al servicio de algo que lo merece. El mensajero perfecto: entrega, y desaparece." },
+    27: { o: "Egoísmo", d: "Altruismo", s: "Entrega de sí", t: "Cuidar: el instinto de nutrir y proteger todo lo que aún tiene que crecer.",
+      long: "El 27 es el alimento: el instinto de cuidar lo que tiene que crecer. La sombra es el egoísmo — nutrir solo el propio huerto, o nutrir a los demás por hambre de gratitud. El don es el altruismo: dar lo que hace falta, a quien hace falta, cuando hace falta. Sin llevar la cuenta." },
+    28: { o: "Falta de propósito", d: "Totalidad", s: "Inmortalidad", t: "Jugárselo todo por lo que da sentido a la vida: prefiere el riesgo al arrepentimiento.",
+      long: "El 28 es el jugador de dados: prefiere el riesgo al arrepentimiento. La sombra es la falta de propósito — perseguir escalofríos para no sentir el vacío, o no arriesgar nunca nada. El don es la totalidad: elegir aquello por lo que merece la pena jugárselo todo, y vivirlo sin reservas. La vida como apuesta, no como espera." },
+    29: { o: "Tibieza", d: "Compromiso", s: "Devoción", t: "El sí dicho con todo el cuerpo: cuando se compromete, va hasta el final del ciclo.",
+      long: "El 29 es el sí que compromete: cuando esta Llave dice sí, va con todo el cuerpo. La sombra es la tibieza — síes dichos a medias, compromisos asumidos por complacer y abandonados a mitad de ciclo. El don es el compromiso: elegir poco, pero ir hasta el final. La persistencia que atraviesa incluso los tramos oscuros del ciclo." },
+    30: { o: "Voracidad", d: "Ligereza", s: "Arrobamiento", t: "El fuego del deseo que aprende a calentar sin quemar: intensidad que se vuelve alegría.",
+      long: "El 30 es el fuego del deseo: ansía intensidad, experiencias, sentir. La sombra es la voracidad — el deseo que consume y nunca se sacia: un fuego que quema la casa. El don es la ligereza: desear intensamente sin pretender que el objeto del deseo te salve la vida. El fuego en la chimenea, no en el tejado." },
+    31: { o: "Arrogancia", d: "Liderazgo", s: "Humildad", t: "La voz que el grupo elige escuchar: influye en quienes lo rodean, para bien o para mal.",
+      long: "El 31 es la voz y la influencia: guiar hablando. La sombra es la arrogancia — hablar desde una posición, por interés propio, usando la influencia como palanca personal. El don es el liderazgo específico del 31: decir lo que el grupo ya siente pero aún no ha formulado. No guía porque manda: guía porque nombra." },
+    32: { o: "Fracaso", d: "Conservación", s: "Veneración", t: "El instinto para lo que merece durar: reconoce el valor y lo protege en el tiempo.",
+      long: "El 32 es el instinto de conservación: reconoce lo que merece durar. La sombra es el miedo al fracaso — retenerlo todo, no arriesgar nada, confundir prudencia y parálisis. El don es la conservación activa: distinguir lo que hay que custodiar de lo que hay que soltar. La memoria larga que hace posible la evolución." },
+    33: { o: "Olvido", d: "Consciencia", s: "Revelación", t: "El retiro fértil: se aparta para transformar las experiencias vividas en sabiduría.",
+      long: "El 33 es el retiro y la memoria: contar lo que se ha atravesado, para que otros no tengan que atravesarlo a ciegas. La sombra es el olvido — pasar por las experiencias sin extraer nada, y por tanto repetirlas. El don es la consciencia, y exige el retiro como condición técnica: sin una fase de silencio, el material queda en bruto." },
+    34: { o: "Prepotencia", d: "Vigor", s: "Majestad", t: "La pura energía vital: una fuerza enorme, magnífica cuando sigue su propio camino.",
+      long: "El 34 es la pura potencia: energía vital abundante e independiente. La sombra es la prepotencia — fuerza aplicada donde no hace falta, en el momento equivocado, para demostrar algo. El don es el vigor: la misma potencia que fluye cuando sigue su propio camino sin pedir espectadores. Magnífica precisamente porque no tiene que demostrar nada." },
+    35: { o: "Hambre", d: "Aventura", s: "Infinitud", t: "Las ganas de probarlo todo al menos una vez: el progreso nace de la curiosidad.",
+      long: "El 35 es el hambre de experiencia: todo hay que probarlo al menos una vez. La sombra es el hambre sin fondo — cambiar por aburrimiento, coleccionar experiencias como cromos y seguir hambriento. El don es la aventura: elegir las experiencias por lo que enseñan, no para llenar un vacío. El progreso como consecuencia de la curiosidad." },
+    36: { o: "Turbulencia", d: "Humanidad", s: "Compasión", t: "Las tormentas emocionales atravesadas se vuelven experiencia: nadie entiende a los demás tan a fondo.",
+      long: "El 36 es la tormenta emocional: atraviesa crisis que otros evitan. La sombra es la turbulencia — buscar el drama, o ser arrasado por él en cada ciclo. El don es la humanidad: las tormentas atravesadas se vuelven experiencia compartida. Nadie entiende una crisis como quien ya ha atravesado varias, y ha vuelto." },
+    37: { o: "Debilidad", d: "Igualdad", s: "Ternura", t: "El pegamento de la familia y de las comunidades: calor, lealtad y acuerdos que se sostienen.",
+      long: "El 37 es el pacto familiar: el calor que mantiene unidas a las personas. La sombra es la debilidad — acuerdos tragados por no discutir, papeles soportados por miedo a perder el sitio en la mesa. El don es la igualdad: pactos claros y afecto leal. La familia — de sangre o elegida — como lugar donde nadie tiene que comprarse el sitio." },
+    38: { o: "Lucha", d: "Perseverancia", s: "Honor", t: "El guerrero que no se rinde: combate solamente por las cosas que valen de verdad.",
+      long: "El 38 es el guerrero: nacido para luchar, solo está bien cuando la lucha vale. La sombra es la lucha ciega — combatirlo todo, siempre, incluso lo que no lo merece; o pelear las batallas ajenas. El don es la perseverancia: elegir las causas justas y no soltarlas jamás, con el honor de quien combate limpio." },
+    39: { o: "Provocación", d: "Dinamismo", s: "Liberación", t: "El aguijón que despierta la energía bloqueada: provoca para liberar, no para herir.",
+      long: "El 39 es el provocador: pincha donde la energía está bloqueada. La sombra es la provocación por sí misma — irritar para existir, poner a prueba los límites ajenos por aburrimiento. El don es el dinamismo: la provocación quirúrgica que libera lo que estaba parado. En las personas, en los grupos, en las situaciones encalladas." },
+    40: { o: "Agotamiento", d: "Resolución", s: "Voluntad divina", t: "La fuerza del no: trabaja duro y sabe cuándo parar, defendiendo su propio espacio.",
+      long: "El 40 es la fuerza del no: trabaja duro y defiende su espacio de recuperación. La sombra es el agotamiento — decir sí por sentido del deber hasta vaciarse, y luego retirarse con rencor. El don es la resolución: dar mucho, dentro de límites claros. El no dicho a tiempo salva todos los síes futuros." },
+    41: { o: "Fantasía", d: "Anticipación", s: "Emanación", t: "El punto de partida de cada ciclo: siente llegar lo nuevo antes de que sea visible.",
+      long: "El 41 es la semilla de toda experiencia nueva: la presión de hacer algo nunca hecho antes — la Llave que abre la rueda entera de las 64. En sombra es fantasía: imaginar la vida en vez de vivirla. Es una sombra insidiosa, porque cada posibilidad imaginada da una pequeña dosis de la satisfacción que daría realizarla. El don es la anticipación: sentir el futuro que empuja, y hacerle sitio en los hechos." },
+    42: { o: "Expectativa", d: "Desapego", s: "Celebración", t: "Llevar los ciclos a término y cerrarlos con gratitud, sin retener nada.",
+      long: "El 42 es la culminación: la Llave que lleva los ciclos a su final natural. La sombra es la expectativa — quedarse aferrado a cómo deberían haber ido las cosas, arrastrando ciclos ya terminados. El don es el desapego: cerrar con gratitud, recoger el fruto y dejar el árbol. Cada final bien hecho financia el comienzo siguiente." },
+    43: { o: "Sordera", d: "Visión interior", s: "Epifanía", t: "La intuición inconformista: ideas que llegan del silencio y descolocan a todos.",
+      long: "El 43 es la intuición inconformista: sabe cosas que no sabe explicar, adelantada a su tiempo. La sombra es la sordera — encerrarse en la propia frecuencia y no hacerse entender, o dejar de escuchar a nadie. El don es la visión interior: traducir la intuición a una forma que los demás puedan recibir, aceptando que el mundo llegue con unos años de retraso." },
+    44: { o: "Interferencia", d: "Espíritu de equipo", s: "Sinarquía", t: "El olfato para las personas: reconoce al vuelo quién es el adecuado para cada papel.",
+      long: "El 44 es el olfato para las personas: reconoce a primera vista quién sirve para qué. La sombra es la interferencia — usar este talento para manipular, o quedar atrapado en los fantasmas de las traiciones pasadas. El don es el espíritu de equipo: poner a cada persona en el papel donde florece. El cazatalentos natural de todo grupo." },
+    45: { o: "Dominancia", d: "Sinergia", s: "Comunión", t: "Reunir los recursos y redistribuirlos para que la comunidad entera prospere.",
+      long: "El 45 es el soberano de los recursos: reúne y distribuye. La sombra es la dominancia — acumular poder y recursos como un derecho de nacimiento, mandar desde arriba. El don es la sinergia: orquestar los recursos para que la comunidad entera prospere. El liderazgo que mide su propio éxito por la prosperidad de los demás." },
+    46: { o: "Seriedad", d: "Deleite", s: "Éxtasis", t: "La suerte de quien habita su propio cuerpo: se encuentra en el lugar justo en el momento justo.",
+      long: "El 46 es el amor por el cuerpo: la suerte de quien habita de verdad su propia carne. La sombra es la seriedad — vivir en la cabeza, tratar el cuerpo como un medio de transporte, llegar siempre un instante después del momento justo. El don es el deleite: la presencia física plena que te pone, aparentemente por casualidad, en el lugar justo en el momento justo." },
+    47: { o: "Opresión", d: "Transmutación", s: "Transfiguración", t: "El alquimista de la memoria: transforma los recuerdos pesados en oro interior.",
+      long: "El 47 es el alquimista de la memoria: trabaja el pasado hasta que rinde oro. La sombra es la opresión — los recuerdos pesados que giran en bucle y aplastan el presente. El don es la transmutación: los mismos recuerdos, compostados con el tiempo, se vuelven la materia prima de la propia profundidad." },
+    48: { o: "Inadecuación", d: "Ingenio", s: "Sabiduría", t: "El pozo profundo: dentro tiene un recurso para cada problema, aunque teme no bastar.",
+      long: "El 48 es el pozo: profundidad que ya está ahí, pero de la que se duda. La sombra es el miedo a no ser suficiente, y produce dos comportamientos opuestos e igualmente bloqueantes: aplazar hasta el infinito por no estar nunca lo bastante preparado, o acumular formación y títulos para llenar un vacío que no es vacío. El don es el ingenio, con un mecanismo contraintuitivo: la profundidad se manifiesta bajo presión, no antes. No te vuelves adecuado y luego actúas; actúas, y descubres que lo eras." },
+    49: { o: "Reactividad", d: "Revolución", s: "Renacimiento", t: "Cambia las reglas cuando ya no sirven a las personas: principios antes que costumbres.",
+      long: "El 49 es el revolucionario: cambia las reglas cuando ya no sirven a las personas. La sombra es la reactividad — romper los pactos por impulso, cortar los puentes como primera respuesta. El don es la revolución verdadera: renegociar los principios en el momento justo, llevando consigo a quien se apunta. Las rupturas que abren eras, en vez de dejar escombros." },
+    50: { o: "Corrupción", d: "Equilibrio", s: "Armonía", t: "El custodio de los valores: siente la responsabilidad de lo que protege a la comunidad.",
+      long: "El 50 es el custodio de los valores: siente en la piel la responsabilidad de lo que protege a la comunidad. La sombra es la corrupción — doblar los valores al interés, o cargarse con responsabilidades ajenas hasta aplastarse. El don es el equilibrio: actualizar las reglas que protegen de verdad. La ética como cosa viva, no como museo." },
+    51: { o: "Agitación", d: "Iniciativa", s: "Despertar", t: "La sacudida que abre caminos nuevos: el primero en atreverse adonde nadie ha ido todavía.",
+      long: "El 51 es el shock que despierta: el primero en cruzar el umbral que asusta a todos. La sombra es la agitación — buscar la adrenalina para sentirse vivo, impactar por costumbre. El don es la iniciativa: el coraje de ir primero adonde nadie ha ido. Y volver a contar que se puede." },
+    52: { o: "Estrés", d: "Moderación", s: "Quietud", t: "La montaña inmóvil: la concentración serena que consigue ver lejos.",
+      long: "El 52 es la montaña: quieto, concentrado, ve lejos precisamente porque no se mueve. La sombra es el estrés — la energía retenida que vibra en el sitio: la tensión de quien querría actuar en todas partes y no actúa en ninguna. El don es la moderación: elegir el punto exacto donde concentrar la energía, y dejar correr todo lo demás." },
+    53: { o: "Inmadurez", d: "Expansión", s: "Sobreabundancia", t: "El iniciador: siembra comienzos por todas partes, y no todas las semillas tendrá que cultivarlas él.",
+      long: "El 53 es la Llave de los comienzos y del crecimiento gradual: el impulso de empezar algo nuevo, y la disciplina de dejarlo crecer a su ritmo. La sombra es la inmadurez, y tiene una forma precisa: empezar sin terminar — saltar a un nuevo comienzo justo cuando el anterior entra en la fase aburrida, esa en la que, sin embargo, ocurre el crecimiento verdadero. El don es la expansión: desarrollo por etapas, sin forzar las fases." },
+    54: { o: "Avidez", d: "Aspiración", s: "Ascensión", t: "La ambición que sube: el impulso material que, purificado, se vuelve elevación.",
+      long: "El 54 es el motor del ascenso: el impulso de subir, materialmente y no solo. En sombra es avidez — acumular como sustituto de subir de verdad. El don es la aspiración: la misma fuerza orientada hacia lo alto en vez de hacia el más. La diferencia no está en la intensidad, que sigue siendo idéntica: está en el objeto." },
+    55: { o: "Victimismo", d: "Libertad", s: "Libertad absoluta", t: "El espíritu libre: aprende a cabalgar las emociones como olas en vez de sufrirlas como cadenas.",
+      long: "El 55 es el espíritu en busca de libertad: la Llave de las emociones como olas. La sombra es el victimismo — creer que el estado de ánimo depende de fuera: de alguien, de algo, de la suerte. El don es la libertad: cabalgar las olas emocionales sin identificarse ni con la cresta ni con el valle. El ánimo como meteorología, no como identidad." },
+    56: { o: "Distracción", d: "Enriquecimiento", s: "Embriaguez", t: "El narrador: transforma el río de los estímulos en historias que nutren a quien escucha.",
+      long: "El 56 es el narrador errante: recoge estímulos y los transforma en historias. La sombra es la distracción — perseguir estímulos siempre nuevos sin digerir ninguno. El don es el enriquecimiento: las experiencias se vuelven relato que nutre a quien escucha. El viaje vale por cómo se cuenta, no por los kilómetros." },
+    57: { o: "Inquietud", d: "Intuición", s: "Claridad", t: "El oído más fino: percibe lo que está por suceder un instante antes que los demás.",
+      long: "El 57 es el oído más fino: percibe lo que está por suceder un instante antes que los demás. La sombra es la inquietud — la ansiedad de fondo de quien siente demasiado y no se fía de lo que siente. El don es la intuición: la claridad instantánea que no pasa por el razonamiento. Para escuchar al momento, porque no se repite." },
+    58: { o: "Insatisfacción", d: "Vitalidad", s: "Beatitud", t: "La alegría de vivir que quiere mejorar el mundo: energía que brota como una fuente.",
+      long: "El 58 es la fuente de alegría: vitalidad que brota y quiere mejorar las cosas. La sombra es la insatisfacción — el crítico interno que encuentra el defecto en todo y nunca está contento. El don es la vitalidad: la misma energía que, en vez de lamentar el defecto, se pone a repararlo. Con una alegría contagiosa al hacerlo." },
+    59: { o: "Deshonestidad", d: "Intimidad", s: "Transparencia", t: "Derriba las barreras entre las personas: su talento es crear vínculos verdaderos.",
+      long: "El 59 es el derribador de barreras: nacido para la intimidad verdadera. La sombra es la deshonestidad — las estrategias usadas para acercarse: seducir, complacer, maniobrar. Consiguen contacto, e impiden el encuentro. El don es la intimidad: la transparencia que desarma, el acercarse sin máscaras que da a los demás el valor de hacer lo mismo." },
+    60: { o: "Limitación", d: "Realismo", s: "Justicia", t: "Los límites como estructura: sabe que la magia necesita una forma para manifestarse.",
+      long: "El 60 es la estructura: sabe que la magia necesita forma. La sombra es la limitación — vivir los límites como condena, murmurar contra las reglas siguiendo prisionero de ellas. El don es el realismo: aceptar los límites como las orillas que dan fuerza al río. Dentro de un límite aceptado, la energía se concentra y crea." },
+    61: { o: "Psicosis", d: "Inspiración", s: "Santidad", t: "El misterio: la mente enamorada de las preguntas que nadie sabe responder.",
+      long: "El 61 es el misterio: la mente enamorada de las preguntas sin respuesta. La sombra es la presión psíquica — la necesidad compulsiva de saber, que en sus extremos se vuelve delirio de certeza. El don es la inspiración: permanecer en lo desconocido sin exigir respuestas. Y recibir, de vez en cuando, un destello que no se había pedido." },
+    62: { o: "Intelecto", d: "Precisión", s: "Impecabilidad", t: "El detalle exacto: da el nombre preciso a las cosas y vuelve claro lo complicado.",
+      long: "El 62 es la precisión: da el nombre exacto a las cosas. La sombra es el intelecto — perderse en los detalles, inundar de datos, confundir la exactitud con la verdad. El don es la precisión al servicio del sentido: el detalle justo que vuelve claro lo complicado. El arte de decir exactamente lo que hace falta, y nada más." },
+    63: { o: "Duda", d: "Indagación", s: "Verdad", t: "La duda fértil: la pregunta que no se conforma y empuja el conocimiento hacia delante.",
+      long: "El 63 es la duda fértil: la pregunta que no se conforma. La sombra es la duda corrosiva — sospechar de todo, de todos y sobre todo de uno mismo, sin concluir jamás. El don es la indagación: transformar la sospecha en preguntas precisas, y las preguntas en verificaciones. El motor de todo conocimiento que avanza." },
+    64: { o: "Confusión", d: "Imaginación", s: "Iluminación", t: "El caleidoscopio: mil imágenes en busca de sentido, hasta que la luz se enciende sola.",
+      long: "El 64 es el caleidoscopio: una presión constante de imágenes en busca de sentido. La sombra es la confusión — intentar ordenar el flujo a la fuerza, y ahogarse en él. El don es la imaginación: dejar que las imágenes se compongan solas. La comprensión llega de golpe, entera, cuando se deja de forzarla." }
+  };
+
+  const LINES = {
+    1: { n: "El Investigador", brevis: "cimientos", t: "Necesita entender a fondo antes de actuar: estudia, profundiza, construye bases sólidas.",
+      long: "La Línea 1 construye desde abajo: antes de actuar tiene que entender, estudiar, tocar los cimientos. Su seguridad nace del conocimiento — cuando las bases son sólidas nada la mueve; cuando faltan, la ansiedad la inmoviliza. El riesgo es prepararse para siempre y no arrancar nunca." },
+    2: { n: "El Ermitaño", brevis: "talento natural", t: "El talento le fluye de manera natural, pero tiende a no verlo: florece cuando lo llaman.",
+      long: "La Línea 2 significa natural, no entrenado: el talento funciona solo cuando el contexto lo deja funcionar, y se estropea cuando se lo fuerza o se lo pone bajo observación. No se ve a sí mismo: necesita ser reconocido y llamado — y solo responde a las llamadas sinceras." },
+    3: { n: "El Experimentador", brevis: "ensayo y error", t: "Aprende chocando contra las cosas: cada intento «fallido» es material precioso. Imposible de frenar por mucho tiempo.",
+      long: "La Línea 3 aprende por ensayo y error: la competencia se construye sobre los intentos fallidos, que son material y no accidentes. Tiene una mala reputación inmerecida: produce la solidez más concreta que existe, porque es la única construida por experiencia directa en vez de por teoría." },
+    4: { n: "El Oportunista", brevis: "red y corazón", t: "Vive de relaciones: las oportunidades le llegan a través de las personas que conoce.",
+      long: "La Línea 4 es relacional: todo — oportunidades, trabajo, amor — pasa por la red de personas que cultiva. Su don es la lealtad de su tejido social; su riesgo es limarse para no perderlo. Las transiciones solo le salen bien si la rama nueva ya está lista antes de soltar la vieja." },
+    5: { n: "El Hereje", brevis: "soluciones prácticas", t: "Los demás proyectan sobre él grandes expectativas: su solución práctica en el momento justo salva la situación.",
+      long: "La Línea 5 atrae proyecciones: los demás le atribuyen poderes, culpas y expectativas que no ha pedido. Su talento es la solución práctica ofrecida en el momento justo — salvar la situación y luego retirarse, porque quedarse demasiado bajo los focos convierte la aureola en diana." },
+    6: { n: "El Modelo", brevis: "visión de conjunto", t: "Tres vidas en una: experimenta, luego observa desde el tejado del mundo, finalmente se convierte en ejemplo.",
+      long: "La Línea 6 no es un rasgo: es un calendario en tres fases. Hasta los ~30 años, experiencia directa, errores, cicatrices. De los ~30 a los ~50, retiro y observación — un periodo que casi todos los 6 viven mal porque parece un estancamiento, cuando es digestión. Luego la tercera fase: te conviertes en referente. Pide paciencia con tu propio calendario." }
+  };
+
+  // Nombres canónicos de las esferas (ingleses, como en los informes oficiales) + textos
+  const SPHERES = {
+    lavoro:     { n: "Life's Work",   d: "Tu genio exterior: aquello que has venido a hacer, el papel que el mundo ve.",
+      ctx: "En el Life's Work esta energía es el oficio del alma: el papel visible, aquello por lo que te reconocerán. Es la misma esfera que, vista desde fuera, la Secuencia de la Perla llama Brand." },
+    evoluzione: { n: "Evolution",     d: "El desafío central: lo que la vida te enseña a través de las dificultades.",
+      ctx: "Como Evolution, es el desafío central del perfil: el tema que la vida vuelve a proponer en espiral, cada vez una vuelta más arriba. No es un defecto que corregir — es el camino." },
+    radianza:   { n: "Radiance",      d: "Lo que enciende tu vitalidad: cuando lo vives, salud y presencia se irradian.",
+      ctx: "Como Radiance es una esfera del Diseño, por tanto inconsciente: actúa antes de ser elegida, y se te nota encima. Vivida en don enciende vitalidad y salud; retenida en sombra, las apaga." },
+    scopo:      { n: "Purpose",       d: "El fundamento profundo: se activa cuando sirves a algo más grande que tú.",
+      ctx: "Como Purpose es el fundamento inconsciente: se activa cuando lo que haces sirve a algo más grande que tú. Mientras no ocurra, algo sigue faltando sordamente." },
+    attrazione: { n: "Attraction",    d: "A quién y qué atraes en las relaciones: la puerta de entrada de tus vínculos.",
+      ctx: "Como Attraction gobierna lo que atraes: las personas que llegan ponen en escena exactamente este tema, hasta que lo reconoces como tuyo." },
+    iq:         { n: "IQ",            d: "El ciclo mental de los 14–21 años: cómo tu mente aprendió a defenderse y a brillar.", age: "14–21 años",
+      ctx: "Como IQ es el punto ciego mental, formado entre los 14 y los 21 años: la defensa intelectual construida en la adolescencia, que de adulto se confunde con «mi manera de pensar»." },
+    eq:         { n: "EQ",            d: "El ciclo emocional de los 7–14 años: cómo tu corazón aprendió a reaccionar y a abrirse.", age: "7–14 años",
+      ctx: "Como EQ es el ciclo emocional de los 7–14 años: el modo en que el corazón aprendió a reaccionar. La defensa emocional que hoy salta sola, antes de cada decisión." },
+    sq:         { n: "SQ",            d: "El imprinting de los primeros 7 años — el Punto de Amor: la raíz de la confianza.", age: "0–7 años",
+      ctx: "Como SQ es el imprinting de los primeros 7 años — el Punto de Amor: la memoria más profunda del cuerpo, donde se decidió cuánto se puede confiar en el amor." },
+    nucleo:     { n: "Core / Vocation", d: "La herida más antigua — y, transformada, tu vocación.",
+      ctx: "Como Core es la herida central, asociada a los nueve meses de gestación; como Vocation es la misma Llave del revés: la medicina que traes está hecha del material de tu herida." },
+    cultura:    { n: "Culture",       d: "Tu lugar en la comunidad: cómo prosperas dentro de un grupo y qué le aportas.",
+      ctx: "Como Culture es la contribución al colectivo: el lugar natural en la comunidad, que se revela cuando la herida del Core ya ha sido atravesada." },
+    perla:      { n: "Pearl",         d: "La recompensa: la prosperidad que llega cuando simplificas.",
+      ctx: "Como Pearl es la recompensa: la prosperidad que llega cuando simplificas. No un premio que perseguir — un subproducto de la simplicidad." }
+  };
+
+  const SEQ = {
+    attivazione: { n: "Secuencia de Activación", sub: "LOS CUATRO DONES PRIMARIOS",
+      d: "Se calcula desde el Sol y es la base del perfil: hay que contemplarla primero, porque todo lo demás se apoya sobre ella. El eje consciente (Life's Work / Evolution) y el inconsciente (Radiance / Purpose) son dos motores distintos que empujan el mismo vehículo — y su distancia es el motor del perfil." },
+    venere: { n: "Secuencia de Venus", sub: "EL PLANO EMOCIONAL",
+      d: "Luna, Venus y Marte. Se lee hacia atrás: desde la Attraction — el resultado adulto visible — bajando por los ciclos de siete años (IQ 14–21, EQ 7–14, SQ 0–7) hasta el Core, la herida más antigua. Es el mapa para abrir lo que se había cerrado." },
+    perla: { n: "Secuencia de la Perla", sub: "EL PLANO MENTAL Y LA PROSPERIDAD",
+      d: "Construida sobre Júpiter, la Llave de la expansión. Parte del Core — de la herida ya atravesada — y muestra cómo se convierte en servicio y prosperidad: Vocation, Culture, Pearl, y el Brand que cierra el círculo sobre el Life's Work. No funciona si se salta: la Perla presupone la Venus." }
+  };
+
+  const SIGNS = ["Aries","Tauro","Géminis","Cáncer","Leo","Virgo","Libra","Escorpio","Sagitario","Capricornio","Acuario","Piscis"];
+  const BODIES = { sun: "Sol", earth: "Tierra", moon: "Luna", venus: "Venus", mars: "Marte", jupiter: "Júpiter" };
+  const LBL = {
+    natale: "natal", design: "diseño",
+    tSfera: "Esfera", tPianeta: "Planeta", tChiave: "Llave", tPosizione: "Posición",
+    nascita: "Nacimiento", designDate: "Diseño", linee: "Líneas", croce: "Cruz de encarnación",
+    ombra: "Sombra", dono: "Don", siddhi: "Siddhi", linea: "Línea",
+    strutturaTitle: "La estructura en breve",
+    sogliaTitle: "Un dato al límite: {from} o {to}",
+    sogliaText: "La esfera {sphere} se calcula sobre un cuerpo rápido y cae cerca de una frontera de Línea. Umbral calculado: {time}. Nacimiento antes de esa hora → {from}; a esa hora o después → {to}. La Llave sigue siendo la misma: cambia el cómo, no el qué.",
+    sogliaStable: "Las demás esferas aguantan ±30 minutos sin moverse.",
+    noTimeWarn: "Sin la hora de nacimiento la esfera de la Attraction (Luna) es aproximada y las Líneas de las esferas rápidas pueden variar."
+  };
+
+  // Síntesis estructural (plantillas con marcadores)
+  const STRUCT = {
+    croce: "Cruz de encarnación {ps}/{pe} | {ds}/{de}. El eje consciente ({ps}/{pe}) habla de {giftPS} y {giftPE}; el inconsciente ({ds}/{de}) de {giftDS} y {giftDE}. Dos motores distintos que empujan el mismo vehículo.",
+    asse: "El eje {a}/{b}. Life's Work y Evolution están siempre opuestos en la rueda, y la pareja se lee junta: el genio de {giftA} y el desafío de {shadowB} son los dos polos del mismo eje — desatar el segundo libera al primero.",
+    double: "Llave {key} ×{n}. La misma Llave aparece en {spheres}: el tema de {gift} (y de su sombra, {shadow}) no es un lado del perfil — es el tema. Cada esfera que lo alberga lo vuelve a poner en escena.",
+    mirror: "El canal {keyA} ↔ {keyB}. Dos Llaves opuestas en la rueda ocupan {sphereA} y {sphereB}: {giftA} y {giftB} son dos mitades de la misma función, vistas desde dos esferas distintas. Donde una se bloquea, la otra se agarrota; donde una florece, la otra se suelta.",
+    domLine: "{n} esferas en Línea {line}. La indicación se repite {n} veces: {hint}",
+    lineHints: {
+      1: "lo mejor aquí nace de cimientos estudiados — primero entender, luego actuar.",
+      2: "lo mejor aquí no se produce: se deja suceder en condiciones protegidas, sin forzarlo ni observarlo demasiado.",
+      3: "lo mejor aquí pasa por el intento: el error es el método, no el accidente.",
+      4: "lo mejor aquí pasa por las personas: la red no es un adorno, es el canal.",
+      5: "lo mejor aquí son soluciones prácticas ofrecidas en el momento justo — y luego la retirada, antes de que la aureola se vuelva diana.",
+      6: "lo mejor aquí tiene un calendario largo: fases que respetar, no etapas que quemar."
+    },
+    starts: "Muchos comienzos, pocos finales. {keys} ocupan {n} de las once esferas: el impulso de arrancar es abundante{unconscious}. Las Llaves orientadas a completar son {ends}: este perfil no tiene un problema de energía — tiene un tema de duración.",
+    startsNoEnds: "Muchos comienzos, pocos finales. {keys} ocupan {n} de las once esferas: el impulso de arrancar es abundante{unconscious} — y ninguna Llave del perfil está orientada a completar. La estructura hay que construirla, deliberadamente, sobre el terminar.",
+    startsUnconscious: " y en gran parte inconsciente",
+    profLines: "Líneas {a}/{b}"
+  };
+
+  // Textos de compatibilidad (títulos/cuerpos con marcadores + parejas de Líneas)
+  const MATCH = {
+    types: { gemella: "llave gemela", risonanza: "resonancia", specchio: "llaves espejo", ponte: "puente de línea", passo: "mismo paso" },
+    gemellaTitle: "Llave {key} gemela — ambos en {sphere}",
+    gemellaText: "En la esfera «{sphere}» tenéis exactamente la misma Llave: el don de {gift} es un idioma que habláis los dos. Os reconocéis — y también os reflejáis en la sombra de {shadow}: sed amables con lo que se os parece.",
+    risonanzaTitle: "Llave {key} compartida — {sphereA} ↔ {sphereB}",
+    risonanzaText: "La Llave {key} es el «{sphereA}» de {nameA} y el «{sphereB}» de {nameB}: el mismo don ({gift}) vivido desde dos ángulos distintos. Excelente terreno común.",
+    specchioTitle: "Espejo {keyA} ↔ {keyB} — {sphereA} / {sphereB}",
+    specchioText: "Las Llaves {keyA} y {keyB} son socias de programación: dos mitades del mismo eje de la rueda. {nameA} aporta {giftA}, {nameB} aporta {giftB}: cada uno tiene en la mano la pieza que el otro necesita para completar el cuadro.",
+    ponteTitle: "Puente de Línea {a}-{b} — armonía geométrica",
+    ponteText: "Las Líneas {a} y {b} están en armonía natural (como 1-4, 2-5, 3-6 en el hexagrama): estilos distintos que encajan sin esfuerzo.",
+    passoTitle: "Mismo paso — ambos Línea {line} ({lineName})",
+    passoText: "Afrontáis la vida con el mismo estilo: {brevis}. Os entendéis sin explicaciones — el reverso es que también compartís los mismos puntos ciegos.",
+    noConn: "Ninguna conexión geométrica directa: sois una pareja «de puentes construidos a mano». Mirad la comparación de estilos aquí abajo — ahí se juega todo.",
+    verdicts: {
+      alta:  { label: "RESONANCIA RARA", t: "Vuestros perfiles se entrelazan en varios puntos: una de esas conexiones que parecen escritas antes de nacer. El trabajo es no dormirse en los laureles: cada Llave compartida es también una sombra compartida." },
+      buona: { label: "GRAN ALIANZA", t: "Varios hilos conectan vuestros perfiles: hay reconocimiento, y también suficiente diferencia como para aprender el uno del otro. Un vínculo que crece con el tiempo." },
+      media: { label: "ENCUENTRO FÉRTIL", t: "Algunos puntos de contacto y mucho territorio nuevo: la relación funciona si la curiosidad sigue siendo más fuerte que la necesidad de sentirse iguales." },
+      bassa: { label: "MUNDOS DISTINTOS", t: "Pocos enganches directos entre los perfiles: no es un no — es una invitación. Las parejas sin resonancias automáticas construyen sus puentes a mano, y esos aguantan más que ninguno." }
+    },
+    lineIntro: "{nameA} es Línea {la} ({lineA}), {nameB} es Línea {lb} ({lineB}).",
+    linepair: {
+      "1-1": "Dos Investigadores: casa llena de libros y de preguntas. Os entendéis al vuelo, pero acordaos de vez en cuando de salir de la madriguera y vivir las respuestas.",
+      "1-2": "El Investigador estudia, el Ermitaño sabe sin saber por qué. Si el primero no interroga demasiado al segundo, nace una calma muy fértil.",
+      "1-3": "Teoría y práctica: uno lee el manual, el otro lo tira y prueba. Juntos cubrís el ciclo entero del aprendizaje.",
+      "1-4": "Puente natural: los cimientos del Investigador encuentran en la red del Oportunista el público que merecen. Pareja que construye.",
+      "1-5": "Las bases sólidas de uno dan credibilidad a las soluciones del otro. Atentos solo a las expectativas que el mundo carga sobre el Hereje.",
+      "1-6": "El Modelo ve el panorama, el Investigador los ladrillos. Si os fiais el uno del otro, construís algo que dura tres generaciones.",
+      "2-2": "Dos Ermitaños: el riesgo es que ninguno llame a la puerta del otro. Pero cuando sucede, es una de las intimidades más naturales del espectro.",
+      "2-3": "El Experimentador arrastra fuera al Ermitaño, el Ermitaño le ofrece un puerto tranquilo. Intercambio silencioso pero nutritivo.",
+      "2-4": "El Oportunista es buenísimo llamando, el Ermitaño solo espera la llamada adecuada. Si la llamada es sincera, funciona de maravilla.",
+      "2-5": "Puente natural: el talento espontáneo del Ermitaño y la oportunidad práctica del Hereje se completan sin esfuerzo.",
+      "2-6": "El Modelo reconoce el talento del Ermitaño mejor que nadie — y el Ermitaño solo se deja ver por quien lo respeta de verdad.",
+      "3-3": "Dos Experimentadores: vida movida, cero aburrimiento, muchos moratones. El secreto es reíros juntos de los experimentos fallidos.",
+      "3-4": "Los descubrimientos de uno viajan por la red del otro. Pareja social y concreta, que aprende rápido y comparte con gusto.",
+      "3-5": "Ambos prácticos y concretos: uno descubre lo que NO funciona, el otro ofrece la solución. Equipo para situaciones difíciles.",
+      "3-6": "Puente natural: el Modelo es un Experimentador que ya ha vivido esa fase. Comprensión profunda de los intentos del otro.",
+      "4-4": "Dos redes que se entrelazan: amistades, contactos, comunidad. La relación florece si seguís siendo también el mejor amigo el uno del otro.",
+      "4-5": "El corazón del Oportunista y el carisma del Hereje: pareja influyente, querida por el grupo. Proteged un espacio solo vuestro.",
+      "4-6": "El Oportunista teje los vínculos, el Modelo da ejemplo: juntos sois el punto de referencia de vuestro círculo.",
+      "5-5": "Dos Herejes: el mundo os proyecta encima de todo. Entre dos, las proyecciones se reducen a la mitad: sois el refugio el uno del otro.",
+      "5-6": "Practicidad y visión: el Hereje resuelve el hoy, el Modelo mantiene el rumbo hacia el mañana. Liderazgo de pareja.",
+      "6-6": "Dos Modelos en el tejado del mundo: relación que madura como el vino — y que hacia los 50 años se vuelve ejemplo para todos los demás."
+    }
+  };
+
+  window.HOLO_LANGS = window.HOLO_LANGS || {};
+  window.HOLO_LANGS.es = { KEYS, LINES, SPHERES, SEQ, SIGNS, BODIES, LBL, STRUCT, MATCH };
+})();

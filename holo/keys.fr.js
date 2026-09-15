@@ -1,0 +1,278 @@
+/* ============================================================
+   OLOGENETICA · PACK DE LANGUE — FRANÇAIS
+   Chaque Clé : o=Ombre, d=Don, s=Siddhi, t=essence brève,
+   long=lecture étendue (2-4 phrases, style rapport).
+   LINES : n=nom, brevis=synthèse, t=phrase, long=lecture étendue.
+   SPHERES : par clé-sphère { n=nom, d=description, ctx=lecture
+   de la Clé DANS cette sphère }.
+   Les templates utilisent des variables {commeCa} : remplies par fill().
+   Textes originaux. Système inspiré du Profil Hologénétique
+   (Gene Keys de Richard Rudd : Yi King + astrologie + Human Design).
+   ============================================================ */
+(function () {
+
+  const KEYS = {
+    1:  { o: "Entropie", d: "Fraîcheur", s: "Beauté", t: "L'énergie créative à l'état pur : elle traverse les moments gris et en ressort en créant de la beauté à partir de rien.",
+      long: "La 1 est la Clé de la créativité individuelle : l'urgence d'exprimer quelque chose qui n'existait pas encore. L'ombre est l'entropie — ces cycles gris où l'énergie stagne et où tout semble sans but ; les combattre les allonge, les traverser les transforme. Le don est la fraîcheur : qui accepte ses hivers créatifs ressurgit avec une expression qui renouvelle l'air autour de lui." },
+    2:  { o: "Désorientation", d: "Orientation", s: "Unité", t: "La boussole intérieure : elle sait dans quelle direction va la vie, même quand il n'existe aucune carte.",
+      long: "Le 2 est la boussole : il connaît la direction sans savoir l'expliquer. Dans l'ombre, le contact se perd : on se désoriente et on demande la route aux autres, en s'adaptant à des cartes qui ne sont pas les siennes. Le don est l'orientation — faire confiance à son nord intérieur et laisser les décisions s'aligner d'elles-mêmes." },
+    3:  { o: "Chaos", d: "Innovation", s: "Innocence", t: "Il voit l'ordre caché dans le désordre et le transforme en quelque chose qui n'existait pas encore.",
+      long: "Le 3 se tient sur le seuil du nouveau : tout ce qui naît passe par ici, désordonné par nature. L'ombre est le chaos subi : la vie comme urgence permanente. Le don est l'innovation — utiliser le désordre comme matière première et trouver la combinaison que personne n'avait tentée. Les routines parfaites l'éteignent : il a besoin de mutation." },
+    4:  { o: "Intolérance", d: "Compréhension", s: "Pardon", t: "L'esprit qui cherche des réponses : quand il cesse de juger, il commence vraiment à comprendre.",
+      long: "Le 4 est l'esprit qui formule des réponses : logique rapide, explications toutes prêtes. L'ombre est l'intolérance : prendre sa propre réponse pour la seule valable et balayer qui ne la voit pas. Le don est la compréhension — la même lucidité mise au service des questions des autres, avec la patience de qui sait que toute réponse est provisoire." },
+    5:  { o: "Impatience", d: "Patience", s: "Intemporalité", t: "Le rythme naturel des choses : faire confiance aux temps de la vie au lieu de les forcer.",
+      long: "Le 5 est le gardien des rythmes naturels : il sait que chaque chose a sa saison. L'ombre est l'impatience — forcer les délais, vivre en avance sur le présent, s'user dans l'attente. Le don est la patience vraie : non pas résignation mais confiance active dans les cycles. Agir quand c'est le moment, et pas une minute plus tôt." },
+    6:  { o: "Conflit", d: "Diplomatie", s: "Paix", t: "L'art de transformer les frictions en rencontres : la peau émotionnelle qui sent l'atmosphère de chaque pièce.",
+      long: "Le 6 est la peau émotionnelle du profil : il sent l'atmosphère de chaque pièce et l'endroit exact où les gens se heurtent. L'ombre est le conflit : réactivité à fleur de peau, murs dressés pour se défendre. Le don est la diplomatie — utiliser la même sensibilité pour faire tomber les défenses des autres et transformer les frictions en rencontres." },
+    7:  { o: "Division", d: "Guidance", s: "Vertu", t: "Le leadership qui montre le cap sans l'imposer : les autres le suivent parce qu'ils lui font confiance.",
+      long: "Le 7 est le guide qui opère depuis le flanc : il voit la route du groupe avant le groupe. L'ombre est la division — imposer la direction, créer des factions, commander par insécurité. Le don est la guidance authentique : montrer le chemin et laisser les autres choisir de l'emprunter. C'est l'autorité qui n'a pas besoin de galons." },
+    8:  { o: "Médiocrité", d: "Style", s: "Exquisité", t: "Le courage de faire les choses à sa manière : la contribution que personne d'autre ne peut apporter.",
+      long: "Le 8 est la Clé de la contribution individuelle : apporter au monde quelque chose qui soit inimitablement sien. L'ombre s'appelle médiocrité, et elle ne signifie pas piètre qualité : elle signifie conformité — limer ce qu'on a de singulier pour ne pas perdre l'appartenance. Le don est le style : la signature reconnaissable qui donne aux autres la permission d'être singuliers à leur tour." },
+    9:  { o: "Inertie", d: "Détermination", s: "Invincibilité", t: "La force des petits pas : mettre l'énergie sur le bon détail jusqu'à ce que le grand s'accomplisse de lui-même.",
+      long: "Le 9 est la puissance du détail : se consacrer aux petites choses qui font réussir les grandes. L'ombre est l'inertie : s'éparpiller dans le minuscule qui ne compte pas, ou remettre à demain par épuisement. Le don est la détermination — choisir le bon détail et y rester jusqu'à ce que le tableau entier se compose de lui-même." },
+    10: { o: "Obsession de soi", d: "Naturel", s: "Être", t: "S'aimer tel qu'on est : quand il arrête de jouer un rôle, tout se simplifie.",
+      long: "Le 10 est l'amour de soi : le comportement qui naît du simple fait d'être ce qu'on est. L'ombre est l'obsession de soi — jouer un personnage, se corriger sans cesse, se chercher dans les yeux des autres. Le don est le naturel : quand il cesse de s'interpréter, la vie autour se simplifie de façon presque suspecte." },
+    11: { o: "Obscurité", d: "Idéalisme", s: "Lumière", t: "Un flux continu d'images et de rêves qui demandent à devenir des histoires et des visions partagées.",
+      long: "Le 11 est le producteur d'images : idées, rêves et visions en flux continu. L'ombre est l'obscurité : accumuler des images sans jamais en choisir une, confondre rêvasser et vivre. Le don est l'idéalisme — donner forme aux images et les offrir comme des histoires qui allument les autres. Toutes les visions ne sont pas à réaliser : la plupart sont à raconter." },
+    12: { o: "Vanité", d: "Sélectivité", s: "Pureté", t: "Il ne parle que quand ça compte : la voix qui, au bon moment, touche le cœur de qui écoute.",
+      long: "Le 12 est la voix rare : il parle peu et touche en profondeur. L'ombre est la vanité — utiliser l'expression pour être admiré, ou se taire par orgueil blessé. Le don est la sélectivité : le discernement sur quand parler, à qui et avec quels mots. La même phrase, au bon moment, change une journée ; au mauvais moment, elle tombe dans le vide." },
+    13: { o: "Discorde", d: "Discernement", s: "Empathie", t: "L'écouteur-né : il recueille les histoires de tous et en garde la mémoire.",
+      long: "Le 13 est l'oreille du monde : les gens lui racontent des choses qu'ils ne disent à personne. L'ombre est la discorde — écouter en filtrant avec sa propre mesure, accumuler des secrets comme des poids ou comme des armes. Le don est le discernement : distinguer dans les histoires ce qui compte, le garder et le restituer comme mémoire partagée." },
+    14: { o: "Compromis", d: "Compétence", s: "Munificence", t: "Le talent qui ne prospère que lorsqu'il travaille pour ce qu'il aime : alors les ressources arrivent.",
+      long: "Le 14 est la richesse comme conséquence : une énergie qui fructifie quand elle travaille pour ce qu'elle aime. L'ombre est le compromis — vendre ses heures à ce qui ne réchauffe pas, et appeler ça du réalisme. Le don est la compétence : quand direction intérieure et travail coïncident, les ressources arrivent comme sous-produit, pas comme objectif." },
+    15: { o: "Aridité", d: "Magnétisme", s: "Floraison", t: "L'amour pour la variété de la vie : un aimant naturel pour les personnes et les expériences de toutes sortes.",
+      long: "Le 15 est la Clé de l'extrême : rythmes irréguliers, périodes pleines et périodes vides, l'oscillation comme norme et non comme panne. L'ombre est l'aridité — vivre les périodes éteintes comme un échec personnel et se forcer vers une régularité qui n'appartient pas à cette Clé. Le don est le magnétisme : une fois le rythme accepté, les pics deviennent irrésistibles et les creux deviennent préparation. Ce n'est pas l'oscillation qui fait des dégâts : c'est la lutte contre l'oscillation." },
+    16: { o: "Indifférence", d: "Polyvalence", s: "Maîtrise", t: "L'enthousiasme qui, répété avec dévouement chaque jour, se transforme en art.",
+      long: "Le 16 est l'enthousiasme qui devient métier : il identifie un talent et s'y jette. L'ombre est l'indifférence — sauter d'enthousiasme en enthousiasme sans en approfondir aucun. Le don est la polyvalence : la répétition quotidienne qui transforme l'élan en maîtrise. Dix mille heures qui ne pèsent pas, parce que le geste est aimé." },
+    17: { o: "Opinion", d: "Prévoyance", s: "Omniscience", t: "L'œil qui voit le grand tableau avant les autres et sait où mènera la route.",
+      long: "Le 17 est l'œil qui organise le futur : il voit les motifs et les trajectoires avant les autres. L'ombre est l'opinion — se retrancher derrière son point de vue et le défendre comme une identité. Le don est la prévoyance : offrir sa vision comme un service, en sachant qu'une prédiction n'est utile que si quelqu'un peut s'en servir." },
+    18: { o: "Jugement", d: "Intégrité", s: "Perfection", t: "Le regard qui remarque aussitôt ce qui ne va pas : il corrige pour améliorer, pas pour blesser.",
+      long: "Le 18 est le correcteur : il voit à l'instant ce qui ne fonctionne pas, dans un système ou chez une personne. L'ombre est le jugement — la critique qui blesse, tournée vers les autres ou retournée vers l'intérieur en autocritique chronique. Le don est l'intégrité : la même précision utilisée pour réparer ce qu'on aime, pas pour le condamner." },
+    19: { o: "Co-dépendance", d: "Sensibilité", s: "Sacrifice", t: "Des antennes ultra-fines pour les besoins des autres : il sent ce qu'il faut avant qu'on le demande.",
+      long: "Le 19 est le capteur des besoins : il sent ce dont les autres ont besoin — nourriture, contact, reconnaissance — avant qu'on le demande. L'ombre est la co-dépendance : se rendre indispensable, acheter la proximité avec le soin. Le don est la sensibilité : toucher les vrais besoins sans s'y noyer, en restant une personne et non une fonction." },
+    20: { o: "Superficialité", d: "Assurance", s: "Présence", t: "L'ici et maintenant : la capacité d'agir à l'instant exact où il le faut, sans hésiter.",
+      long: "Le 20 est le présent pur : pour cette Clé, seul l'ici et maintenant existe. L'ombre est la superficialité — activité continue sans conscience, mots qui sortent avant la pensée. Le don est l'assurance : l'action parfaitement synchronisée avec le moment, sans répétition générale. La présence qui n'a pas besoin de se préparer." },
+    21: { o: "Contrôle", d: "Autorité", s: "Vaillance", t: "Le courage de prendre les situations en main : il gouverne ressources et territoires avec un cœur noble.",
+      long: "Le 21 est le gardien : il défend un périmètre — ressources, territoire, personnes. L'ombre est le contrôle exercé sur les personnes : microgestion, emprise qui étouffe. Le don est l'autorité — assumer une responsabilité réelle sur quelque chose et en répondre. L'antidote au contrôle n'est pas de tout lâcher : c'est de déléguer une autorité vraie, la seule chose que le contrôle ne sait pas faire." },
+    22: { o: "Déshonneur", d: "Gentillesse", s: "Grâce", t: "La gentillesse qui reste gentille même au cœur des émotions les plus fortes : une élégance de l'âme.",
+      long: "Le 22 est la grâce sous pression : la gentillesse qui traverse les émotions les plus violentes. L'ombre est le déshonneur — quand la vague émotionnelle déborde, on dit les mots qu'on ne peut plus retirer. Le don est la gentillesse : tout sentir, jusqu'au bout, et choisir quand même le geste qui honore l'autre." },
+    23: { o: "Complexité", d: "Simplicité", s: "Quintessence", t: "Le don de dire la chose juste avec les mots les plus simples : il tranche le superflu.",
+      long: "Le 23 est la simplification : mettre en mots ce que les autres n'arrivent pas à formuler. L'ombre est la complexité — trop expliquer, envelopper la pensée dans des couches et ne pas être compris ; ou parler à contretemps, et récolter le rejet au lieu de la compréhension. Le don : dire la chose en une phrase, au bon moment, et s'arrêter. Chaque phrase de plus pousse le 23 vers l'ombre." },
+    24: { o: "Dépendance", d: "Invention", s: "Silence", t: "L'esprit qui revient sur les mêmes pensées jusqu'à ce que, dans une pause de silence, il trouve le déclic.",
+      long: "Le 24 est l'esprit qui revient : il rumine les mêmes pensées en cherchant une issue. L'ombre est la dépendance — la boucle qui tourne à vide : pensées, substances, personnes, tout ce qui promet de fermer le cercle. Le don est l'invention : dans la pause entre deux tours, quand l'esprit se tait un instant, l'idée neuve entre." },
+    25: { o: "Constriction", d: "Acceptation", s: "Amour universel", t: "Le cœur qui apprend à aimer sans conditions : chaque blessure devient une ouverture.",
+      long: "Le 25 est l'amour sans objet : la capacité d'aimer ce qui est, et non ce qu'on voudrait. L'ombre est la constriction — le cœur qui se ferme après les blessures et rationne l'affection. Le don est l'acceptation : chaque blessure traversée élargit l'espace intérieur, jusqu'à ce que l'amour cesse de choisir ses destinataires." },
+    26: { o: "Orgueil", d: "Astuce", s: "Invisibilité", t: "Le vendeur-né : il sait arriver où il veut avec ruse, timing et un sourire.",
+      long: "Le 26 est l'art du passage : il sait vendre, convaincre, raccourcir le chemin. L'ombre est l'orgueil — plier la vérité pour gonfler sa propre image. Le don est l'astuce : la même ruse mise au service de quelque chose qui en vaut la peine. Le messager parfait : il livre, et il disparaît." },
+    27: { o: "Égoïsme", d: "Altruisme", s: "Don de soi", t: "Prendre soin : l'instinct de nourrir et de protéger tout ce qui doit encore grandir.",
+      long: "Le 27 est le nourrissement : l'instinct de prendre soin de ce qui doit grandir. L'ombre est l'égoïsme — ne nourrir que son propre jardin, ou nourrir les autres par faim de gratitude. Le don est l'altruisme : donner ce qu'il faut, à qui il faut, quand il faut. Sans tenir les comptes." },
+    28: { o: "Absence de but", d: "Totalité", s: "Immortalité", t: "Tout miser sur ce qui donne du sens à la vie : il préfère le risque au regret.",
+      long: "Le 28 est le joueur de dés : il préfère le risque au regret. L'ombre est l'absence de but — courir après les frissons pour ne pas sentir le vide, ou ne jamais rien risquer. Le don est la totalité : choisir ce qui vaut la peine de tout miser, et le vivre sans réserve. La vie comme mise, pas comme attente." },
+    29: { o: "Tiédeur", d: "Engagement", s: "Dévotion", t: "Le oui dit avec tout le corps : quand il s'engage, il va jusqu'au bout du cycle.",
+      long: "Le 29 est le oui qui engage : quand cette Clé dit oui, elle y va avec tout le corps. L'ombre est la tiédeur — des oui dits à moitié, des engagements pris pour complaire et abandonnés à mi-cycle. Le don est l'engagement : choisir peu, mais aller jusqu'au bout. La persistance qui traverse même les tronçons sombres du cycle." },
+    30: { o: "Convoitise", d: "Légèreté", s: "Ravissement", t: "Le feu du désir qui apprend à réchauffer sans brûler : une intensité qui devient joie.",
+      long: "Le 30 est le feu du désir : il a soif d'intensité, d'expériences, de sensations. L'ombre est la convoitise — le désir qui consume et ne se rassasie jamais : un feu qui brûle la maison. Le don est la légèreté : désirer intensément sans exiger que l'objet du désir sauve la vie. Le feu dans la cheminée, pas dans le toit." },
+    31: { o: "Arrogance", d: "Leadership", s: "Humilité", t: "La voix que le groupe choisit d'écouter : elle influence son entourage, en bien ou en mal.",
+      long: "Le 31 est la voix et l'influence : guider en parlant. L'ombre est l'arrogance — parler depuis une position, pour son propre intérêt, en utilisant l'influence comme levier personnel. Le don est le leadership propre au 31 : dire ce que le groupe sent déjà mais n'a pas encore formulé. Il ne guide pas parce qu'il commande : il guide parce qu'il nomme." },
+    32: { o: "Échec", d: "Conservation", s: "Vénération", t: "L'instinct pour ce qui mérite de durer : il reconnaît la valeur et la protège dans le temps.",
+      long: "Le 32 est l'instinct de conservation : il reconnaît ce qui mérite de durer. L'ombre est la peur de l'échec — tout retenir, ne rien risquer, confondre prudence et paralysie. Le don est la conservation active : distinguer ce qui doit être gardé de ce qui doit être lâché. La mémoire longue qui rend l'évolution possible." },
+    33: { o: "Oubli", d: "Conscience", s: "Révélation", t: "Le retrait fertile : il s'isole pour transformer les expériences vécues en sagesse.",
+      long: "Le 33 est le retrait et la mémoire : raconter ce qu'on a traversé, pour que d'autres n'aient pas à le traverser à l'aveugle. L'ombre est l'oubli — passer à travers les expériences sans rien en extraire, et donc les répéter. Le don est la conscience, et elle exige le retrait comme condition technique : sans une phase de silence, le matériau reste brut." },
+    34: { o: "Force brute", d: "Vigueur", s: "Majesté", t: "La pure énergie vitale : une force énorme, magnifique quand elle suit sa propre voie.",
+      long: "Le 34 est la pure puissance : une énergie vitale abondante et indépendante. L'ombre est la force brute — la force appliquée là où elle ne sert pas, au mauvais moment, pour prouver quelque chose. Le don est la vigueur : la même puissance qui coule quand elle suit sa propre voie sans réclamer de spectateurs. Magnifique justement parce qu'elle n'a rien à prouver." },
+    35: { o: "Faim", d: "Aventure", s: "Immensité", t: "L'envie de tout essayer au moins une fois : le progrès naît de la curiosité.",
+      long: "Le 35 est la faim d'expérience : tout doit être essayé au moins une fois. L'ombre est la faim sans fond — changer par ennui, collectionner les expériences comme des vignettes et rester affamé. Le don est l'aventure : choisir les expériences pour ce qu'elles enseignent, pas pour remplir un vide. Le progrès comme conséquence de la curiosité." },
+    36: { o: "Turbulence", d: "Humanité", s: "Compassion", t: "Les tempêtes émotionnelles traversées deviennent de l'expérience : personne ne comprend les autres aussi profondément.",
+      long: "Le 36 est la tempête émotionnelle : il traverse des crises que d'autres évitent. L'ombre est la turbulence — chercher le drame, ou en être submergé à chaque cycle. Le don est l'humanité : les tempêtes traversées deviennent une expérience partagée. Personne ne comprend une crise comme celui qui en a déjà traversé, et qui en est revenu." },
+    37: { o: "Faiblesse", d: "Égalité", s: "Tendresse", t: "Le ciment de la famille et des communautés : chaleur, loyauté et accords qui tiennent.",
+      long: "Le 37 est le pacte familial : la chaleur qui tient les gens ensemble. L'ombre est la faiblesse — des accords avalés pour avoir la paix, des rôles subis par peur de perdre sa place à table. Le don est l'égalité : des pactes clairs et une affection loyale. La famille — de sang ou choisie — comme lieu où personne n'a à acheter sa place." },
+    38: { o: "Lutte", d: "Persévérance", s: "Honneur", t: "Le guerrier qui ne lâche rien : il ne se bat que pour les choses qui en valent vraiment la peine.",
+      long: "Le 38 est le guerrier : né pour lutter, il ne va bien que quand la lutte en vaut la peine. L'ombre est la lutte aveugle — combattre tout, tout le temps, même ce qui ne le mérite pas ; ou mener les batailles des autres. Le don est la persévérance : choisir les bonnes causes et ne jamais les lâcher, avec l'honneur de qui se bat proprement." },
+    39: { o: "Provocation", d: "Dynamisme", s: "Libération", t: "L'aiguillon qui réveille l'énergie bloquée : il provoque pour libérer, pas pour blesser.",
+      long: "Le 39 est le provocateur : il pique là où l'énergie est bloquée. L'ombre est la provocation gratuite — irriter pour exister, tester les limites des autres par ennui. Le don est le dynamisme : la provocation chirurgicale qui libère ce qui était figé. Chez les personnes, dans les groupes, dans les situations enlisées." },
+    40: { o: "Épuisement", d: "Résolution", s: "Volonté divine", t: "La force du non : il travaille dur et sait quand s'arrêter, en défendant son propre espace.",
+      long: "Le 40 est la force du non : il travaille dur et défend son espace de récupération. L'ombre est l'épuisement — dire oui par sens du devoir jusqu'à se vider, puis se retirer avec rancœur. Le don est la résolution : donner beaucoup, à l'intérieur de limites claires. Le non dit à temps sauve tous les oui futurs." },
+    41: { o: "Fantasme", d: "Anticipation", s: "Émanation", t: "Le point de départ de chaque cycle : il sent le nouveau arriver avant qu'il soit visible.",
+      long: "Le 41 est la graine de toute nouvelle expérience : la pression de faire quelque chose de jamais fait — la Clé qui ouvre toute la roue des 64. Dans l'ombre, c'est le fantasme : imaginer la vie au lieu de la vivre. Une ombre insidieuse, car chaque possibilité imaginée donne une petite dose de la satisfaction que donnerait sa réalisation. Le don est l'anticipation : sentir le futur qui pousse, et lui faire de la place dans les faits." },
+    42: { o: "Attente", d: "Détachement", s: "Célébration", t: "Mener les cycles à leur terme et les clore avec gratitude, sans rien retenir.",
+      long: "Le 42 est l'accomplissement : la Clé qui mène les cycles à leur fin naturelle. L'ombre est l'attente — rester accroché à la façon dont les choses auraient dû se passer, traîner des cycles déjà finis. Le don est le détachement : clore avec gratitude, cueillir le fruit et laisser l'arbre. Chaque fin bien faite finance le début suivant." },
+    43: { o: "Surdité", d: "Vision intérieure", s: "Épiphanie", t: "L'intuition anticonformiste : des idées qui surgissent du silence et déroutent tout le monde.",
+      long: "Le 43 est l'intuition anticonformiste : il sait des choses qu'il ne sait pas expliquer, en avance sur son temps. L'ombre est la surdité — s'enfermer dans sa propre fréquence et ne pas se faire comprendre, ou n'écouter plus personne. Le don est la vision intérieure : traduire l'intuition dans une forme que les autres peuvent recevoir, en acceptant que le monde arrive avec quelques années de retard." },
+    44: { o: "Interférence", d: "Esprit d'équipe", s: "Synarchie", t: "Le flair pour les personnes : il reconnaît au premier coup d'œil qui est fait pour quel rôle.",
+      long: "Le 44 est le flair pour les personnes : il reconnaît au premier regard qui est fait pour quoi. L'ombre est l'interférence — utiliser ce talent pour manœuvrer, ou rester piégé dans les fantômes des trahisons passées. Le don est l'esprit d'équipe : placer chaque personne dans le rôle où elle fleurit. Le découvreur de talents naturel de chaque groupe." },
+    45: { o: "Domination", d: "Synergie", s: "Communion", t: "Rassembler les ressources et les redistribuer pour que toute la communauté prospère.",
+      long: "Le 45 est le souverain des ressources : il rassemble et distribue. L'ombre est la domination — accumuler pouvoir et ressources comme un droit de naissance, commander d'en haut. Le don est la synergie : orchestrer les ressources pour que toute la communauté prospère. Le leadership qui mesure son succès à la prospérité des autres." },
+    46: { o: "Sérieux", d: "Délice", s: "Extase", t: "La chance de qui habite son corps : il se trouve au bon endroit au bon moment.",
+      long: "Le 46 est l'amour du corps : la chance de qui habite vraiment sa chair. L'ombre est le sérieux — vivre dans sa tête, traiter le corps comme un moyen de transport, arriver toujours un instant après le bon moment. Le don est le délice : la présence physique pleine qui place, apparemment par hasard, au bon endroit au bon moment." },
+    47: { o: "Oppression", d: "Transmutation", s: "Transfiguration", t: "L'alchimiste de la mémoire : il transforme les souvenirs lourds en or intérieur.",
+      long: "Le 47 est l'alchimiste de la mémoire : il travaille le passé jusqu'à ce qu'il rende de l'or. L'ombre est l'oppression — les souvenirs lourds qui tournent en boucle et écrasent le présent. Le don est la transmutation : les mêmes souvenirs, compostés avec le temps, deviennent la matière première de sa propre profondeur." },
+    48: { o: "Inadéquation", d: "Ingéniosité", s: "Sagesse", t: "Le puits profond : il a en lui une ressource pour chaque problème, même s'il craint de ne pas suffire.",
+      long: "Le 48 est le puits : une profondeur qui est déjà là, mais dont on doute. L'ombre est la peur de ne pas être à la hauteur, et elle produit deux comportements opposés et également bloquants : remettre à l'infini parce que jamais assez prêt, ou accumuler formations et diplômes pour combler un vide qui n'est pas vide. Le don est l'ingéniosité, avec un mécanisme contre-intuitif : la profondeur se manifeste sous pression, pas avant. On ne devient pas adéquat pour ensuite agir ; on agit, et on découvre qu'on l'est." },
+    49: { o: "Réactivité", d: "Révolution", s: "Renaissance", t: "Il change les règles quand elles ne servent plus les gens : les principes avant les habitudes.",
+      long: "Le 49 est le révolutionnaire : il change les règles quand elles ne servent plus les gens. L'ombre est la réactivité — rompre les pactes sur un coup de tête, couper les ponts comme première réponse. Le don est la révolution vraie : renégocier les principes au bon moment, en emmenant avec soi ceux qui suivent. Les ruptures qui ouvrent des ères, au lieu de laisser des décombres." },
+    50: { o: "Corruption", d: "Équilibre", s: "Harmonie", t: "Le gardien des valeurs : il sent la responsabilité de ce qui protège la communauté.",
+      long: "Le 50 est le gardien des valeurs : il sent dans sa chair la responsabilité de ce qui protège la communauté. L'ombre est la corruption — plier les valeurs à l'intérêt, ou se charger de responsabilités qui ne sont pas les siennes jusqu'à s'écraser. Le don est l'équilibre : mettre à jour les règles qui protègent vraiment. L'éthique comme chose vivante, pas comme musée." },
+    51: { o: "Agitation", d: "Initiative", s: "Éveil", t: "La secousse qui ouvre des chemins nouveaux : le premier à oser là où personne n'est encore allé.",
+      long: "Le 51 est le choc qui réveille : le premier à franchir le seuil qui effraie tout le monde. L'ombre est l'agitation — chercher l'adrénaline pour se sentir vivant, choquer par habitude. Le don est l'initiative : le courage d'aller en premier là où personne n'est allé. Et de revenir raconter que c'est possible." },
+    52: { o: "Stress", d: "Modération", s: "Quiétude", t: "La montagne immobile : la concentration posée qui parvient à voir loin.",
+      long: "Le 52 est la montagne : immobile, concentré, il voit loin justement parce qu'il ne bouge pas. L'ombre est le stress — l'énergie retenue qui vibre sur place : la tension de qui voudrait agir partout et n'agit nulle part. Le don est la modération : choisir le point exact où concentrer l'énergie, et laisser tomber tout le reste." },
+    53: { o: "Immaturité", d: "Expansion", s: "Surabondance", t: "L'initiateur : il sème des débuts partout, et il n'aura pas à cultiver toutes les graines lui-même.",
+      long: "Le 53 est la Clé des débuts et de la croissance graduelle : l'élan de commencer quelque chose de nouveau, et la discipline de le laisser grandir à son rythme. L'ombre est l'immaturité, et elle a une forme précise : commencer sans terminer — sauter vers un nouveau début juste quand le précédent entre dans sa phase ennuyeuse, celle où pourtant se produit la vraie croissance. Le don est l'expansion : un développement par étapes, sans forcer les phases." },
+    54: { o: "Avidité", d: "Aspiration", s: "Ascension", t: "L'ambition qui monte : l'élan matériel qui, purifié, devient élévation.",
+      long: "Le 54 est le moteur de l'ascension : la poussée de monter, matériellement et pas seulement. Dans l'ombre, c'est l'avidité — accumuler comme substitut au fait de monter vraiment. Le don est l'aspiration : la même force orientée vers le haut plutôt que vers le plus. La différence n'est pas dans l'intensité, qui reste identique : elle est dans l'objet." },
+    55: { o: "Victimisation", d: "Liberté", s: "Liberté absolue", t: "L'esprit libre : il apprend à surfer les émotions comme des vagues au lieu de les subir comme des chaînes.",
+      long: "Le 55 est l'esprit en quête de liberté : la Clé des émotions comme vagues. L'ombre est la victimisation — croire que l'humeur dépend de l'extérieur : de quelqu'un, de quelque chose, de la chance. Le don est la liberté : surfer les vagues émotionnelles sans s'identifier ni à la crête ni au creux. L'humeur comme météo, pas comme identité." },
+    56: { o: "Distraction", d: "Enrichissement", s: "Ivresse", t: "Le conteur : il transforme le fleuve des stimulations en histoires qui nourrissent qui écoute.",
+      long: "Le 56 est le conteur errant : il recueille des stimulations et les transforme en histoires. L'ombre est la distraction — courir après des stimulations toujours nouvelles sans en digérer aucune. Le don est l'enrichissement : les expériences deviennent un récit qui nourrit qui écoute. Le voyage vaut par la façon dont il est raconté, pas par les kilomètres." },
+    57: { o: "Inquiétude", d: "Intuition", s: "Clarté", t: "L'oreille la plus fine : elle perçoit ce qui va arriver un instant avant les autres.",
+      long: "Le 57 est l'oreille la plus fine : il perçoit ce qui va arriver un instant avant les autres. L'ombre est l'inquiétude — l'anxiété de fond de qui sent trop et ne fait pas confiance à ce qu'il sent. Le don est l'intuition : la clarté instantanée qui ne passe pas par le raisonnement. À écouter tout de suite, parce qu'elle ne se répète pas." },
+    58: { o: "Insatisfaction", d: "Vitalité", s: "Béatitude", t: "La joie de vivre qui veut améliorer le monde : une énergie qui jaillit comme une source.",
+      long: "Le 58 est la source de joie : une vitalité qui jaillit et veut améliorer les choses. L'ombre est l'insatisfaction — le critique intérieur qui trouve le défaut dans tout et n'est jamais content. Le don est la vitalité : la même énergie qui, au lieu de se plaindre du défaut, se met à le réparer. Avec une joie contagieuse en le faisant." },
+    59: { o: "Malhonnêteté", d: "Intimité", s: "Transparence", t: "Il abat les barrières entre les gens : son talent est de créer des liens vrais.",
+      long: "Le 59 est l'abatteur de barrières : né pour l'intimité vraie. L'ombre est la malhonnêteté — les stratégies utilisées pour s'approcher : séduire, complaire, manœuvrer. Elles obtiennent le contact, et empêchent la rencontre. Le don est l'intimité : la transparence qui désarme, l'approche sans masques qui donne aux autres le courage d'en faire autant." },
+    60: { o: "Limitation", d: "Réalisme", s: "Justice", t: "Les limites comme structure : il sait que la magie a besoin d'une forme pour se manifester.",
+      long: "Le 60 est la structure : il sait que la magie a besoin de forme. L'ombre est la limitation — vivre les contraintes comme une condamnation, maugréer contre les règles tout en restant leur prisonnier. Le don est le réalisme : accepter les limites comme les berges qui donnent sa force au fleuve. Dans une contrainte acceptée, l'énergie se concentre et crée." },
+    61: { o: "Psychose", d: "Inspiration", s: "Sainteté", t: "Le mystère : l'esprit amoureux des questions auxquelles personne ne sait répondre.",
+      long: "Le 61 est le mystère : l'esprit amoureux des questions sans réponse. L'ombre est la pression psychique — le besoin compulsif de savoir, qui à ses extrêmes devient délire de certitude. Le don est l'inspiration : demeurer dans l'inconnu sans exiger de réponses. Et recevoir, de temps en temps, un éclair qu'on n'avait pas demandé." },
+    62: { o: "Intellect", d: "Précision", s: "Impeccabilité", t: "Le détail exact : il donne aux choses leur nom précis et rend clair ce qui est compliqué.",
+      long: "Le 62 est la précision : il donne aux choses leur nom exact. L'ombre est l'intellect — se perdre dans les détails, noyer sous les données, confondre l'exactitude avec la vérité. Le don est la précision au service du sens : le détail juste qui rend clair ce qui est compliqué. L'art de dire exactement ce qu'il faut, et rien d'autre." },
+    63: { o: "Doute", d: "Investigation", s: "Vérité", t: "Le doute fertile : la question qui ne se contente pas et pousse la connaissance en avant.",
+      long: "Le 63 est le doute fertile : la question qui ne se contente pas. L'ombre est le doute corrosif — soupçonner tout, tout le monde et surtout soi-même, sans jamais conclure. Le don est l'investigation : transformer le soupçon en questions précises, et les questions en vérifications. Le moteur de toute connaissance qui avance." },
+    64: { o: "Confusion", d: "Imagination", s: "Illumination", t: "Le kaléidoscope : mille images en quête de sens, jusqu'à ce que la lumière s'allume toute seule.",
+      long: "Le 64 est le kaléidoscope : une pression constante d'images en quête de sens. L'ombre est la confusion — essayer d'ordonner le flux de force, et s'y noyer. Le don est l'imagination : laisser les images se composer d'elles-mêmes. La compréhension arrive d'un coup, entière, quand on cesse de la forcer." }
+  };
+
+  const LINES = {
+    1: { n: "L'Investigateur", brevis: "fondations", t: "Il a besoin de comprendre à fond avant d'agir : il étudie, approfondit, construit des bases solides.",
+      long: "La Ligne 1 construit par le bas : avant d'agir, elle doit comprendre, étudier, toucher les fondations. Sa sécurité naît de la connaissance — quand les bases sont solides, rien ne la déplace ; quand elles manquent, l'anxiété la paralyse. Le risque : se préparer pour toujours et ne jamais partir." },
+    2: { n: "L'Ermite", brevis: "talent naturel", t: "Le talent coule en lui naturellement, mais il tend à ne pas le voir : il fleurit quand on l'appelle.",
+      long: "La Ligne 2 signifie naturel, pas entraîné : le talent fonctionne tout seul quand le contexte le laisse fonctionner, et se dérègle quand on le force ou qu'on le met sous observation. Il ne se voit pas lui-même : il a besoin d'être reconnu et appelé — et il ne répond qu'aux appels sincères." },
+    3: { n: "L'Expérimentateur", brevis: "essai et erreur", t: "Il apprend en se cognant dedans : chaque tentative « ratée » est un matériau précieux. Impossible à arrêter longtemps.",
+      long: "La Ligne 3 apprend par essai et erreur : la compétence se construit sur les tentatives ratées, qui sont du matériau et non des accidents. Elle a une mauvaise réputation imméritée : elle produit la solidité la plus concrète qui soit, parce que c'est la seule construite par expérience directe plutôt que par théorie." },
+    4: { n: "L'Opportuniste", brevis: "réseau et cœur", t: "Il vit de relations : les occasions lui arrivent à travers les personnes qu'il connaît.",
+      long: "La Ligne 4 est relationnelle : tout — occasions, travail, amour — passe par le réseau de personnes qu'elle cultive. Son don est la fidélité de son tissu social ; son risque est de se limer pour ne pas le perdre. Les transitions ne lui réussissent que si la nouvelle branche est déjà prête avant de lâcher l'ancienne." },
+    5: { n: "L'Hérétique", brevis: "solutions pratiques", t: "Les autres projettent sur lui de grandes attentes : sa solution pratique au bon moment sauve la situation.",
+      long: "La Ligne 5 attire les projections : les autres lui attribuent des pouvoirs, des fautes et des attentes qu'elle n'a pas demandés. Son talent est la solution pratique offerte au bon moment — sauver la situation puis se retirer, parce que rester trop longtemps sous les projecteurs transforme l'auréole en cible." },
+    6: { n: "Le Modèle", brevis: "vision d'ensemble", t: "Trois vies en une : il expérimente, puis observe depuis le toit du monde, et devient enfin un exemple.",
+      long: "La Ligne 6 n'est pas un trait : c'est un calendrier en trois phases. Jusqu'à ~30 ans, expérience directe, erreurs, cicatrices. De ~30 à ~50 ans, retrait et observation — une période que presque tous les 6 vivent mal parce qu'elle ressemble à une impasse, alors que c'est une digestion. Puis la troisième phase : on devient une référence. Elle demande de la patience envers son propre calendrier." }
+  };
+
+  // Noms canoniques des sphères (anglais, comme dans les rapports officiels) + textes
+  const SPHERES = {
+    lavoro:     { n: "Life's Work",   d: "Ton génie extérieur : ce que tu es venu faire, le rôle que le monde voit.",
+      ctx: "Sur le Life's Work, cette énergie est le métier de l'âme : le rôle visible, ce pour quoi tu seras reconnu. C'est la même sphère que, vue de l'extérieur, la Séquence de la Perle appelle Brand." },
+    evoluzione: { n: "Evolution",     d: "Le défi central : ce que la vie t'enseigne à travers les difficultés.",
+      ctx: "En tant qu'Evolution, c'est le défi central du profil : le thème que la vie repropose en spirale, chaque fois un tour plus haut. Ce n'est pas un défaut à corriger — c'est le chemin." },
+    radianza:   { n: "Radiance",      d: "Ce qui allume ta vitalité : quand tu la vis, santé et présence rayonnent.",
+      ctx: "En tant que Radiance, c'est une sphère du Design, donc inconsciente : elle agit avant d'être choisie, et elle se voit sur toi. Vécue dans le don, elle allume vitalité et santé ; retenue dans l'ombre, elle les éteint." },
+    scopo:      { n: "Purpose",       d: "Le fondement profond : il s'active quand tu sers quelque chose de plus grand que toi.",
+      ctx: "En tant que Purpose, c'est le fondement inconscient : il s'active quand ce que tu fais sert quelque chose de plus grand que toi. Tant que ça n'arrive pas, quelque chose continue sourdement de manquer." },
+    attrazione: { n: "Attraction",    d: "Qui et quoi tu attires dans les relations : la porte d'entrée de tes liens.",
+      ctx: "En tant qu'Attraction, elle gouverne ce que tu attires : les personnes qui arrivent mettent en scène exactement ce thème, jusqu'à ce que tu le reconnaisses comme le tien." },
+    iq:         { n: "IQ",            d: "Le cycle mental des 14–21 ans : comment ton esprit a appris à se défendre et à briller.", age: "14–21 ans",
+      ctx: "En tant qu'IQ, c'est l'angle mort mental, formé entre 14 et 21 ans : la défense intellectuelle construite à l'adolescence, qu'adulte on prend pour « ma façon de penser »." },
+    eq:         { n: "EQ",            d: "Le cycle émotionnel des 7–14 ans : comment ton cœur a appris à réagir et à s'ouvrir.", age: "7–14 ans",
+      ctx: "En tant qu'EQ, c'est le cycle émotionnel des 7–14 ans : la façon dont le cœur a appris à réagir. La défense émotionnelle qui aujourd'hui se déclenche toute seule, avant chaque décision." },
+    sq:         { n: "SQ",            d: "L'empreinte des 7 premières années — le Point d'Amour : la racine de la confiance.", age: "0–7 ans",
+      ctx: "En tant que SQ, c'est l'empreinte des 7 premières années — le Point d'Amour : la mémoire la plus profonde du corps, là où s'est décidé combien on peut faire confiance à l'amour." },
+    nucleo:     { n: "Core / Vocation", d: "La blessure la plus ancienne — et, transformée, ta vocation.",
+      ctx: "En tant que Core, c'est la blessure centrale, associée aux neuf mois de gestation ; en tant que Vocation, c'est la même Clé retournée : le remède que tu portes est fait du matériau de ta blessure." },
+    cultura:    { n: "Culture",       d: "Ta place dans la communauté : comment tu prospères dans un groupe et ce que tu lui apportes.",
+      ctx: "En tant que Culture, c'est la contribution au collectif : la place naturelle dans la communauté, qui se révèle quand la blessure du Core a déjà été traversée." },
+    perla:      { n: "Pearl",         d: "La récompense : la prospérité qui arrive quand tu simplifies.",
+      ctx: "En tant que Pearl, c'est la récompense : la prospérité qui arrive quand tu simplifies. Pas un prix à poursuivre — un sous-produit de la simplicité." }
+  };
+
+  const SEQ = {
+    attivazione: { n: "Séquence d'Activation", sub: "LES QUATRE DONS PRIMAIRES",
+      d: "Elle se calcule à partir du Soleil et constitue la base du profil : c'est elle qu'il faut contempler en premier, parce que tout le reste repose dessus. L'axe conscient (Life's Work / Evolution) et l'axe inconscient (Radiance / Purpose) sont deux moteurs distincts qui poussent le même véhicule — et leur distance est le moteur du profil." },
+    venere: { n: "Séquence de Vénus", sub: "LE PLAN ÉMOTIONNEL",
+      d: "Lune, Vénus et Mars. Elle se lit à rebours : de l'Attraction — le résultat adulte visible — en descendant les cycles de sept ans (IQ 14–21, EQ 7–14, SQ 0–7) jusqu'au Core, la blessure la plus ancienne. C'est la carte pour rouvrir ce qui s'était fermé." },
+    perla: { n: "Séquence de la Perle", sub: "LE PLAN MENTAL ET LA PROSPÉRITÉ",
+      d: "Construite sur Jupiter, la Clé de l'expansion. Elle part du Core — de la blessure déjà traversée — et montre comment elle devient service et prospérité : Vocation, Culture, Pearl, et le Brand qui referme le cercle sur le Life's Work. Elle ne fonctionne pas si on la saute : la Perle présuppose Vénus." }
+  };
+
+  const SIGNS = ["Bélier","Taureau","Gémeaux","Cancer","Lion","Vierge","Balance","Scorpion","Sagittaire","Capricorne","Verseau","Poissons"];
+  const BODIES = { sun: "Soleil", earth: "Terre", moon: "Lune", venus: "Vénus", mars: "Mars", jupiter: "Jupiter" };
+  const LBL = {
+    natale: "natal", design: "design",
+    tSfera: "Sphère", tPianeta: "Planète", tChiave: "Clé", tPosizione: "Position",
+    nascita: "Naissance", designDate: "Design", linee: "Lignes", croce: "Croix d'incarnation",
+    ombra: "Ombre", dono: "Don", siddhi: "Siddhi", linea: "Ligne",
+    strutturaTitle: "La structure en bref",
+    sogliaTitle: "Une donnée à la limite : {from} ou {to}",
+    sogliaText: "La sphère {sphere} se calcule sur un corps rapide et tombe près d'une frontière de Ligne. Seuil calculé : {time}. Naissance avant cette heure → {from} ; à cette heure ou après → {to}. La Clé reste la même : c'est le comment qui change, pas le quoi.",
+    sogliaStable: "Les autres sphères tiennent à ±30 minutes sans bouger.",
+    noTimeWarn: "Sans l'heure de naissance, la sphère de l'Attraction (Lune) est approximative et les Lignes des sphères rapides peuvent varier."
+  };
+
+  // Synthèse structurelle (templates avec variables)
+  const STRUCT = {
+    croce: "Croix d'incarnation {ps}/{pe} | {ds}/{de}. L'axe conscient ({ps}/{pe}) parle de {giftPS} et {giftPE} ; l'axe inconscient ({ds}/{de}) de {giftDS} et {giftDE}. Deux moteurs distincts qui poussent le même véhicule.",
+    asse: "L'axe {a}/{b}. Life's Work et Evolution sont toujours opposés sur la roue, et la paire se lit ensemble : le génie de « {giftA} » et le défi de « {shadowB} » sont les deux pôles du même axe — dénouer le second libère le premier.",
+    double: "Clé {key} ×{n}. La même Clé apparaît sur {spheres} : le thème de « {gift} » (et de son ombre, « {shadow} ») n'est pas une facette du profil — c'est le thème. Chaque sphère qui l'héberge le remet en scène.",
+    mirror: "Le canal {keyA} ↔ {keyB}. Deux Clés opposées sur la roue occupent {sphereA} et {sphereB} : « {giftA} » et « {giftB} » sont deux moitiés de la même fonction, vues depuis deux sphères différentes. Là où l'une se bloque, l'autre se raidit ; là où l'une fleurit, l'autre se dénoue.",
+    domLine: "{n} sphères en Ligne {line}. L'indication se répète {n} fois : {hint}",
+    lineHints: {
+      1: "ici, les meilleures choses naissent de fondations étudiées — d'abord comprendre, ensuite agir.",
+      2: "ici, les meilleures choses ne se produisent pas : on les laisse advenir dans des conditions protégées, sans les forcer ni trop les observer.",
+      3: "ici, les meilleures choses passent par la tentative : l'erreur est la méthode, pas l'accident.",
+      4: "ici, les meilleures choses passent par les personnes : le réseau n'est pas un décor, c'est le canal.",
+      5: "ici, les meilleures choses sont des solutions pratiques offertes au bon moment — puis le retrait, avant que l'auréole ne devienne une cible.",
+      6: "ici, les meilleures choses ont un calendrier long : des phases à respecter, pas des étapes à brûler."
+    },
+    starts: "Beaucoup de débuts, peu de fins. {keys} occupent {n} des onze sphères : l'élan de démarrer est abondant{unconscious}. Les Clés orientées vers l'achèvement sont {ends} : ce profil n'a pas un problème d'énergie — il a un thème de durée.",
+    startsNoEnds: "Beaucoup de débuts, peu de fins. {keys} occupent {n} des onze sphères : l'élan de démarrer est abondant{unconscious} — et aucune Clé du profil n'est orientée vers l'achèvement. La structure doit se construire, délibérément, sur le fait de finir.",
+    startsUnconscious: " et en grande partie inconscient",
+    profLines: "Lignes {a}/{b}"
+  };
+
+  // Textes de compatibilité (titres/corps avec variables + paires de Lignes)
+  const MATCH = {
+    types: { gemella: "clé jumelle", risonanza: "résonance", specchio: "clés miroir", ponte: "pont de ligne", passo: "même pas" },
+    gemellaTitle: "Clé {key} jumelle — tous les deux en {sphere}",
+    gemellaText: "Sur la sphère « {sphere} », vous avez exactement la même Clé : le don « {gift} » est un langage que vous parlez tous les deux. Vous vous reconnaissez — et vous vous reflétez aussi dans l'ombre « {shadow} » : soyez doux avec ce qui vous ressemble.",
+    risonanzaTitle: "Clé {key} partagée — {sphereA} ↔ {sphereB}",
+    risonanzaText: "La Clé {key} est le « {sphereA} » de {nameA} et le « {sphereB} » de {nameB} : le même don ({gift}) vécu sous deux angles différents. Un excellent terrain commun.",
+    specchioTitle: "Miroir {keyA} ↔ {keyB} — {sphereA} / {sphereB}",
+    specchioText: "Les Clés {keyA} et {keyB} sont partenaires de programmation : deux moitiés du même axe de la roue. {nameA} apporte « {giftA} », {nameB} « {giftB} » : chacun tient dans sa main la pièce dont l'autre a besoin pour compléter le tableau.",
+    ponteTitle: "Pont de Ligne {a}-{b} — harmonie géométrique",
+    ponteText: "Les Lignes {a} et {b} sont en harmonie naturelle (comme 1-4, 2-5, 3-6 dans l'hexagramme) : des styles différents qui s'emboîtent sans effort.",
+    passoTitle: "Même pas — tous les deux Ligne {line} ({lineName})",
+    passoText: "Vous abordez la vie avec le même style : {brevis}. Vous vous comprenez sans explications — le revers, c'est que vous partagez aussi les mêmes angles morts.",
+    noConn: "Aucune connexion géométrique directe : vous êtes un couple « à ponts construits à la main ». Regardez la comparaison des styles ci-dessous — c'est là que tout se joue.",
+    verdicts: {
+      alta:  { label: "RÉSONANCE RARE", t: "Vos profils s'entrelacent en plusieurs points : une de ces connexions qui semblent écrites avant la naissance. Le travail : ne pas s'endormir sur ses lauriers — chaque Clé partagée est aussi une ombre partagée." },
+      buona: { label: "GRANDE ALLIANCE", t: "Plusieurs fils relient vos profils : il y a de la reconnaissance, et il y a aussi assez de différence pour apprendre l'un de l'autre. Un lien qui grandit avec le temps." },
+      media: { label: "RENCONTRE FERTILE", t: "Quelques points de contact et beaucoup de territoire nouveau : la relation fonctionne si la curiosité reste plus forte que le besoin de se sentir pareils." },
+      bassa: { label: "MONDES DIFFÉRENTS", t: "Peu d'accroches directes entre les profils : ce n'est pas un non — c'est une invitation. Les couples sans résonances automatiques construisent leurs ponts à la main, et ce sont ceux qui tiennent le mieux." }
+    },
+    lineIntro: "{nameA} est Ligne {la} ({lineA}), {nameB} est Ligne {lb} ({lineB}).",
+    linepair: {
+      "1-1": "Deux Investigateurs : une maison pleine de livres et de questions. Vous vous comprenez au quart de tour, mais pensez de temps en temps à sortir de la tanière et à vivre les réponses.",
+      "1-2": "L'Investigateur étudie, l'Ermite sait sans savoir pourquoi. Si le premier n'interroge pas trop le second, il naît une quiétude très fertile.",
+      "1-3": "Théorie et pratique : l'un lit le manuel, l'autre le jette et essaie. Ensemble, vous couvrez le cycle complet de l'apprentissage.",
+      "1-4": "Pont naturel : les fondations de l'Investigateur trouvent dans le réseau de l'Opportuniste le public qu'elles méritent. Un couple qui construit.",
+      "1-5": "Les bases solides de l'un donnent de la crédibilité aux solutions de l'autre. Attention seulement aux attentes que le monde charge sur l'Hérétique.",
+      "1-6": "Le Modèle voit le panorama, l'Investigateur les briques. Si vous vous faites confiance, vous construisez quelque chose qui dure trois générations.",
+      "2-2": "Deux Ermites : le risque, c'est que personne ne frappe à la porte de l'autre. Mais quand ça arrive, c'est une des intimités les plus naturelles du spectre.",
+      "2-3": "L'Expérimentateur tire l'Ermite dehors, l'Ermite lui offre un port tranquille. Un échange silencieux mais nourrissant.",
+      "2-4": "L'Opportuniste excelle à appeler, l'Ermite n'attend que le bon appel. Si l'appel est sincère, ça marche à merveille.",
+      "2-5": "Pont naturel : le talent spontané de l'Ermite et le timing pratique de l'Hérétique se complètent sans effort.",
+      "2-6": "Le Modèle reconnaît le talent de l'Ermite mieux que quiconque — et l'Ermite ne se laisse voir que par qui le respecte vraiment.",
+      "3-3": "Deux Expérimentateurs : vie mouvementée, zéro ennui, beaucoup de bleus. Le secret : rire ensemble des expériences ratées.",
+      "3-4": "Les découvertes de l'un voyagent sur le réseau de l'autre. Un couple social et concret, qui apprend vite et partage volontiers.",
+      "3-5": "Tous deux pratiques et concrets : l'un découvre ce qui NE marche PAS, l'autre offre la solution. L'équipe des situations difficiles.",
+      "3-6": "Pont naturel : le Modèle est un Expérimentateur qui a déjà vécu cette phase. Une compréhension profonde des tentatives de l'autre.",
+      "4-4": "Deux réseaux qui s'entrelacent : amitiés, contacts, communauté. La relation fleurit si vous restez aussi le meilleur ami l'un de l'autre.",
+      "4-5": "Le cœur de l'Opportuniste et le charisme de l'Hérétique : un couple influent, aimé du groupe. Protégez un espace rien qu'à vous.",
+      "4-6": "L'Opportuniste tisse les liens, le Modèle donne l'exemple : ensemble, vous êtes le point de repère de votre cercle.",
+      "5-5": "Deux Hérétiques : le monde vous projette dessus de tout. À deux, les projections se divisent par deux : vous êtes le refuge l'un de l'autre.",
+      "5-6": "Pragmatisme et vision : l'Hérétique résout l'aujourd'hui, le Modèle tient le cap sur le demain. Un leadership de couple.",
+      "6-6": "Deux Modèles sur le toit du monde : une relation qui mûrit comme le vin — et qui, autour des 50 ans, devient un exemple pour tous les autres."
+    }
+  };
+
+  window.HOLO_LANGS = window.HOLO_LANGS || {};
+  window.HOLO_LANGS.fr = { KEYS, LINES, SPHERES, SEQ, SIGNS, BODIES, LBL, STRUCT, MATCH };
+})();

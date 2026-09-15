@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>Ologenetica — Compatibilità</title>
+<meta name="theme-color" content="#0b0f0b">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icons/icon-192.png" type="image/png">
+<link rel="stylesheet" href="holo/fonts.css">
+<link rel="stylesheet" href="holo/instrument.css">
+<style>
+/* moduli specifici della pagina compatibilità */
+.duo{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:700px){.duo{grid-template-columns:1fr}}
+.person{border:1px solid var(--etch);border-radius:3px;background:var(--panel-2);padding:14px 15px}
+.person h3{font-family:var(--f-engr);font-weight:600;font-size:11.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--dim);margin:0 0 12px;
+  display:flex;align-items:center;gap:8px}
+.person h3::after{content:"";flex:1;height:4px;border-bottom:1px solid var(--etch);
+  background:repeating-linear-gradient(90deg,var(--etch) 0 1px,transparent 1px 8px);background-position:bottom;background-size:auto 3px;background-repeat:repeat-x}
+.scorebox{display:flex;gap:20px;align-items:center;flex-wrap:wrap}
+.scorering{flex:0 0 auto}
+.verdict{flex:1;min-width:230px}
+.verdict .vlabel{font-family:var(--f-engr);font-weight:700;font-size:20px;letter-spacing:.2em;text-transform:uppercase;color:var(--amber);text-shadow:var(--glow)}
+.verdict p{margin:6px 0 0;font-size:14px;color:var(--txt);line-height:1.6;max-width:64ch}
+.mini{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px}
+@media(max-width:700px){.mini{grid-template-columns:1fr}}
+.minicard{border:1px solid var(--etch);border-radius:3px;background:var(--panel-2);padding:11px 13px;font-size:13px;color:var(--txt)}
+.minicard b{font-family:var(--f-engr);font-weight:600;letter-spacing:.08em;text-transform:uppercase;font-size:12px}
+.minicard .keys{font-family:var(--f-mono);font-size:10.5px;color:var(--dim);margin-top:5px;line-height:1.7}
+.connrow{border:1px solid var(--etch);border-radius:3px;background:var(--panel-2);padding:11px 14px 12px;margin-bottom:12px}
+.conntype{font-family:var(--f-mono);font-size:9.5px;letter-spacing:.18em;text-transform:uppercase;font-weight:600;
+  display:inline-block;padding:2px 7px;border:1px solid var(--etch-hi);border-radius:2px;color:var(--dim);flex:0 0 auto}
+.connrow.gemella .conntype{color:var(--amber);border-color:var(--amber-dn)}
+.connrow.risonanza .conntype{color:var(--amber);border-color:var(--amber-dn)}
+.connrow.specchio .conntype{color:var(--mint);border-color:var(--mint)}
+.connrow.ponte .conntype{color:var(--blu);border-color:var(--blu)}
+.connrow.passo .conntype{color:var(--mag);border-color:var(--mag)}
+.conntitle{font-family:var(--f-engr);font-weight:600;font-size:13.5px;letter-spacing:.06em;color:var(--txt);
+  display:flex;align-items:baseline;gap:9px;flex-wrap:wrap}
+.conntext{font-size:13.5px;color:var(--dim);line-height:1.6;margin-top:4px;max-width:80ch}
+.linecmt{font-size:14px;color:var(--txt);line-height:1.65;max-width:76ch}
+.linecmt b{color:var(--amber)}
+</style>
+</head>
+<body>
+<!--
+THESIS: due tracce sullo stesso oscilloscopio — la compatibilità come sovrapposizione di due letture, misurata a lancetta; rifiuta il quiz d'amore a cuoricini.
+OWN-WORLD: mondo "Lo Spettrometro" condiviso (holo/instrument.css): pannello smaltato, fosfori, scale a tacche, stato=segno.
+STORY: due persone inseriscono i dati, leggono il galvanometro e le connessioni geometriche: capiscono DOVE si riconoscono, non "quanto si amano".
+FIRST VIEWPORT: targa, titolo COMPATIBILITÀ con lancetta accesa, doppio pannello di controllo PERSONA 1 / PERSONA 2, pulsante CONFRONTA.
+FORM: derivata dal mondo scelto (Lo Spettrometro, seed 84c75ad3) — modalità dual-trace.
+FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, DESIGN.md, and every shipping raster carrying its provenance.
+-->
+<div class="wrap">
+  <div class="topbar">
+    <a class="brand" href="index.html" title="Home">
+      <svg class="dialmark" viewBox="0 0 22 22" fill="none" aria-hidden="true"><circle cx="11" cy="11" r="9" stroke-width="1.4"/><line x1="11" y1="11" x2="16.5" y2="6.5" stroke-width="1.4"/><line x1="11" y1="2" x2="11" y2="4.5" stroke-width="1"/><line x1="11" y1="17.5" x2="11" y2="20" stroke-width="1"/><line x1="2" y1="11" x2="4.5" y2="11" stroke-width="1"/><line x1="17.5" y1="11" x2="20" y2="11" stroke-width="1"/></svg>
+      Ologenetica</a>
+    <div class="topright">
+      <div class="nav">
+        <a class="pill" data-k="profilo" href="Profilo%20Ologenetico.html">Profilo</a>
+        <a class="pill" data-k="chiavi" href="Chiavi.html">Chiavi</a>
+        <a class="pill" data-k="almanacco" href="Almanacco.html">Almanacco</a>
+        <a class="pill" data-k="guida" href="Come%20si%20Legge.html">Come si legge</a>
+        <a class="pill on" data-k="match" href="Compatibilit%C3%A0.html">Compatibilità</a>
+      </div>
+      <span id="langPick"></span>
+    </div>
+  </div>
+
+  <div class="hero">
+    <h1 class="htitle" id="htitle"></h1>
+    <div class="ksuper" id="ksuper"></div>
+    <p class="hsub" id="hsub"></p>
+    <div class="tickline"></div>
+  </div>
+
+  <div class="panel">
+    <h2 id="formTitle"></h2>
+    <div class="duo">
+      <div class="person" id="pA"></div>
+      <div class="person" id="pB"></div>
+    </div>
+    <button class="btn-go" id="goBtn"></button>
+    <div class="err" id="errBox"></div>
+  </div>
+
+  <div id="result" style="display:none">
+    <div class="panel">
+      <h2 id="resTitle"></h2>
+      <div class="scorebox">
+        <div class="scorering" id="ring"></div>
+        <div class="verdict"><div class="vlabel" id="vLabel"></div><p id="vText"></p></div>
+      </div>
+      <div class="mini" id="miniProfiles"></div>
+      <div class="sharelbl" id="shareLbl"></div>
+      <div class="sharebar" id="shareBar"></div>
+    </div>
+
+    <div class="panel">
+      <h2 id="connTitle"></h2>
+      <p class="seqsub" id="connHint"></p>
+      <div id="conns"></div>
+    </div>
+
+    <div class="panel">
+      <h2 id="styleTitle"></h2>
+      <div class="linecmt" id="lineComment"></div>
+    </div>
+  </div>
+
+  <div class="panel" id="theoryPanel">
+    <h2 id="thTitle"></h2>
+    <div id="thBody"></div>
+  </div>
+
+  <div class="footnote" id="foot"></div>
+</div>
+
+<script src="lang/i18n.js"></script>
+<script src="lib/astronomy.browser.min.js"></script>
+<script src="lib/cities.js"></script>
+<script src="holo/keys.it.js"></script>
+<script src="holo/keys.en.js"></script>
+<script src="holo/keys.fr.js"></script>
+<script src="holo/keys.es.js"></script>
+<script src="holo/keys.pt.js"></script>
+<script src="holo/engine.js"></script>
+<script src="holo/compat.js"></script>
+<script>
+(function(){
+  const $ = id => document.getElementById(id);
+  const fill = window.HOLOMATCH.fill;
+  const langOf = () => window.ZI18N ? window.ZI18N.get() : "it";
+  const D = () => window.HOLO_LANGS[langOf()] || window.HOLO_LANGS.it;
+  let curA=null, curB=null, curM=null;
+
+  const UI = {
+    it:{ htitle:["COMPATI","BILITÀ"], ksuper:"DUAL TRACE · DUE PROFILI, UNA MISURA",
+      hsub:"Confrontiamo le 11 sfere di due profili ologenetici: Chiavi condivise, Chiavi specchio, ponti di Linea. Non un voto sull'amore — una mappa di dove vi riconoscete e dove vi completate.",
+      formTitle:"Dati di nascita", p1:"Persona 1 · Traccia A", p2:"Persona 2 · Traccia B",
+      lblName:"Nome", lblDate:"Data", lblTime:"Ora", lblNoTime:"Non la so", lblPlace:"Città di nascita",
+      phPlace:"Cerca una città…", placeHint:"Scegli dalla lista.", go:"Confronta i profili",
+      resTpl:"Misura — {a} + {b}", connTitle:"Connessioni rilevate",
+      connHint:"In ordine di forza: Chiavi gemelle, risonanze, specchi (esagrammi opposti), ponti di Linea.",
+      styleTitle:"Stili a confronto",
+      lwLabel:"Life's Work",
+      errDate:n=>`Inserisci la data di nascita di ${n}.`, errTime:n=>`Inserisci l'ora di ${n} (o spunta «non la so»).`,
+      errPlace:n=>`Scegli la città di ${n} dalla lista.`, errCalc:"Qualcosa è andato storto nel calcolo.",
+      thTitle:"Come funziona (anche senza calcolare)",
+      thBody:`<p style="font-size:14px;color:var(--txt);line-height:1.6;max-width:80ch">La compatibilità ologenetica non cerca «segni giusti»: cerca <b>geometrie</b> tra due profili. Queste sono le quattro che contano:</p>
+<div style="overflow-x:auto"><table class="stable"><tr><th>Connessione</th><th>Che cos'è</th><th>Effetto tipico</th></tr>
+<tr><td>Chiave gemella</td><td>La stessa Chiave nella stessa sfera dei due profili.</td><td>Riconoscimento immediato («parli la mia lingua») — ma anche la stessa identica ombra: vi specchiate nel bene e nel meno bene.</td></tr>
+<tr><td>Risonanza</td><td>La stessa Chiave in sfere diverse.</td><td>Terreno comune: lo stesso dono vissuto da angolazioni diverse. Ottimo per collaborazioni.</td></tr>
+<tr><td>Chiavi specchio</td><td>Chiavi opposte sulla ruota (a 180°, «partner di programmazione»): es. 26 ↔ 45, 1 ↔ 2.</td><td>Attrazione da poli opposti: ognuno porta la metà che all'altro manca. Elettrica, richiede rispetto della differenza.</td></tr>
+<tr><td>Ponte di Linea</td><td>Linee in armonia geometrica: 1-4, 2-5, 3-6 (stessa posizione nei due trigrammi dell'esagramma).</td><td>Stili di vita che si incastrano da soli: uno costruisce dove l'altro apre.</td></tr></table></div>
+<p style="font-size:14px;color:var(--dim);line-height:1.6;max-width:80ch;margin-top:12px">E i profili «dello stesso tipo»? Guarda la <b style="color:var(--txt)">Linea del Life's Work</b>: due Linee 1 costruiscono una casa-biblioteca, due Linee 3 una vita d'avventure, due Linee 5 un rifugio dalle proiezioni del mondo. Le coppie di Linea uguale si capiscono al volo ma condividono i punti ciechi; le coppie ponte (1-4, 2-5, 3-6) si completano senza sforzo; tutte le altre si scelgono — e i ponti costruiti a mano tengono più di tutti.</p>`,
+      shareLbl:"Link condivisibile", copy:"Copia link", copied:"Copiato — OK", shareSys:"Condividi",
+      nav:{profilo:"Profilo",chiavi:"Chiavi",almanacco:"Almanacco",guida:"Come si legge",match:"Compatibilità"},
+      foot:"Effemeridi astronomy-engine · Personalità = nascita, Design = 88° di arco solare prima.<br>Sistema ispirato al Profilo Ologenetico (Gene Keys di Richard Rudd). Strumento contemplativo: testi originali, per gioco — nessun algoritmo decide per il tuo cuore." },
+    en:{ htitle:["COMPATI","BILITY"], ksuper:"DUAL TRACE · TWO PROFILES, ONE MEASURE",
+      hsub:"We compare the 11 spheres of two hologenetic profiles: shared Keys, mirror Keys, Line bridges. Not a score on love — a map of where you recognize each other and where you complete each other.",
+      formTitle:"Birth data", p1:"Person 1 · Trace A", p2:"Person 2 · Trace B",
+      lblName:"Name", lblDate:"Date", lblTime:"Time", lblNoTime:"Don't know it", lblPlace:"City of birth",
+      phPlace:"Search a city…", placeHint:"Pick from the list.", go:"Compare the profiles",
+      resTpl:"Measure — {a} + {b}", connTitle:"Connections detected",
+      connHint:"In order of strength: twin Keys, resonances, mirrors (opposite hexagrams), Line bridges.",
+      styleTitle:"Styles side by side",
+      lwLabel:"Life's Work",
+      errDate:n=>`Enter ${n}'s date of birth.`, errTime:n=>`Enter ${n}'s time of birth (or tick «don't know it»).`,
+      errPlace:n=>`Pick ${n}'s city from the list.`, errCalc:"Something went wrong in the calculation.",
+      thTitle:"How it works (even without calculating)",
+      thBody:`<p style="font-size:14px;color:var(--txt);line-height:1.6;max-width:80ch">Hologenetic compatibility doesn't look for «the right signs»: it looks for <b>geometries</b> between two profiles. These are the four that matter:</p>
+<div style="overflow-x:auto"><table class="stable"><tr><th>Connection</th><th>What it is</th><th>Typical effect</th></tr>
+<tr><td>Twin Key</td><td>The same Key in the same sphere of both profiles.</td><td>Instant recognition («you speak my language») — but also the very same shadow: you mirror each other, for better and worse.</td></tr>
+<tr><td>Resonance</td><td>The same Key in different spheres.</td><td>Common ground: the same gift lived from two angles. Great for collaboration.</td></tr>
+<tr><td>Mirror Keys</td><td>Keys opposite on the wheel (180°, «programming partners»): e.g. 26 ↔ 45, 1 ↔ 2.</td><td>Attraction of opposite poles: each carries the half the other is missing. Electric — requires respect for the difference.</td></tr>
+<tr><td>Line bridge</td><td>Lines in geometric harmony: 1-4, 2-5, 3-6 (same position in the hexagram's two trigrams).</td><td>Life styles that lock together on their own: one builds where the other opens.</td></tr></table></div>
+<p style="font-size:14px;color:var(--dim);line-height:1.6;max-width:80ch;margin-top:12px">And profiles «of the same type»? Look at the <b style="color:var(--txt)">Life's Work Line</b>: two Line 1s build a library-house, two Line 3s a life of adventures, two Line 5s a refuge from the world's projections. Same-Line couples understand each other instantly but share blind spots; bridge couples (1-4, 2-5, 3-6) complete each other effortlessly; all the others choose each other — and hand-built bridges hold best of all.</p>`,
+      shareLbl:"Shareable link", copy:"Copy link", copied:"Copied — OK", shareSys:"Share",
+      nav:{profilo:"Profile",chiavi:"Keys",almanacco:"Almanac",guida:"How to read it",match:"Compatibility"},
+      foot:"astronomy-engine ephemerides · Personality = birth, Design = 88° of solar arc earlier.<br>Inspired by the Hologenetic Profile (Gene Keys by Richard Rudd). A contemplative tool: original texts, for play — no algorithm decides for your heart." },
+    fr:{ htitle:["COMPATI","BILITÉ"], ksuper:"DUAL TRACE · DEUX PROFILS, UNE MESURE",
+      hsub:"Nous comparons les 11 sphères de deux profils hologénétiques : Clés partagées, Clés miroir, ponts de Ligne. Pas une note sur l'amour — une carte de là où vous vous reconnaissez et où vous vous complétez.",
+      formTitle:"Données de naissance", p1:"Personne 1 · Trace A", p2:"Personne 2 · Trace B",
+      lblName:"Prénom", lblDate:"Date", lblTime:"Heure", lblNoTime:"Je ne sais pas", lblPlace:"Ville de naissance",
+      phPlace:"Cherche une ville…", placeHint:"Choisis dans la liste.", go:"Comparer les profils",
+      resTpl:"Mesure — {a} + {b}", connTitle:"Connexions détectées",
+      connHint:"Par ordre de force : Clés jumelles, résonances, miroirs (hexagrammes opposés), ponts de Ligne.",
+      styleTitle:"Styles face à face",
+      lwLabel:"Life's Work",
+      errDate:n=>`Entre la date de naissance de ${n}.`, errTime:n=>`Entre l'heure de ${n} (ou coche « je ne sais pas »).`,
+      errPlace:n=>`Choisis la ville de ${n} dans la liste.`, errCalc:"Un souci est survenu dans le calcul.",
+      thTitle:"Comment ça marche (même sans calculer)",
+      thBody:`<p style="font-size:14px;color:var(--txt);line-height:1.6;max-width:80ch">La compatibilité hologénétique ne cherche pas « les bons signes » : elle cherche des <b>géométries</b> entre deux profils. Voici les quatre qui comptent :</p>
+<div style="overflow-x:auto"><table class="stable"><tr><th>Connexion</th><th>Ce que c'est</th><th>Effet typique</th></tr>
+<tr><td>Clé jumelle</td><td>La même Clé dans la même sphère des deux profils.</td><td>Reconnaissance immédiate (« tu parles ma langue ») — mais aussi la même ombre : vous vous reflétez, en bien comme en moins bien.</td></tr>
+<tr><td>Résonance</td><td>La même Clé dans des sphères différentes.</td><td>Terrain commun : le même don vécu sous deux angles. Excellent pour collaborer.</td></tr>
+<tr><td>Clés miroir</td><td>Clés opposées sur la roue (à 180°, « partenaires de programmation ») : ex. 26 ↔ 45, 1 ↔ 2.</td><td>Attraction des pôles opposés : chacun porte la moitié qui manque à l'autre. Électrique — exige le respect de la différence.</td></tr>
+<tr><td>Pont de Ligne</td><td>Lignes en harmonie géométrique : 1-4, 2-5, 3-6 (même position dans les deux trigrammes).</td><td>Des styles de vie qui s'emboîtent tout seuls : l'un construit là où l'autre ouvre.</td></tr></table></div>
+<p style="font-size:14px;color:var(--dim);line-height:1.6;max-width:80ch;margin-top:12px">Et les profils « du même type » ? Regarde la <b style="color:var(--txt)">Ligne du Life's Work</b> : deux Lignes 1 bâtissent une maison-bibliothèque, deux Lignes 3 une vie d'aventures, deux Lignes 5 un refuge contre les projections du monde. Les couples de même Ligne se comprennent au vol mais partagent leurs angles morts ; les couples pont (1-4, 2-5, 3-6) se complètent sans effort ; tous les autres se choisissent — et les ponts construits à la main tiennent mieux que tout.</p>`,
+      shareLbl:"Lien partageable", copy:"Copier le lien", copied:"Copié — OK", shareSys:"Partager",
+      nav:{profilo:"Profil",chiavi:"Clés",almanacco:"Almanach",guida:"Comment lire",match:"Compatibilité"},
+      foot:"Éphémérides astronomy-engine · Personnalité = naissance, Design = 88° d'arc solaire avant.<br>Inspiré du Profil Hologénétique (Gene Keys de Richard Rudd). Outil contemplatif : textes originaux, pour jouer — aucun algorithme ne décide pour ton cœur." },
+    es:{ htitle:["COMPATI","BILIDAD"], ksuper:"DUAL TRACE · DOS PERFILES, UNA MEDIDA",
+      hsub:"Comparamos las 11 esferas de dos perfiles hologenéticos: Llaves compartidas, Llaves espejo, puentes de Línea. No una nota sobre el amor — un mapa de dónde os reconocéis y dónde os completáis.",
+      formTitle:"Datos de nacimiento", p1:"Persona 1 · Traza A", p2:"Persona 2 · Traza B",
+      lblName:"Nombre", lblDate:"Fecha", lblTime:"Hora", lblNoTime:"No la sé", lblPlace:"Ciudad de nacimiento",
+      phPlace:"Busca una ciudad…", placeHint:"Elige de la lista.", go:"Comparar los perfiles",
+      resTpl:"Medida — {a} + {b}", connTitle:"Conexiones detectadas",
+      connHint:"En orden de fuerza: Llaves gemelas, resonancias, espejos (hexagramas opuestos), puentes de Línea.",
+      styleTitle:"Estilos frente a frente",
+      lwLabel:"Life's Work",
+      errDate:n=>`Introduce la fecha de nacimiento de ${n}.`, errTime:n=>`Introduce la hora de ${n} (o marca «no la sé»).`,
+      errPlace:n=>`Elige la ciudad de ${n} de la lista.`, errCalc:"Algo salió mal en el cálculo.",
+      thTitle:"Cómo funciona (incluso sin calcular)",
+      thBody:`<p style="font-size:14px;color:var(--txt);line-height:1.6;max-width:80ch">La compatibilidad hologenética no busca «signos correctos»: busca <b>geometrías</b> entre dos perfiles. Estas son las cuatro que cuentan:</p>
+<div style="overflow-x:auto"><table class="stable"><tr><th>Conexión</th><th>Qué es</th><th>Efecto típico</th></tr>
+<tr><td>Llave gemela</td><td>La misma Llave en la misma esfera de ambos perfiles.</td><td>Reconocimiento inmediato («hablas mi idioma») — pero también la misma sombra: os reflejáis, para bien y para menos bien.</td></tr>
+<tr><td>Resonancia</td><td>La misma Llave en esferas distintas.</td><td>Terreno común: el mismo don vivido desde dos ángulos. Excelente para colaborar.</td></tr>
+<tr><td>Llaves espejo</td><td>Llaves opuestas en la rueda (a 180°, «socios de programación»): ej. 26 ↔ 45, 1 ↔ 2.</td><td>Atracción de polos opuestos: cada uno lleva la mitad que al otro le falta. Eléctrica — exige respeto por la diferencia.</td></tr>
+<tr><td>Puente de Línea</td><td>Líneas en armonía geométrica: 1-4, 2-5, 3-6 (misma posición en los dos trigramas).</td><td>Estilos de vida que encajan solos: uno construye donde el otro abre.</td></tr></table></div>
+<p style="font-size:14px;color:var(--dim);line-height:1.6;max-width:80ch;margin-top:12px">¿Y los perfiles «del mismo tipo»? Mira la <b style="color:var(--txt)">Línea del Life's Work</b>: dos Líneas 1 construyen una casa-biblioteca, dos Líneas 3 una vida de aventuras, dos Líneas 5 un refugio de las proyecciones del mundo. Las parejas de la misma Línea se entienden al vuelo pero comparten los puntos ciegos; las parejas puente (1-4, 2-5, 3-6) se completan sin esfuerzo; todas las demás se eligen — y los puentes construidos a mano aguantan más que ninguno.</p>`,
+      shareLbl:"Enlace para compartir", copy:"Copiar enlace", copied:"Copiado — OK", shareSys:"Compartir",
+      nav:{profilo:"Perfil",chiavi:"Llaves",almanacco:"Almanaque",guida:"Cómo se lee",match:"Compatibilidad"},
+      foot:"Efemérides astronomy-engine · Personalidad = nacimiento, Diseño = 88° de arco solar antes.<br>Inspirado en el Perfil Hologenético (Gene Keys de Richard Rudd). Herramienta contemplativa: textos originales, para jugar — ningún algoritmo decide por tu corazón." },
+    pt:{ htitle:["COMPATIBI","LIDADE"], ksuper:"DUAL TRACE · DOIS PERFIS, UMA MEDIDA",
+      hsub:"Comparamos as 11 esferas de dois perfis hologenéticos: Chaves compartilhadas, Chaves espelho, pontes de Linha. Não uma nota sobre o amor — um mapa de onde vocês se reconhecem e onde se completam.",
+      formTitle:"Dados de nascimento", p1:"Pessoa 1 · Traço A", p2:"Pessoa 2 · Traço B",
+      lblName:"Nome", lblDate:"Data", lblTime:"Hora", lblNoTime:"Não sei", lblPlace:"Cidade de nascimento",
+      phPlace:"Busque uma cidade…", placeHint:"Escolha da lista.", go:"Comparar os perfis",
+      resTpl:"Medida — {a} + {b}", connTitle:"Conexões detectadas",
+      connHint:"Em ordem de força: Chaves gêmeas, ressonâncias, espelhos (hexagramas opostos), pontes de Linha.",
+      styleTitle:"Estilos lado a lado",
+      lwLabel:"Life's Work",
+      errDate:n=>`Informe a data de nascimento de ${n}.`, errTime:n=>`Informe a hora de ${n} (ou marque «não sei»).`,
+      errPlace:n=>`Escolha a cidade de ${n} na lista.`, errCalc:"Algo deu errado no cálculo.",
+      thTitle:"Como funciona (mesmo sem calcular)",
+      thBody:`<p style="font-size:14px;color:var(--txt);line-height:1.6;max-width:80ch">A compatibilidade hologenética não procura «signos certos»: procura <b>geometrias</b> entre dois perfis. Estas são as quatro que contam:</p>
+<div style="overflow-x:auto"><table class="stable"><tr><th>Conexão</th><th>O que é</th><th>Efeito típico</th></tr>
+<tr><td>Chave gêmea</td><td>A mesma Chave na mesma esfera dos dois perfis.</td><td>Reconhecimento imediato («você fala a minha língua») — mas também a mesma sombra: vocês se espelham, para o bem e para o menos bem.</td></tr>
+<tr><td>Ressonância</td><td>A mesma Chave em esferas diferentes.</td><td>Terreno comum: o mesmo dom vivido de dois ângulos. Ótimo para colaborações.</td></tr>
+<tr><td>Chaves espelho</td><td>Chaves opostas na roda (a 180°, «parceiras de programação»): ex. 26 ↔ 45, 1 ↔ 2.</td><td>Atração de polos opostos: cada um carrega a metade que falta ao outro. Elétrica — exige respeito pela diferença.</td></tr>
+<tr><td>Ponte de Linha</td><td>Linhas em harmonia geométrica: 1-4, 2-5, 3-6 (mesma posição nos dois trigramas).</td><td>Estilos de vida que se encaixam sozinhos: um constrói onde o outro abre.</td></tr></table></div>
+<p style="font-size:14px;color:var(--dim);line-height:1.6;max-width:80ch;margin-top:12px">E os perfis «do mesmo tipo»? Olhe a <b style="color:var(--txt)">Linha do Life's Work</b>: duas Linhas 1 constroem uma casa-biblioteca, duas Linhas 3 uma vida de aventuras, duas Linhas 5 um refúgio das projeções do mundo. Casais da mesma Linha se entendem na hora mas compartilham os pontos cegos; casais ponte (1-4, 2-5, 3-6) se completam sem esforço; todos os outros se escolhem — e as pontes construídas à mão são as que mais aguentam.</p>`,
+      shareLbl:"Link compartilhável", copy:"Copiar link", copied:"Copiado — OK", shareSys:"Compartilhar",
+      nav:{profilo:"Perfil",chiavi:"Chaves",almanacco:"Almanaque",guida:"Como ler",match:"Compatibilidade"},
+      foot:"Efemérides astronomy-engine · Personalidade = nascimento, Design = 88° de arco solar antes.<br>Inspirado no Perfil Hologenético (Gene Keys de Richard Rudd). Ferramenta contemplativa: textos originais, para brincar — nenhum algoritmo decide pelo seu coração." }
+  };
+  const U = () => UI[langOf()] || UI.it;
+
+  function personForm(id, title){
+    const u = U();
+    return `<h3>${title}</h3>
+    <div class="field"><label>${u.lblName}</label><input class="inp" id="${id}Name" placeholder="${u.lblName}" autocomplete="off"></div>
+    <div class="row">
+      <div class="field"><label>${u.lblDate}</label><input class="inp" id="${id}Date" type="date" min="1900-01-01" max="2030-12-31"></div>
+      <div class="field"><label>${u.lblTime}</label><input class="inp" id="${id}Time" type="time">
+        <label class="check"><input type="checkbox" id="${id}NoTime"> <span>${u.lblNoTime}</span></label></div>
+    </div>
+    <div class="field"><label>${u.lblPlace}</label>
+      <input class="inp" id="${id}Place" placeholder="${u.phPlace}" autocomplete="off">
+      <div class="ac" id="${id}Ac"></div>
+      <div class="hint" id="${id}Hint">${u.placeHint}</div>
+    </div>`;
+  }
+
+  const chosen = { a:null, b:null };
+  const saved = { a:{}, b:{} };
+  function buildForms(){
+    ["a","b"].forEach(id=>{
+      ["Name","Date","Time"].forEach(f=>{ const el=$(id+f); if(el) saved[id][f]=el.value; });
+      const nt = $(id+"NoTime"); if(nt) saved[id].NoTime = nt.checked;
+      const pl = $(id+"Place"); if(pl) saved[id].Place = pl.value;
+    });
+    $("pA").innerHTML = personForm("a", U().p1);
+    $("pB").innerHTML = personForm("b", U().p2);
+    ["a","b"].forEach(id=>{
+      ["Name","Date","Time"].forEach(f=>{ if(saved[id][f]!=null) $(id+f).value = saved[id][f]; });
+      if(saved[id].NoTime){ $(id+"NoTime").checked = true; $(id+"Time").disabled = true; }
+      if(saved[id].Place!=null) $(id+"Place").value = saved[id].Place;
+      if(chosen[id]) $(id+"Hint").innerHTML = `<span class="ok">OK</span> ${chosen[id].name}, ${chosen[id].area}`;
+      wireAc(id);
+    });
+  }
+  function wireAc(id){
+    const inp = $(id+"Place"), box = $(id+"Ac");
+    let items = [], sel = -1;
+    function render(list){
+      items = list; sel = -1;
+      if(!list.length){ box.classList.remove("show"); return; }
+      box.innerHTML = list.map((c,i)=>`<div class="ac-item" data-i="${i}">${c.name} <small>· ${c.area}</small></div>`).join("");
+      box.classList.add("show");
+      box.querySelectorAll(".ac-item").forEach(el=>{ el.onclick = ()=> pick(items[+el.dataset.i]); });
+    }
+    function pick(c){
+      chosen[id] = c; inp.value = c.name; box.classList.remove("show");
+      $(id+"Hint").innerHTML = `<span class="ok">OK</span> ${c.name}, ${c.area}`;
+    }
+    inp.addEventListener("input", ()=>{
+      chosen[id] = null; $(id+"Hint").textContent = U().placeHint;
+      render(window.CITY.search(inp.value, 6));
+    });
+    inp.addEventListener("keydown", e=>{
+      if(!box.classList.contains("show")) return;
+      if(e.key==="ArrowDown"){sel=Math.min(sel+1,items.length-1);e.preventDefault();}
+      else if(e.key==="ArrowUp"){sel=Math.max(sel-1,0);e.preventDefault();}
+      else if(e.key==="Enter"){ if(sel>=0){pick(items[sel]);e.preventDefault();} return;}
+      else return;
+      box.querySelectorAll(".ac-item").forEach((el,i)=>el.classList.toggle("sel",i===sel));
+    });
+    document.addEventListener("click", e=>{ if(!inp.contains(e.target)&&!box.contains(e.target)) box.classList.remove("show"); });
+    $(id+"NoTime").addEventListener("change", e=>{
+      $(id+"Time").disabled = e.target.checked;
+      if(e.target.checked) $(id+"Time").value="";
+    });
+  }
+
+  function showErr(m){ const e=$("errBox"); e.textContent=m; e.classList.add("show"); }
+
+  function readPerson(id, fallbackName){
+    const u = U();
+    const dateStr = $(id+"Date").value;
+    if(!dateStr) throw u.errDate(fallbackName);
+    const [y,mo,d] = dateStr.split("-").map(Number);
+    const noTime = $(id+"NoTime").checked;
+    let hour=null, minute=null;
+    if(!noTime){
+      const t = $(id+"Time").value;
+      if(!t) throw u.errTime(fallbackName);
+      [hour,minute] = t.split(":").map(Number);
+    }
+    let tz;
+    if(chosen[id]) tz = chosen[id].tz;
+    else if($(id+"Place").value.trim()) throw u.errPlace(fallbackName);
+    else tz = Intl.DateTimeFormat().resolvedOptions().timeZone || "UTC";
+    const name = $(id+"Name").value.trim() || fallbackName;
+    return { name, prof: window.HOLO.compute({year:y,month:mo,day:d,hour,minute,tz}) };
+  }
+
+  $("goBtn").addEventListener("click", ()=>{
+    $("errBox").classList.remove("show");
+    try{
+      curA = readPerson("a", U().p1.split("·")[0].trim());
+      curB = readPerson("b", U().p2.split("·")[0].trim());
+    }catch(m){ if(typeof m==="string") return showErr(m); console.error(m); return showErr(U().errCalc); }
+    curM = window.HOLOMATCH.compare(curA.prof, curB.prof);
+    updateShareUrl();
+    render();
+    $("result").style.display="block";
+    if(!window.__autorun) $("result").scrollIntoView();
+  });
+
+  // --- link condivisibile: l'URL diventa la misura ---
+  function updateShareUrl(){
+    try{
+      const q = new URLSearchParams();
+      q.set("lang", langOf());
+      ["a","b"].forEach(id=>{
+        q.set(id+"_d", $(id+"Date").value);
+        if(!$(id+"NoTime").checked && $(id+"Time").value) q.set(id+"_t", $(id+"Time").value);
+        if(chosen[id]) q.set(id+"_city", chosen[id].name);
+        const n = $(id+"Name").value.trim(); if(n) q.set(id+"_n", n);
+      });
+      q.set("run","1");
+      history.replaceState(null, "", location.pathname + "?" + q.toString());
+    }catch(e){}
+  }
+  function renderShare(){
+    const u = U();
+    $("shareLbl").textContent = u.shareLbl;
+    let h = `<input class="inp surl" id="shareUrl" readonly value="${location.href.replace(/"/g,"&quot;")}">` +
+      `<button class="sbtn" id="copyBtn" type="button">${u.copy}</button>`;
+    if(navigator.share) h += `<button class="sbtn" id="sysShareBtn" type="button">${u.shareSys}</button>`;
+    $("shareBar").innerHTML = h;
+    $("copyBtn").onclick = async ()=>{
+      const val = $("shareUrl").value;
+      try{ await navigator.clipboard.writeText(val); }
+      catch(e){ $("shareUrl").select(); try{ document.execCommand("copy"); }catch(_){} }
+      $("copyBtn").textContent = u.copied; $("copyBtn").classList.add("done");
+    };
+    const sb = $("sysShareBtn");
+    if(sb) sb.onclick = ()=>{ navigator.share({ url: $("shareUrl").value }).catch(()=>{}); };
+  }
+
+  // galvanometro: quadrante semicircolare con lancetta
+  function meterSVG(score){
+    const w=190, h=118, cx=w/2, cy=100, r=76;
+    const D2R=Math.PI/180;
+    const ang = v => 180 - v*1.8;   // 0..100 → 180..0 gradi
+    const pt = (rr,a)=>[cx + rr*Math.cos(a*D2R), cy - rr*Math.sin(a*D2R)];
+    let s=`<svg viewBox="0 0 ${w} ${h}" width="${w}" height="${h}" role="img" aria-label="score ${score}/100">`;
+    s+=`<path d="M${cx-r-10} ${cy} A${r+10} ${r+10} 0 0 1 ${cx+r+10} ${cy}" fill="#0b0f0b" stroke="#49564a" stroke-width="1.2"/>`;
+    for(let v=0;v<=100;v+=5){
+      const big = v%25===0;
+      const [x0,y0]=pt(r-(big?10:5),ang(v)), [x1,y1]=pt(r,ang(v));
+      s+=`<line x1="${x0.toFixed(1)}" y1="${y0.toFixed(1)}" x2="${x1.toFixed(1)}" y2="${y1.toFixed(1)}" stroke="${big?'#93a08f':'#2c352c'}" stroke-width="${big?1.2:0.8}"/>`;
+      if(big){
+        const [tx,ty]=pt(r-19,ang(v));
+        s+=`<text x="${tx.toFixed(1)}" y="${(ty+3).toFixed(1)}" text-anchor="middle" font-size="7.5" font-family="Azeret Mono,monospace" fill="#93a08f">${v}</text>`;
+      }
+    }
+    const [nx,ny]=pt(r-8,ang(score));
+    s+=`<line x1="${cx}" y1="${cy}" x2="${nx.toFixed(1)}" y2="${ny.toFixed(1)}" stroke="#ffb454" stroke-width="2"/>`;
+    s+=`<circle cx="${cx}" cy="${cy}" r="5" fill="#1a211a" stroke="#49564a" stroke-width="1"/>`;
+    s+=`<text x="${cx}" y="${cy-14}" text-anchor="middle" font-size="17" font-family="Azeret Mono,monospace" font-weight="600" fill="#ffb454">${score}</text>`;
+    s+=`</svg>`;
+    return s;
+  }
+
+  function connHTML(c, A, B){
+    const M = D().MATCH, K = D().KEYS, SP = D().SPHERES, L = D().LINES;
+    let title="", text="";
+    if(c.type==="gemella"){
+      title = fill(M.gemellaTitle, {key:c.key, sphere:SP[c.aK].n});
+      text = fill(M.gemellaText, {key:c.key, sphere:SP[c.aK].n, gift:K[c.key].d, shadow:K[c.key].o});
+    } else if(c.type==="risonanza"){
+      title = fill(M.risonanzaTitle, {key:c.key, sphereA:SP[c.aK].n, sphereB:SP[c.bK].n});
+      text = fill(M.risonanzaText, {key:c.key, sphereA:SP[c.aK].n, sphereB:SP[c.bK].n, nameA:A.name, nameB:B.name, gift:K[c.key].d});
+    } else if(c.type==="specchio"){
+      title = fill(M.specchioTitle, {keyA:c.keyA, keyB:c.keyB, sphereA:SP[c.aK].n, sphereB:SP[c.bK].n});
+      text = fill(M.specchioText, {keyA:c.keyA, keyB:c.keyB, nameA:A.name, nameB:B.name, giftA:K[c.keyA].d, giftB:K[c.keyB].d});
+    } else if(c.type==="ponte"){
+      title = fill(M.ponteTitle, {a:c.a, b:c.b});
+      text = fill(M.ponteText, {a:c.a, b:c.b});
+    } else {
+      title = fill(M.passoTitle, {line:c.line, lineName:L[c.line].n});
+      text = fill(M.passoText, {line:c.line, brevis:L[c.line].brevis});
+    }
+    return `<div class="connrow ${c.type}">
+      <div class="conntitle"><span class="conntype">${M.types[c.type]}</span> ${title}</div>
+      <div class="conntext">${text}</div></div>`;
+  }
+
+  function miniProfile(P){
+    const lw = P.prof.byK.lavoro, K = D().KEYS, L = D().LINES;
+    return `<div class="minicard">
+      <b>${P.name}</b> — ${U().lwLabel} <span style="font-family:var(--f-mono);color:var(--amber)">${lw.label}</span> (${K[lw.key].d}) · ${D().LBL.linea} ${lw.line}: ${L[lw.line].n}
+      <div class="keys">${P.prof.spheres.map(s=>D().SPHERES[s.k].n.split(" ")[0]+" "+s.label).join(" · ")}</div>
+    </div>`;
+  }
+
+  function render(){
+    if(!curM) return;
+    const u = U(), M = D().MATCH;
+    $("resTitle").textContent = fill(u.resTpl, {a:curA.name, b:curB.name});
+    $("ring").innerHTML = meterSVG(curM.score);
+    const v = M.verdicts[curM.band];
+    $("vLabel").textContent = v.label;
+    $("vText").textContent = v.t;
+    $("miniProfiles").innerHTML = miniProfile(curA) + miniProfile(curB);
+    $("conns").innerHTML = curM.conns.length
+      ? curM.conns.map(c=>connHTML(c, curA, curB)).join("")
+      : `<p style="font-size:14px;color:var(--txt)">${M.noConn}</p>`;
+    const L = D().LINES;
+    const pairKey = Math.min(curM.la,curM.lb)+"-"+Math.max(curM.la,curM.lb);
+    $("lineComment").innerHTML =
+      fill(M.lineIntro, {nameA:curA.name, nameB:curB.name, la:curM.la, lb:curM.lb, lineA:L[curM.la].n, lineB:L[curM.lb].n}) +
+      "<br>" + (M.linepair[pairKey] || "");
+    renderShare();
+  }
+
+  function applyLang(){
+    const u = U();
+    $("htitle").innerHTML = `${u.htitle[0]}<span class="lit">${u.htitle[1]}</span>`;
+    $("ksuper").textContent = u.ksuper; $("hsub").textContent = u.hsub;
+    $("formTitle").textContent = u.formTitle; $("goBtn").textContent = u.go;
+    $("connTitle").textContent = u.connTitle; $("connHint").textContent = u.connHint;
+    $("styleTitle").textContent = u.styleTitle;
+    $("thTitle").textContent = u.thTitle; $("thBody").innerHTML = u.thBody;
+    $("foot").innerHTML = u.foot;
+    document.querySelectorAll(".pill[data-k]").forEach(p=>{ if(u.nav[p.dataset.k]) p.textContent = u.nav[p.dataset.k]; });
+    buildForms();
+    if(curM) render();
+  }
+  if(window.ZI18N) window.ZI18N.mount($("langPick"));
+  window.addEventListener("zlangchange", applyLang);
+  applyLang();
+
+  // --- link condivisibile di coppia:
+  // ?a_d=YYYY-MM-DD&a_t=HH:MM&a_city=..&a_n=..&b_d=..&b_t=..&b_city=..&b_n=..&run=1 ---
+  try{
+    const q = new URLSearchParams(location.search);
+    if(q.get("run") === "1" && q.get("a_d") && q.get("b_d")){
+      window.__autorun = true;
+      ["a","b"].forEach(id=>{
+        $(id+"Date").value = q.get(id+"_d") || "";
+        if(q.get(id+"_t")) $(id+"Time").value = q.get(id+"_t");
+        else { $(id+"NoTime").checked = true; $(id+"Time").disabled = true; }
+        if(q.get(id+"_n")) $(id+"Name").value = q.get(id+"_n");
+        if(q.get(id+"_city")){
+          const hits = window.CITY.search(q.get(id+"_city"), 1);
+          if(hits.length){ chosen[id] = hits[0]; $(id+"Place").value = hits[0].name; }
+        }
+      });
+      $("goBtn").click();
+      window.scrollTo(0,0);
+    }
+  }catch(e){}
+})();
+</script>
+</body>
+</html>

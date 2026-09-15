@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>Ologenetica — Le 64 Chiavi</title>
+<meta name="theme-color" content="#0b0f0b">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icons/icon-192.png" type="image/png">
+<link rel="stylesheet" href="holo/fonts.css">
+<link rel="stylesheet" href="holo/instrument.css">
+<style>
+.kgrid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:22px 24px}
+@media(max-width:720px){.kgrid{grid-template-columns:1fr;margin:16px 12px}}
+.kcard{border:1px solid var(--etch);border-radius:3px;background:var(--panel-1);padding:14px 15px;scroll-margin-top:20px}
+.kcard .khead{display:flex;align-items:baseline;gap:12px}
+.kcard .knum{font-family:var(--f-mono);font-weight:600;font-size:30px;color:var(--amber);text-shadow:var(--glow);line-height:1}
+.kcard .kspec{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--amber-dn)}
+.kcard .kt{font-size:13px;color:var(--txt);line-height:1.55;margin-top:9px}
+.kcard .klong{font-size:13px;color:var(--dim);line-height:1.6;margin-top:7px}
+.kcard .kmeta{font-family:var(--f-mono);font-size:10.5px;color:var(--dim);margin-top:9px;border-top:1px solid var(--etch);padding-top:8px;line-height:1.8}
+.kcard .kmeta b{color:var(--txt);font-weight:600}
+.kcard .kmeta a{color:var(--amber);text-decoration:none}
+</style>
+</head>
+<body>
+<!--
+THESIS: la biblioteca dello strumento — le 64 bande di frequenza catalogate, consultabili una a una; eredita il mondo "Lo Spettrometro".
+OWN-WORLD: holo/instrument.css (pannelli, fosfori, rampa calibrata, mono readouts).
+STORY: il lettore consulta una Chiave come si consulta una tavola di taratura: spettro, essenza, anello, specchio.
+FIRST VIEWPORT: targa, titolo LE 64 CHIAVI acceso, griglia di schede numerate con ancore #k1..#k64.
+FORM: estensione del mondo scelto (Lo Spettrometro, seed 84c75ad3) — registro catalogo.
+FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, DESIGN.md, and every shipping raster carrying its provenance.
+-->
+<div class="wrap">
+  <div class="topbar">
+    <a class="brand" href="index.html" title="Home">
+      <svg class="dialmark" viewBox="0 0 22 22" fill="none" aria-hidden="true"><circle cx="11" cy="11" r="9" stroke-width="1.4"/><line x1="11" y1="11" x2="16.5" y2="6.5" stroke-width="1.4"/><line x1="11" y1="2" x2="11" y2="4.5" stroke-width="1"/><line x1="11" y1="17.5" x2="11" y2="20" stroke-width="1"/><line x1="2" y1="11" x2="4.5" y2="11" stroke-width="1"/><line x1="17.5" y1="11" x2="20" y2="11" stroke-width="1"/></svg>
+      Ologenetica</a>
+    <div class="topright">
+      <div class="nav">
+        <a class="pill" data-k="profilo" href="Profilo%20Ologenetico.html">Profilo</a>
+        <a class="pill on" data-k="chiavi" href="Chiavi.html">Chiavi</a>
+        <a class="pill" data-k="almanacco" href="Almanacco.html">Almanacco</a>
+        <a class="pill" data-k="guida" href="Come%20si%20Legge.html">Come si legge</a>
+        <a class="pill" data-k="match" href="Compatibilit%C3%A0.html">Compatibilità</a>
+      </div>
+      <span id="langPick"></span>
+    </div>
+  </div>
+
+  <div class="hero">
+    <h1 class="htitle" id="htitle"></h1>
+    <div class="ksuper" id="ksuper"></div>
+    <p class="hsub" id="hsub"></p>
+    <div class="tickline"></div>
+  </div>
+
+  <div class="kgrid" id="kgrid"></div>
+
+  <div class="footnote" id="foot"></div>
+</div>
+
+<script src="lang/i18n.js"></script>
+<script src="holo/keys.it.js"></script>
+<script src="holo/keys.en.js"></script>
+<script src="holo/keys.fr.js"></script>
+<script src="holo/keys.es.js"></script>
+<script src="holo/keys.pt.js"></script>
+<script src="holo/extra.it.js"></script>
+<script src="holo/extra.en.js"></script>
+<script src="holo/extra.fr.js"></script>
+<script src="holo/extra.es.js"></script>
+<script src="holo/extra.pt.js"></script>
+<script src="holo/engine.js"></script>
+<script>
+(function(){
+  const $ = id => document.getElementById(id);
+  const langOf = () => window.ZI18N ? window.ZI18N.get() : "it";
+  const D = () => window.HOLO_LANGS[langOf()] || window.HOLO_LANGS.it;
+  const E = () => window.HOLO_EXTRA[langOf()] || window.HOLO_EXTRA.it;
+  const NAV = {
+    it:{profilo:"Profilo",chiavi:"Chiavi",almanacco:"Almanacco",guida:"Come si legge",match:"Compatibilità"},
+    en:{profilo:"Profile",chiavi:"Keys",almanacco:"Almanac",guida:"How to read it",match:"Compatibility"},
+    fr:{profilo:"Profil",chiavi:"Clés",almanacco:"Almanach",guida:"Comment lire",match:"Compatibilité"},
+    es:{profilo:"Perfil",chiavi:"Llaves",almanacco:"Almanaque",guida:"Cómo se lee",match:"Compatibilidad"},
+    pt:{profilo:"Perfil",chiavi:"Chaves",almanacco:"Almanaque",guida:"Como ler",match:"Compatibilidade"}
+  };
+  const FOOT = {
+    it:"Sistema ispirato al Profilo Ologenetico (Gene Keys di Richard Rudd). Strumento contemplativo e simbolico: testi originali.",
+    en:"Inspired by the Hologenetic Profile (Gene Keys by Richard Rudd). A contemplative, symbolic tool: original texts.",
+    fr:"Inspiré du Profil Hologénétique (Gene Keys de Richard Rudd). Outil contemplatif et symbolique : textes originaux.",
+    es:"Inspirado en el Perfil Hologenético (Gene Keys de Richard Rudd). Herramienta contemplativa y simbólica: textos originales.",
+    pt:"Inspirado no Perfil Hologenético (Gene Keys de Richard Rudd). Ferramenta contemplativa e simbólica: textos originais."
+  };
+
+  function band(K, L){
+    return `<div class="band"><div class="scale"></div><div class="zones">
+      <div class="zone z-o"><span class="zlab">${L.ombra}</span><span class="zval">${K.o}</span></div>
+      <div class="zone z-d"><span class="zlab">${L.dono}</span><span class="zval">${K.d}</span></div>
+      <div class="zone z-s"><span class="zlab">${L.siddhi}</span><span class="zval">${K.s}</span></div>
+    </div></div>`;
+  }
+
+  function applyLang(){
+    const X = E().LIB, L = D().LBL, RD = E().RINGS;
+    $("htitle").innerHTML = X.title.split(" ").length > 1
+      ? X.title.split(" ").slice(0,-1).join(" ") + ' <span class="lit">' + X.title.split(" ").pop() + "</span>"
+      : `<span class="lit">${X.title}</span>`;
+    $("ksuper").textContent = X.ksuper;
+    $("hsub").textContent = X.sub;
+    let h = "";
+    for(let k=1;k<=64;k++){
+      const K = D().KEYS[k];
+      const ringId = window.HOLO.RING_OF[k];
+      const partner = window.HOLO.partnerOf(k);
+      h += `<div class="kcard" id="k${k}">
+        <div class="khead"><span class="knum">${k}</span><span class="kspec">${K.o} · ${K.d} · ${K.s}</span></div>
+        ${band(K, L)}
+        <div class="kt">${K.t}</div>
+        <div class="klong">${K.long}</div>
+        <div class="kmeta">${X.ringLbl}: <b>${RD[ringId].n}</b> — ${RD[ringId].t}<br>
+          ${X.partnerLbl}: <a href="#k${partner}">${partner} · ${D().KEYS[partner].d}</a></div>
+      </div>`;
+    }
+    $("kgrid").innerHTML = h;
+    $("foot").textContent = FOOT[langOf()] || FOOT.it;
+    const nav = NAV[langOf()] || NAV.it;
+    document.querySelectorAll(".pill[data-k]").forEach(p=>{ if(nav[p.dataset.k]) p.textContent = nav[p.dataset.k]; });
+    if(window.ZI18N) window.ZI18N.decorate();
+    if(location.hash){ const el = document.querySelector(location.hash); if(el) el.scrollIntoView(); }
+  }
+  if(window.ZI18N) window.ZI18N.mount($("langPick"));
+  window.addEventListener("zlangchange", applyLang);
+  applyLang();
+})();
+</script>
+</body>
+</html>

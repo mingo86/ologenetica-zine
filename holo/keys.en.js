@@ -1,0 +1,278 @@
+/* ============================================================
+   OLOGENETICA · LANGUAGE PACK — ENGLISH
+   Each Key: o=Shadow, d=Gift, s=Siddhi, t=short essence,
+   long=extended reading (2-4 sentences, report style).
+   LINES: n=name, brevis=summary, t=phrase, long=extended reading.
+   SPHERES: per key-sphere { n=name, d=description, ctx=reading
+   of the Key INSIDE that sphere }.
+   Templates use {curlyBrace} placeholders: filled by fill() in the pages.
+   Original texts. System inspired by the Hologenetic Profile
+   (Gene Keys by Richard Rudd: I Ching + astrology + Human Design).
+   ============================================================ */
+(function () {
+
+  const KEYS = {
+    1:  { o: "Entropy", d: "Freshness", s: "Beauty", t: "Creative energy in its pure state: it moves through the grey stretches and re-emerges creating beauty out of nothing.",
+      long: "The 1 is the Key of individual creativity: the urge to express something that didn't exist before. The shadow is entropy — the grey cycles where energy stagnates and everything feels pointless; fighting them prolongs them, moving through them transforms them. The gift is freshness: those who accept their creative winters re-emerge with an expression that renews the air around them." },
+    2:  { o: "Dislocation", d: "Orientation", s: "Unity", t: "The inner compass: it knows which way life is heading even when there's no map at all.",
+      long: "The 2 is the compass: it knows the direction without being able to explain it. In shadow the contact is lost: you become disoriented and ask others for the route, adapting to maps that aren't yours. The gift is orientation — trusting your own inner north and letting decisions align on their own." },
+    3:  { o: "Chaos", d: "Innovation", s: "Innocence", t: "It sees the hidden order inside disorder and turns it into something that didn't exist before.",
+      long: "The 3 stands on the threshold of the new: everything that is born passes through here, disorderly by nature. The shadow is chaos suffered: life as one continuous emergency. The gift is innovation — using disorder as raw material and finding the combination nobody had tried. Perfect routines switch it off: it needs mutation." },
+    4:  { o: "Intolerance", d: "Understanding", s: "Forgiveness", t: "The mind that hunts for answers: when it stops judging, it starts truly understanding.",
+      long: "The 4 is the mind that formulates answers: quick logic, explanations at the ready. The shadow is intolerance: mistaking your own answer for the only one and dismissing whoever doesn't see it. The gift is understanding — the same lucidity placed at the service of other people's questions, with the patience of someone who knows every answer is provisional." },
+    5:  { o: "Impatience", d: "Patience", s: "Timelessness", t: "The natural rhythm of things: trusting life's timing instead of forcing it.",
+      long: "The 5 guards natural rhythms: it knows everything has its season. The shadow is impatience — forcing the timing, living ahead of the present, wearing yourself out in the waiting. The gift is true patience: not resignation but active trust in the cycles. Acting when the moment comes, and not a minute sooner." },
+    6:  { o: "Conflict", d: "Diplomacy", s: "Peace", t: "The art of turning friction into encounter: the emotional skin that feels the atmosphere of every room.",
+      long: "The 6 is the emotional skin of the profile: it feels the atmosphere of every room and the exact point where people collide. The shadow is conflict: hair-trigger reactivity, walls raised in self-defence. The gift is diplomacy — using that same sensitivity to lower other people's defences and turn friction into encounter." },
+    7:  { o: "Division", d: "Guidance", s: "Virtue", t: "Leadership that points the way without imposing it: others follow because they trust it.",
+      long: "The 7 is the guide who works from the flank: it sees the group's course before the group does. The shadow is division — imposing the direction, creating factions, commanding out of insecurity. The gift is authentic guidance: pointing the way and letting others choose to walk it. It's the authority that needs no rank." },
+    8:  { o: "Mediocrity", d: "Style", s: "Exquisiteness", t: "The courage to do things your own way: the contribution nobody else can make.",
+      long: "The 8 is the Key of individual contribution: bringing the world something unmistakably your own. The shadow is called mediocrity, and it doesn't mean poor quality: it means conformity — sanding down what makes you particular so as not to lose your belonging. The gift is style: the recognisable signature that gives others permission to be particular too." },
+    9:  { o: "Inertia", d: "Determination", s: "Invincibility", t: "The power of small steps: putting energy into the right detail until the big picture completes itself.",
+      long: "The 9 is the power of detail: devoting yourself to the small things that make the big ones succeed. The shadow is inertia: scattering yourself across the wrong minutiae, or postponing out of exhaustion. The gift is determination — choosing the right detail and staying with it until the whole picture composes itself." },
+    10: { o: "Self-Obsession", d: "Naturalness", s: "Being", t: "Loving yourself as you are: when it stops playing a role, everything gets simpler.",
+      long: "The 10 is self-love: behaviour that springs from simply being what you are. The shadow is self-obsession — playing a character, endlessly correcting yourself, searching for yourself in other people's eyes. The gift is naturalness: when it stops performing itself, life around it simplifies in an almost suspicious way." },
+    11: { o: "Obscurity", d: "Idealism", s: "Light", t: "A continuous stream of images and dreams asking to become stories and shared visions.",
+      long: "The 11 is the image-maker: ideas, dreams and visions in continuous flow. The shadow is obscurity: hoarding images without ever choosing one, confusing daydreaming with living. The gift is idealism — giving the images form and offering them as stories that light others up. Not every vision is meant to be realised: most are meant to be told." },
+    12: { o: "Vanity", d: "Discrimination", s: "Purity", t: "It speaks only when it counts: the voice that, at the right moment, touches the heart of whoever is listening.",
+      long: "The 12 is the rare voice: it speaks little and touches deep. The shadow is vanity — using expression to be admired, or staying silent out of wounded pride. The gift is discrimination: the discernment of when to speak, with whom, and in what words. The same sentence, at the right moment, changes a day; at the wrong moment, it falls flat." },
+    13: { o: "Discord", d: "Discernment", s: "Empathy", t: "The born listener: it gathers everyone's stories and keeps their memory safe.",
+      long: "The 13 is the ear of the world: people tell it things they tell no one else. The shadow is discord — listening through your own filter, hoarding secrets as burdens or as weapons. The gift is discernment: picking out what matters in the stories, keeping it safe and giving it back as shared memory." },
+    14: { o: "Compromise", d: "Competence", s: "Bounteousness", t: "The talent that thrives only when it works for what it loves: then the resources arrive.",
+      long: "The 14 is wealth as a consequence: energy that bears fruit when it works for what it loves. The shadow is compromise — selling your hours to what doesn't warm you, and calling it realism. The gift is competence: when inner direction and work coincide, resources arrive as a by-product, not as a goal." },
+    15: { o: "Dullness", d: "Magnetism", s: "Florescence", t: "The love of life's variety: a natural magnet for people and experiences of every kind.",
+      long: "The 15 is the Key of extremes: irregular rhythms, full periods and empty periods, oscillation as the norm and not a malfunction. The shadow is dullness — living the flat stretches as personal failure and forcing yourself towards a regularity this Key was never built for. The gift is magnetism: once the rhythm is accepted, the peaks become irresistible and the troughs become preparation. It's not the oscillation that does the damage: it's the fight against the oscillation." },
+    16: { o: "Indifference", d: "Versatility", s: "Mastery", t: "Enthusiasm that, repeated with devotion every day, turns into art.",
+      long: "The 16 is enthusiasm becoming craft: it identifies a talent and throws itself in. The shadow is indifference — leaping from enthusiasm to enthusiasm without deepening any of them. The gift is versatility: the daily repetition that turns momentum into mastery. Ten thousand hours that don't weigh a thing, because the gesture is loved." },
+    17: { o: "Opinion", d: "Far-Sightedness", s: "Omniscience", t: "The eye that sees the big picture before anyone else and knows where the road will lead.",
+      long: "The 17 is the eye that organises the future: it sees patterns and trajectories before others do. The shadow is opinion — digging in behind your own point of view and defending it like an identity. The gift is far-sightedness: offering your vision as a service, knowing a forecast is only useful if someone can use it." },
+    18: { o: "Judgement", d: "Integrity", s: "Perfection", t: "The gaze that instantly spots what isn't working: it corrects to improve, not to wound.",
+      long: "The 18 is the corrector: it sees in an instant what isn't working, in a system or in a person. The shadow is judgement — criticism that wounds, aimed at others or turned inward as chronic self-criticism. The gift is integrity: the same precision used to repair what you love, not to condemn it." },
+    19: { o: "Co-Dependence", d: "Sensitivity", s: "Sacrifice", t: "Ultra-fine antennae for other people's needs: it senses what's needed before it's asked for.",
+      long: "The 19 is the needs-sensor: it feels what others need — food, contact, recognition — before it's asked for. The shadow is co-dependence: making yourself indispensable, buying closeness with care. The gift is sensitivity: touching the real needs without drowning in them, remaining a person and not a function." },
+    20: { o: "Superficiality", d: "Self-Assurance", s: "Presence", t: "The here and now: the ability to act at the exact moment it's needed, without hesitating.",
+      long: "The 20 is the pure present: for this Key only the here and now exists. The shadow is superficiality — continuous activity without awareness, words that come out before the thought. The gift is self-assurance: action perfectly synchronised with the moment, no dress rehearsals. The presence that doesn't need to prepare." },
+    21: { o: "Control", d: "Authority", s: "Valour", t: "The courage to take charge of situations: it governs resources and territories with a noble heart.",
+      long: "The 21 is the guardian: it defends a perimeter — resources, territory, people. The shadow is control exercised over people: micromanagement, a grip that suffocates. The gift is authority — taking real responsibility for something and answering for it. The antidote to control isn't letting everything go: it's delegating real authority, the one thing control doesn't know how to do." },
+    22: { o: "Dishonour", d: "Graciousness", s: "Grace", t: "Kindness that stays kind even inside the strongest emotions: an elegance of the soul.",
+      long: "The 22 is grace under pressure: kindness that passes through the most violent emotions. The shadow is dishonour — when the emotional wave crashes over, you say the words that can't be taken back. The gift is graciousness: feeling everything, all the way down, and still choosing the gesture that honours the other person." },
+    23: { o: "Complexity", d: "Simplicity", s: "Quintessence", t: "The gift of saying the right thing in the simplest words: it cuts away the superfluous.",
+      long: "The 23 is simplification: putting into words what others can't manage to formulate. The shadow is complexity — over-explaining, wrapping the thought in layers and not being understood; or speaking at the wrong time, earning rejection instead of comprehension. The gift: say the thing in one sentence, at the right moment, and stop. Every extra sentence pushes the 23 towards the shadow." },
+    24: { o: "Addiction", d: "Invention", s: "Silence", t: "The mind that returns to the same thoughts until, in a pause of silence, it finds the breakthrough.",
+      long: "The 24 is the returning mind: it churns over the same thoughts in search of a way out. The shadow is addiction — the loop spinning in place: thoughts, substances, people, anything that promises to close the circle. The gift is invention: in the pause between one loop and the next, when the mind goes quiet for an instant, the new idea slips in." },
+    25: { o: "Constriction", d: "Acceptance", s: "Universal Love", t: "The heart learning to love without conditions: every wound becomes an opening.",
+      long: "The 25 is love without an object: the capacity to love what is, not what you wish were there. The shadow is constriction — the heart that closes after its wounds and rations out affection. The gift is acceptance: each wound crossed widens the inner space, until love stops choosing its recipients." },
+    26: { o: "Pride", d: "Artfulness", s: "Invisibility", t: "The born salesman: it gets where it wants with cunning, timing and a smile.",
+      long: "The 26 is the art of the shortcut: it knows how to sell, persuade, shorten the road. The shadow is pride — bending the truth to inflate your own image. The gift is artfulness: the same cunning placed in service of something that deserves it. The perfect messenger: it delivers, and disappears." },
+    27: { o: "Selfishness", d: "Altruism", s: "Selflessness", t: "Caring: the instinct to nourish and protect everything that has yet to grow.",
+      long: "The 27 is nourishment: the instinct to care for what needs to grow. The shadow is selfishness — tending only your own garden, or feeding others out of hunger for gratitude. The gift is altruism: giving what's needed, to whoever needs it, when it's needed. Without keeping score." },
+    28: { o: "Purposelessness", d: "Totality", s: "Immortality", t: "Staking everything on what gives life meaning: it prefers risk to regret.",
+      long: "The 28 is the dice player: it prefers risk to regret. The shadow is purposelessness — chasing thrills to avoid feeling the void, or never risking anything at all. The gift is totality: choosing what's worth staking everything on, and living it without reservation. Life as a wager, not a waiting room." },
+    29: { o: "Half-Heartedness", d: "Commitment", s: "Devotion", t: "The yes said with the whole body: when it commits, it goes all the way to the end of the cycle.",
+      long: "The 29 is the binding yes: when this Key says yes, it goes in with its whole body. The shadow is half-heartedness — half-spoken yeses, commitments made to please and abandoned mid-cycle. The gift is commitment: choosing little, but going all the way. The persistence that crosses even the dark stretches of the cycle." },
+    30: { o: "Desire", d: "Lightness", s: "Rapture", t: "The fire of desire learning to warm without burning: intensity that becomes joy.",
+      long: "The 30 is the fire of desire: it craves intensity, experiences, feeling. The shadow is desire run wild — the craving that consumes and is never sated: a fire that burns the house down. The gift is lightness: desiring intensely without demanding that the object of desire save your life. The fire in the hearth, not in the roof." },
+    31: { o: "Arrogance", d: "Leadership", s: "Humility", t: "The voice the group chooses to listen to: it influences those around it, for better or worse.",
+      long: "The 31 is voice and influence: leading by speaking. The shadow is arrogance — speaking from a position, for your own interest, using influence as personal leverage. The gift is the 31's specific brand of leadership: saying what the group already feels but hasn't yet put into words. It doesn't lead because it commands: it leads because it names." },
+    32: { o: "Failure", d: "Preservation", s: "Veneration", t: "The instinct for what deserves to last: it recognises value and protects it over time.",
+      long: "The 32 is the preservation instinct: it recognises what deserves to last. The shadow is the fear of failure — holding on to everything, risking nothing, confusing prudence with paralysis. The gift is active preservation: telling apart what should be kept from what should be released. The long memory that makes evolution possible." },
+    33: { o: "Forgetting", d: "Mindfulness", s: "Revelation", t: "The fertile retreat: it withdraws to turn lived experience into wisdom.",
+      long: "The 33 is retreat and memory: telling what you've been through, so others don't have to go through it blind. The shadow is forgetting — passing through experiences without extracting anything, and therefore repeating them. The gift is mindfulness, and it requires retreat as a technical condition: without a phase of silence, the material stays raw." },
+    34: { o: "Force", d: "Strength", s: "Majesty", t: "Pure life energy: an enormous power, magnificent when it follows its own path.",
+      long: "The 34 is pure power: abundant, independent life energy. The shadow is force — strength applied where it isn't needed, at the wrong moment, to prove something. The gift is strength: the same power flowing when it follows its own path without asking for spectators. Magnificent precisely because it has nothing to prove." },
+    35: { o: "Hunger", d: "Adventure", s: "Boundlessness", t: "The urge to try everything at least once: progress is born from curiosity.",
+      long: "The 35 is the hunger for experience: everything must be tried at least once. The shadow is bottomless hunger — changing out of boredom, collecting experiences like trading cards and staying hungry. The gift is adventure: choosing experiences for what they teach, not to fill a void. Progress as a consequence of curiosity." },
+    36: { o: "Turbulence", d: "Humanity", s: "Compassion", t: "The emotional storms it has crossed become experience: nobody understands others so deeply.",
+      long: "The 36 is the emotional storm: it crosses crises others avoid. The shadow is turbulence — seeking out drama, or being swept away by it every cycle. The gift is humanity: the storms crossed become shared experience. Nobody understands a crisis like someone who has already been through them, and come back." },
+    37: { o: "Weakness", d: "Equality", s: "Tenderness", t: "The glue of family and community: warmth, loyalty and agreements that hold.",
+      long: "The 37 is the family pact: the warmth that holds people together. The shadow is weakness — agreements swallowed for the sake of peace, roles endured for fear of losing your seat at the table. The gift is equality: clear pacts and loyal affection. Family — by blood or by choice — as the place where nobody has to buy their seat." },
+    38: { o: "Struggle", d: "Perseverance", s: "Honour", t: "The warrior who won't quit: it fights only for the things that truly matter.",
+      long: "The 38 is the warrior: born to fight, at peace only when the fight is worth it. The shadow is blind struggle — fighting everything, always, even what doesn't deserve it; or fighting other people's battles. The gift is perseverance: choosing the right causes and never letting them go, with the honour of one who fights clean." },
+    39: { o: "Provocation", d: "Dynamism", s: "Liberation", t: "The goad that wakes up stuck energy: it provokes to liberate, not to wound.",
+      long: "The 39 is the provocateur: it pokes exactly where the energy is stuck. The shadow is provocation for its own sake — irritating in order to exist, testing other people's limits out of boredom. The gift is dynamism: the surgical provocation that frees what was frozen. In people, in groups, in situations run aground." },
+    40: { o: "Exhaustion", d: "Resolve", s: "Divine Will", t: "The power of no: it works hard and knows when to stop, defending its own space.",
+      long: "The 40 is the power of no: it works hard and defends its space to recover. The shadow is exhaustion — saying yes out of duty until you're emptied out, then withdrawing in resentment. The gift is resolve: giving a great deal, inside clear boundaries. The no said in time saves all the future yeses." },
+    41: { o: "Fantasy", d: "Anticipation", s: "Emanation", t: "The starting point of every cycle: it feels the new arriving before it's visible.",
+      long: "The 41 is the seed of every new experience: the pressure to do something never done before — the Key that opens the whole wheel of 64. In shadow it's fantasy: imagining life instead of living it. It's an insidious shadow, because every imagined possibility delivers a small dose of the satisfaction realising it would bring. The gift is anticipation: feeling the future pressing in, and making room for it in the facts." },
+    42: { o: "Expectation", d: "Detachment", s: "Celebration", t: "Carrying cycles to their end and closing them with gratitude, holding on to nothing.",
+      long: "The 42 is completion: the Key that carries cycles to their natural end. The shadow is expectation — staying attached to how things were supposed to go, dragging along cycles that are already over. The gift is detachment: closing with gratitude, gathering the fruit and leaving the tree. Every ending done well funds the next beginning." },
+    43: { o: "Deafness", d: "Insight", s: "Epiphany", t: "The nonconformist intuition: ideas that arrive out of silence and catch everyone off guard.",
+      long: "The 43 is nonconformist intuition: it knows things it can't explain, ahead of its time. The shadow is deafness — locking into your own frequency and not making yourself understood, or no longer listening to anyone. The gift is insight: translating the intuition into a form others can receive, accepting that the world arrives a few years late." },
+    44: { o: "Interference", d: "Teamwork", s: "Synarchy", t: "A nose for people: it spots in a flash who is right for which role.",
+      long: "The 44 is the nose for people: it recognises at first glance who is suited to what. The shadow is interference — using this talent to manoeuvre, or staying trapped in the ghosts of past betrayals. The gift is teamwork: putting each person in the role where they flourish. The natural talent scout of every group." },
+    45: { o: "Dominance", d: "Synergy", s: "Communion", t: "Gathering the resources and redistributing them so the whole community prospers.",
+      long: "The 45 is the sovereign of resources: it gathers and distributes. The shadow is dominance — hoarding power and resources like a birthright, ruling from above. The gift is synergy: orchestrating resources so the whole community prospers. The leadership that measures its own success by the prosperity of others." },
+    46: { o: "Seriousness", d: "Delight", s: "Ecstasy", t: "The luck of those who inhabit their own body: it finds itself in the right place at the right time.",
+      long: "The 46 is love for the body: the luck of those who truly inhabit their own flesh. The shadow is seriousness — living in your head, treating the body like a means of transport, always arriving a beat after the right moment. The gift is delight: the full physical presence that places you, apparently by chance, in the right place at the right time." },
+    47: { o: "Oppression", d: "Transmutation", s: "Transfiguration", t: "The alchemist of memory: it turns heavy memories into inner gold.",
+      long: "The 47 is the alchemist of memory: it works the past until it yields gold. The shadow is oppression — heavy memories looping and crushing the present. The gift is transmutation: the same memories, composted over time, become the raw material of your depth." },
+    48: { o: "Inadequacy", d: "Resourcefulness", s: "Wisdom", t: "The deep well: it holds a resource for every problem, even while fearing it won't be enough.",
+      long: "The 48 is the well: depth that is already there, but doubted. The shadow is the fear of not being enough, and it produces two opposite, equally paralysing behaviours: postponing forever because you're never ready enough, or stacking up training and credentials to fill a void that isn't a void. The gift is resourcefulness, with a counterintuitive mechanism: the depth shows up under pressure, not before. You don't become adequate and then act; you act, and discover you already were." },
+    49: { o: "Reaction", d: "Revolution", s: "Rebirth", t: "It changes the rules when they no longer serve the people: principles before habits.",
+      long: "The 49 is the revolutionary: it changes the rules when they no longer serve the people. The shadow is reaction — breaking pacts on impulse, burning bridges as the first response. The gift is true revolution: renegotiating principles at the right moment, bringing along whoever is willing. The ruptures that open eras, instead of leaving rubble." },
+    50: { o: "Corruption", d: "Equilibrium", s: "Harmony", t: "The keeper of values: it feels responsible for whatever protects the community.",
+      long: "The 50 is the keeper of values: it feels on its skin the responsibility for what protects the community. The shadow is corruption — bending values to self-interest, or shouldering responsibilities that aren't yours until you're crushed. The gift is equilibrium: updating the rules that truly protect. Ethics as a living thing, not a museum." },
+    51: { o: "Agitation", d: "Initiative", s: "Awakening", t: "The jolt that opens new roads: the first to dare where no one has gone yet.",
+      long: "The 51 is the shock that awakens: the first to cross the threshold that frightens everyone. The shadow is agitation — chasing adrenaline to feel alive, shocking out of habit. The gift is initiative: the courage to go first where no one has gone. And to come back and tell everyone it can be done." },
+    52: { o: "Stress", d: "Restraint", s: "Stillness", t: "The unmoving mountain: the steady concentration that manages to see far.",
+      long: "The 52 is the mountain: still, concentrated, seeing far precisely because it doesn't move. The shadow is stress — held-in energy vibrating in place: the tension of wanting to act everywhere and acting nowhere. The gift is restraint: choosing the exact point where the energy should concentrate, and letting everything else go." },
+    53: { o: "Immaturity", d: "Expansion", s: "Superabundance", t: "The initiator: it sows beginnings everywhere, and not every seed is its own to tend.",
+      long: "The 53 is the Key of beginnings and gradual growth: the drive to start something new, and the discipline to let it grow at its own pace. The shadow is immaturity, and it has a precise shape: starting without finishing — jumping to a new beginning exactly when the previous one enters its boring phase, which is where the real growth happens. The gift is expansion: development by degrees, without forcing the stages." },
+    54: { o: "Greed", d: "Aspiration", s: "Ascension", t: "The ambition that climbs: the material drive that, purified, becomes elevation.",
+      long: "The 54 is the engine of ascent: the drive to rise, materially and beyond. In shadow it's greed — accumulating as a substitute for actually rising. The gift is aspiration: the same force aimed upward instead of at more. The difference isn't in the intensity, which stays identical: it's in the object." },
+    55: { o: "Victimisation", d: "Freedom", s: "Freedom", t: "The free spirit: it learns to ride emotions like waves instead of wearing them like chains.",
+      long: "The 55 is the spirit in search of freedom: the Key of emotions as waves. The shadow is victimisation — believing your mood depends on the outside: on someone, on something, on luck. The gift is freedom: riding the emotional waves without identifying with the crest or the trough. Mood as weather, not as identity." },
+    56: { o: "Distraction", d: "Enrichment", s: "Intoxication", t: "The storyteller: it turns the river of stimuli into stories that nourish whoever listens.",
+      long: "The 56 is the wandering storyteller: it gathers stimuli and turns them into stories. The shadow is distraction — chasing ever-new stimuli without digesting any of them. The gift is enrichment: experiences become tales that nourish whoever listens. The journey is worth how it gets told, not how many miles it covers." },
+    57: { o: "Unease", d: "Intuition", s: "Clarity", t: "The finest ear: it perceives what's about to happen a moment before everyone else.",
+      long: "The 57 is the finest ear: it perceives what's about to happen a moment before everyone else. The shadow is unease — the background anxiety of someone who senses too much and doesn't trust what they sense. The gift is intuition: the instant clarity that skips reasoning altogether. Listen to it right away, because it doesn't repeat itself." },
+    58: { o: "Dissatisfaction", d: "Vitality", s: "Bliss", t: "The joy of living that wants to improve the world: energy gushing like a spring.",
+      long: "The 58 is the wellspring of joy: vitality that gushes up and wants to make things better. The shadow is dissatisfaction — the inner critic that finds the flaw in everything and is never content. The gift is vitality: the same energy that, instead of complaining about the flaw, sets about fixing it. With a contagious joy in the doing." },
+    59: { o: "Dishonesty", d: "Intimacy", s: "Transparency", t: "It breaks down the barriers between people: its talent is creating real bonds.",
+      long: "The 59 is the barrier-breaker: born for real intimacy. The shadow is dishonesty — the strategies used to get close: seducing, pleasing, manoeuvring. They win contact, and they block the encounter. The gift is intimacy: the disarming transparency, the maskless approach that gives others the courage to do the same." },
+    60: { o: "Limitation", d: "Realism", s: "Justice", t: "Limits as structure: it knows that magic needs a form in order to manifest.",
+      long: "The 60 is structure: it knows magic needs form. The shadow is limitation — living constraints as a sentence, grumbling against the rules while staying their prisoner. The gift is realism: accepting limits as the banks that give the river its force. Inside an accepted constraint, energy concentrates and creates." },
+    61: { o: "Psychosis", d: "Inspiration", s: "Sanctity", t: "The mystery: the mind in love with the questions no one can answer.",
+      long: "The 61 is the mystery: the mind in love with unanswerable questions. The shadow is psychic pressure — the compulsive need to know, which at its extremes becomes a delusion of certainty. The gift is inspiration: dwelling in the unknown without demanding answers. And receiving, now and then, a flash you never asked for." },
+    62: { o: "Intellect", d: "Precision", s: "Impeccability", t: "The exact detail: it gives things their precise name and makes the complicated clear.",
+      long: "The 62 is precision: it gives things their exact name. The shadow is intellect — getting lost in details, drowning people in data, mistaking accuracy for truth. The gift is precision in the service of meaning: the right detail that makes the complicated clear. The art of saying exactly what's needed, and nothing else." },
+    63: { o: "Doubt", d: "Inquiry", s: "Truth", t: "Fertile doubt: the question that won't settle and pushes knowledge forward.",
+      long: "The 63 is fertile doubt: the question that won't settle. The shadow is corrosive doubt — suspecting everything, everyone and above all yourself, without ever concluding. The gift is inquiry: turning suspicion into precise questions, and questions into tests. The engine of all advancing knowledge." },
+    64: { o: "Confusion", d: "Imagination", s: "Illumination", t: "The kaleidoscope: a thousand images searching for meaning, until the light switches on by itself.",
+      long: "The 64 is the kaleidoscope: a constant pressure of images searching for meaning. The shadow is confusion — trying to order the flow by force, and drowning in it. The gift is imagination: letting the images compose themselves. Understanding arrives suddenly, whole, the moment you stop forcing it." }
+  };
+
+  const LINES = {
+    1: { n: "The Investigator", brevis: "foundations", t: "It needs to understand deeply before acting: it studies, digs in, builds solid foundations.",
+      long: "Line 1 builds from the ground up: before acting it must understand, study, touch the foundations. Its confidence is born of knowledge — when the foundations are solid nothing can shift it; when they're missing, anxiety freezes it. The risk is preparing forever and never setting out." },
+    2: { n: "The Hermit", brevis: "natural talent", t: "Talent flows through it effortlessly, but it tends not to see it: it blossoms when it is called.",
+      long: "Line 2 means natural, not trained: the talent works on its own when the context lets it work, and jams when you force it or put it under observation. It can't see itself: it needs to be recognised and called — and it answers only the sincere calls." },
+    3: { n: "The Experimenter", brevis: "trial and error", t: "It learns by crashing into things: every «failed» attempt is precious material. Impossible to stop for long.",
+      long: "Line 3 learns by trial and error: competence is built on failed attempts, which are material and not accidents. It has an undeserved bad reputation: it produces the most concrete solidity there is, because it's the only kind built from direct experience instead of theory." },
+    4: { n: "The Opportunist", brevis: "network and heart", t: "It lives on relationships: opportunities reach it through the people it knows.",
+      long: "Line 4 is relational: everything — opportunities, work, love — comes through the network of people it cultivates. Its gift is the loyalty of its social fabric; its risk is sanding itself down so as not to lose it. Transitions only work if the new branch is already in place before letting go of the old one." },
+    5: { n: "The Heretic", brevis: "practical solutions", t: "Others project great expectations onto it: its practical solution at the right moment saves the day.",
+      long: "Line 5 attracts projections: others assign it powers, faults and expectations it never asked for. Its talent is the practical solution offered at the right moment — save the day, then step back, because staying too long in the spotlight turns the halo into a target." },
+    6: { n: "The Role Model", brevis: "the big picture", t: "Three lives in one: it experiments, then watches from the roof of the world, and finally becomes an example.",
+      long: "Line 6 isn't a trait: it's a calendar in three phases. Until ~30, direct experience, mistakes, scars. From ~30 to ~50, retreat and observation — a period almost every 6 lives through badly because it looks like a stall, when it's actually digestion. Then the third phase: you become a reference point. It asks for patience with your own calendar." }
+  };
+
+  // Canonical sphere names (English, as in the official reports) + texts
+  const SPHERES = {
+    lavoro:     { n: "Life's Work",   d: "Your outer genius: what you came here to do, the role the world sees.",
+      ctx: "In the Life's Work this energy is the soul's trade: the visible role, what you'll be recognised for. It's the same sphere that, seen from the outside, the Pearl Sequence calls the Brand." },
+    evoluzione: { n: "Evolution",     d: "The central challenge: what life teaches you through difficulty.",
+      ctx: "As Evolution, it's the central challenge of the profile: the theme life brings back in a spiral, one turn higher each time. It isn't a flaw to fix — it's the path." },
+    radianza:   { n: "Radiance",      d: "What ignites your vitality: when you live it, health and presence radiate.",
+      ctx: "As Radiance it's a Design sphere, and therefore unconscious: it acts before it's chosen, and it shows on you. Lived as a gift it ignites vitality and health; held back in shadow, it switches them off." },
+    scopo:      { n: "Purpose",       d: "The deep foundation: it activates when you serve something bigger than yourself.",
+      ctx: "As Purpose it's the unconscious foundation: it activates when what you do serves something bigger than you. Until that happens, something keeps quietly missing." },
+    attrazione: { n: "Attraction",    d: "Who and what you attract in relationships: the doorway of your bonds.",
+      ctx: "As Attraction it governs what you attract: the people who arrive bring exactly this theme onto the stage, until you recognise it as your own." },
+    iq:         { n: "IQ",            d: "The mental cycle of ages 14–21: how your mind learned to defend itself and to shine.", age: "ages 14–21",
+      ctx: "As IQ it's the mental blind spot, formed between ages 14 and 21: the intellectual defence built in adolescence, which as an adult gets mistaken for «the way I think»." },
+    eq:         { n: "EQ",            d: "The emotional cycle of ages 7–14: how your heart learned to react and to open.", age: "ages 7–14",
+      ctx: "As EQ it's the emotional cycle of ages 7–14: the way the heart learned to react. The emotional defence that still fires on its own today, before any decision." },
+    sq:         { n: "SQ",            d: "The imprinting of the first 7 years — the Love Point: the root of trust.", age: "ages 0–7",
+      ctx: "As SQ it's the imprinting of the first 7 years — the Love Point: the body's deepest memory, where it was decided how far love can be trusted." },
+    nucleo:     { n: "Core / Vocation", d: "The oldest wound — and, transformed, your vocation.",
+      ctx: "As Core it's the central wound, associated with the nine months of gestation; as Vocation it's the same Key turned inside out: the medicine you carry is made of the material of your wound." },
+    cultura:    { n: "Culture",       d: "Your place in the community: how you thrive inside a group and what you bring to it.",
+      ctx: "As Culture it's the contribution to the collective: the natural place in the community, which reveals itself once the wound of the Core has already been crossed." },
+    perla:      { n: "Pearl",         d: "The reward: the prosperity that arrives when you simplify.",
+      ctx: "As Pearl it's the reward: the prosperity that arrives when you simplify. Not a prize to chase — a by-product of simplicity." }
+  };
+
+  const SEQ = {
+    attivazione: { n: "Activation Sequence", sub: "THE FOUR PRIME GIFTS",
+      d: "Calculated from the Sun, it's the foundation of the profile: contemplate it first, because everything else rests on it. The conscious axis (Life's Work / Evolution) and the unconscious one (Radiance / Purpose) are two distinct engines driving the same vehicle — and the distance between them is the profile's motor." },
+    venere: { n: "Venus Sequence", sub: "THE EMOTIONAL PLANE",
+      d: "Moon, Venus and Mars. It's read backwards: from the Attraction — the visible adult result — down through the seven-year cycles (IQ 14–21, EQ 7–14, SQ 0–7) to the Core, the oldest wound. It's the map for reopening what had closed." },
+    perla: { n: "Pearl Sequence", sub: "THE MENTAL PLANE AND PROSPERITY",
+      d: "Built on Jupiter, the Key of expansion. It starts from the Core — from the wound already crossed — and shows how it becomes service and prosperity: Vocation, Culture, Pearl, and the Brand that closes the circle back on the Life's Work. It doesn't work if skipped: the Pearl presupposes the Venus." }
+  };
+
+  const SIGNS = ["Aries","Taurus","Gemini","Cancer","Leo","Virgo","Libra","Scorpio","Sagittarius","Capricorn","Aquarius","Pisces"];
+  const BODIES = { sun: "Sun", earth: "Earth", moon: "Moon", venus: "Venus", mars: "Mars", jupiter: "Jupiter" };
+  const LBL = {
+    natale: "natal", design: "design",
+    tSfera: "Sphere", tPianeta: "Planet", tChiave: "Key", tPosizione: "Position",
+    nascita: "Birth", designDate: "Design", linee: "Lines", croce: "Incarnation Cross",
+    ombra: "Shadow", dono: "Gift", siddhi: "Siddhi", linea: "Line",
+    strutturaTitle: "The structure at a glance",
+    sogliaTitle: "A borderline value: {from} or {to}",
+    sogliaText: "The {sphere} sphere is calculated on a fast-moving body and falls near a Line boundary. Calculated threshold: {time}. Birth before that time → {from}; at that time or later → {to}. The Key stays the same: what changes is the how, not the what.",
+    sogliaStable: "The other spheres hold steady within ±30 minutes.",
+    noTimeWarn: "Without the birth time, the Attraction sphere (Moon) is approximate and the Lines of the fast spheres may vary."
+  };
+
+  // Structural synthesis (templates with placeholders)
+  const STRUCT = {
+    croce: "Incarnation Cross {ps}/{pe} | {ds}/{de}. The conscious axis ({ps}/{pe}) speaks of {giftPS} and {giftPE}; the unconscious one ({ds}/{de}) of {giftDS} and {giftDE}. Two distinct engines driving the same vehicle.",
+    asse: "The {a}/{b} axis. Life's Work and Evolution always sit opposite each other on the wheel, and the pair must be read together: the genius of {giftA} and the challenge of {shadowB} are the two poles of the same axis — unwinding the second frees the first.",
+    double: "Key {key} ×{n}. The same Key appears on {spheres}: the theme of {gift} (and of its shadow, {shadow}) isn't one side of the profile — it IS the theme. Every sphere hosting it puts it back on stage.",
+    mirror: "The {keyA} ↔ {keyB} channel. Two Keys opposite each other on the wheel occupy {sphereA} and {sphereB}: {giftA} and {giftB} are two halves of the same function, seen from two different spheres. Where one gets stuck, the other stiffens; where one blossoms, the other loosens.",
+    domLine: "{n} spheres in Line {line}. The indication repeats {n} times: {hint}",
+    lineHints: {
+      1: "the best things here grow from well-studied foundations — first understand, then act.",
+      2: "the best things here can't be manufactured: they're allowed to happen in protected conditions, without forcing them or watching them too closely.",
+      3: "the best things here come through attempts: error is the method, not the accident.",
+      4: "the best things here come through people: the network isn't a side dish, it's the channel.",
+      5: "the best things here are practical solutions offered at the right moment — followed by the retreat, before the halo becomes a target.",
+      6: "the best things here run on a long calendar: phases to be honoured, not stages to be rushed."
+    },
+    starts: "Many beginnings, few endings. {keys} occupy {n} of the eleven spheres: the drive to start is abundant{unconscious}. The completion-oriented Keys are {ends}: this profile doesn't have an energy problem — it has a staying-power theme.",
+    startsNoEnds: "Many beginnings, few endings. {keys} occupy {n} of the eleven spheres: the drive to start is abundant{unconscious} — and no Key in the profile is oriented towards completion. The structure has to be built, deliberately, around finishing.",
+    startsUnconscious: " and largely unconscious",
+    profLines: "Lines {a}/{b}"
+  };
+
+  // Compatibility texts (titles/bodies with placeholders + Line pairs)
+  const MATCH = {
+    types: { gemella: "twin key", risonanza: "resonance", specchio: "mirror keys", ponte: "line bridge", passo: "same stride" },
+    gemellaTitle: "Twin Key {key} — both in {sphere}",
+    gemellaText: "On the «{sphere}» sphere you have the exact same Key: the gift of {gift} is a language you both speak. You recognise each other — and you also mirror each other in the shadow of {shadow}: be gentle with what resembles you.",
+    risonanzaTitle: "Shared Key {key} — {sphereA} ↔ {sphereB}",
+    risonanzaText: "Key {key} is {nameA}'s «{sphereA}» and {nameB}'s «{sphereB}»: the same gift ({gift}) lived from two different angles. Excellent common ground.",
+    specchioTitle: "Mirror {keyA} ↔ {keyB} — {sphereA} / {sphereB}",
+    specchioText: "Keys {keyA} and {keyB} are programming partners: two halves of the same axis of the wheel. {nameA} carries {giftA}, {nameB} carries {giftB}: each holds the piece the other needs to complete the picture.",
+    ponteTitle: "Line Bridge {a}-{b} — geometric harmony",
+    ponteText: "Lines {a} and {b} are in natural harmony (like 1-4, 2-5, 3-6 in the hexagram): different styles that click together effortlessly.",
+    passoTitle: "Same stride — both Line {line} ({lineName})",
+    passoText: "You face life with the same style: {brevis}. You understand each other without explanations — the flip side is that you also share the same blind spots.",
+    noConn: "No direct geometric connection: you're a «hand-built bridges» couple. Look at the style comparison below — that's where everything plays out.",
+    verdicts: {
+      alta:  { label: "RARE RESONANCE", t: "Your profiles interweave at several points: one of those connections that seem written before birth. The work is not falling asleep on your laurels: every shared Key is also a shared shadow." },
+      buona: { label: "GREAT ALLIANCE", t: "Several threads connect your profiles: there's recognition, and there's also enough difference to learn from each other. A bond that grows over time." },
+      media: { label: "FERTILE ENCOUNTER", t: "A few points of contact and plenty of new territory: the relationship works if curiosity stays stronger than the need to feel the same." },
+      bassa: { label: "DIFFERENT WORLDS", t: "Few direct hooks between the profiles: it's not a no — it's an invitation. Couples with no automatic resonances build their bridges by hand, and those hold better than any other." }
+    },
+    lineIntro: "{nameA} is Line {la} ({lineA}), {nameB} is Line {lb} ({lineB}).",
+    linepair: {
+      "1-1": "Two Investigators: a house full of books and questions. You get each other instantly, but remember every now and then to leave the den and go live the answers.",
+      "1-2": "The Investigator studies, the Hermit knows without knowing why. If the first doesn't interrogate the second too much, a very fertile quiet is born.",
+      "1-3": "Theory and practice: one reads the manual, the other throws it away and tries. Together you cover the entire learning cycle.",
+      "1-4": "Natural bridge: the Investigator's foundations find in the Opportunist's network the audience they deserve. A couple that builds.",
+      "1-5": "One's solid groundwork lends credibility to the other's solutions. Just watch the expectations the world piles onto the Heretic.",
+      "1-6": "The Role Model sees the panorama, the Investigator the bricks. If you trust each other, you build something that lasts three generations.",
+      "2-2": "Two Hermits: the risk is that neither ever knocks on the other's door. But when it happens, it's one of the most natural intimacies in the spectrum.",
+      "2-3": "The Experimenter drags the Hermit outside, the Hermit offers a quiet harbour in return. A silent but nourishing exchange.",
+      "2-4": "The Opportunist is brilliant at calling, the Hermit is only waiting for the right call. If the call is sincere, it works wonderfully.",
+      "2-5": "Natural bridge: the Hermit's spontaneous talent and the Heretic's practical timing complete each other effortlessly.",
+      "2-6": "The Role Model recognises the Hermit's talent better than anyone — and the Hermit only lets itself be seen by those who truly respect it.",
+      "3-3": "Two Experimenters: an eventful life, zero boredom, plenty of bruises. The secret is laughing together at the failed experiments.",
+      "3-4": "One's discoveries travel on the other's network. A social, concrete couple that learns fast and shares gladly.",
+      "3-5": "Both practical and concrete: one discovers what does NOT work, the other offers the solution. A team for difficult situations.",
+      "3-6": "Natural bridge: the Role Model is an Experimenter who has already lived that phase. Deep understanding of the other's attempts.",
+      "4-4": "Two networks weaving together: friendships, contacts, community. The relationship blossoms if you also stay each other's best friend.",
+      "4-5": "The Opportunist's heart and the Heretic's charisma: an influential couple, loved by the group. Protect a space that's yours alone.",
+      "4-6": "The Opportunist weaves the bonds, the Role Model sets the example: together you're the reference point of your circle.",
+      "5-5": "Two Heretics: the world projects everything onto you. As a pair, the projections are halved: you're each other's refuge.",
+      "5-6": "Practicality and vision: the Heretic solves today, the Role Model holds the course for tomorrow. Leadership as a couple.",
+      "6-6": "Two Role Models on the roof of the world: a relationship that matures like wine — and around age 50 becomes an example for everyone else."
+    }
+  };
+
+  window.HOLO_LANGS = window.HOLO_LANGS || {};
+  window.HOLO_LANGS.en = { KEYS, LINES, SPHERES, SEQ, SIGNS, BODIES, LBL, STRUCT, MATCH };
+})();
