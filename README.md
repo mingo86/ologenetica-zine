@@ -1,5 +1,7 @@
 # Ologenetica Zine
 
+**Live**: https://ologenetica-zine.vercel.app · deploy automatico da `main` via Vercel.
+
 Progetto gemello (ma separato) dello Zodiac Zine, dedicato al **Profilo Ologenetico** (ispirato alle Gene Keys di Richard Rudd: I Ching + astrologia + Human Design). **Senza animazioni**, multilingua **IT / EN / FR / ES / PT-BR**, testi interpretativi originali.
 
 **Mondo visivo: "Lo Spettrometro"** — strumento di misura da laboratorio anni '60–'70: pannello smaltato verde-nero, fosforo ambra/menta, canali CH·1/2/3 (Attivazione/Venere/Perla), scale incise a tacche, rampa calibrata Ombra→Dono→Siddhi, stato = segno stampato. Stylesheet condiviso `holo/instrument.css`, font self-hosted in `fonts/` (`holo/fonts.css`: Saira Semi Condensed, Azeret Mono, Libre Franklin). Contratto di direzione nel commento in testa a ogni pagina (seed 84c75ad3).
