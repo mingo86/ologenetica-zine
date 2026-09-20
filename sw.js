@@ -2,7 +2,7 @@
    Documenti: network-first (mai HTML stantio dopo un deploy).
    Asset: cache-first con aggiornamento in background.
    Bumpare V a ogni deploy che tocca i file in CORE. */
-const V = "holo-v4";
+const V = "holo-v5";
 const CORE = [
   "index.html",
   "Profilo Ologenetico.html",
