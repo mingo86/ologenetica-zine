@@ -79,9 +79,10 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
       <p class="summary" id="resSummary"></p>
       <div class="birthdata" id="birthData"></div>
       <div class="bigline" id="bigline"></div>
-      <div class="modetoggle">
-        <button class="modebtn on" id="modeSimple"></button>
-        <button class="modebtn" id="modeReport"></button>
+      <div class="modehint" id="modeHint"></div>
+      <div class="modetoggle" role="tablist">
+        <button class="modebtn on" id="modeReport" role="tab"></button>
+        <button class="modebtn" id="modeSimple" role="tab"></button>
       </div>
       <div class="sharelbl" id="shareLbl"></div>
       <div class="sharebar" id="shareBar"></div>
@@ -193,7 +194,7 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
   const E = () => (window.HOLO_EXTRA && (window.HOLO_EXTRA[langOf()] || window.HOLO_EXTRA.it)) || null;
   const GL = () => (window.HOLO_GLOSS && (window.HOLO_GLOSS[langOf()] || window.HOLO_GLOSS.it)) || null;
   function fmtD(d){ try{ return new Intl.DateTimeFormat(LOCALE[langOf()]||"it-IT",{dateStyle:"medium"}).format(d); }catch(e){ return ""; } }
-  let chosenPlace = null, curR = null, curName = "", curStab = null, curDS = null, viewMode = "simple";
+  let chosenPlace = null, curR = null, curName = "", curStab = null, curDS = null, viewMode = "report";
 
   const UI = {
     it:{ ksuper:"MOD. 64 · 11 SFERE · 3 SEQUENZE · EFFEMERIDI REALI", htitle:["PROFILO ","OLOGENETICO"],
@@ -201,7 +202,7 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
       formTitle:"Dati di nascita", lblName:"Nome (facoltativo)", phName:"Come ti chiami?",
       lblDate:"Data di nascita", lblTime:"Ora di nascita", lblNoTime:"Non conosco l'ora",
       lblPlace:"Luogo di nascita", phPlace:"Cerca una città… es. Napoli", placeHint:"Scrivi e scegli dalla lista (serve per il fuso orario).",
-      go:"Misura il profilo", modeSimple:"Sintesi", modeReport:"Report completo",
+      go:"Misura il profilo", modeSimple:"Sintesi", modeReport:"Report completo", modeHint:"Due letture dello stesso profilo — scegli",
       resMine:"Lettura del profilo", resName:n=>`Lettura — ${n}`,
       sumTpl:"Il tuo Life's Work è la Chiave {label} — ombra: {o} → dono: {d} → siddhi: {s}. Le tue 11 sfere: {labels}.",
       styleTpl:"Il tuo stile: Linea {line} — {name}",
@@ -217,7 +218,7 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
       formTitle:"Birth data", lblName:"Name (optional)", phName:"What's your name?",
       lblDate:"Date of birth", lblTime:"Time of birth", lblNoTime:"I don't know the time",
       lblPlace:"Place of birth", phPlace:"Search a city… e.g. Naples", placeHint:"Type and pick from the list (needed for the timezone).",
-      go:"Measure the profile", modeSimple:"Overview", modeReport:"Full report",
+      go:"Measure the profile", modeSimple:"Overview", modeReport:"Full report", modeHint:"Two readings of the same profile — choose",
       resMine:"Profile reading", resName:n=>`Reading — ${n}`,
       sumTpl:"Your Life's Work is Key {label} — shadow: {o} → gift: {d} → siddhi: {s}. Your 11 spheres: {labels}.",
       styleTpl:"Your style: Line {line} — {name}",
@@ -233,7 +234,7 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
       formTitle:"Données de naissance", lblName:"Prénom (facultatif)", phName:"Comment tu t'appelles ?",
       lblDate:"Date de naissance", lblTime:"Heure de naissance", lblNoTime:"Je ne connais pas l'heure",
       lblPlace:"Lieu de naissance", phPlace:"Cherche une ville… ex. Naples", placeHint:"Écris et choisis dans la liste (nécessaire pour le fuseau horaire).",
-      go:"Mesurer le profil", modeSimple:"Synthèse", modeReport:"Rapport complet",
+      go:"Mesurer le profil", modeSimple:"Synthèse", modeReport:"Rapport complet", modeHint:"Deux lectures du même profil — choisis",
       resMine:"Lecture du profil", resName:n=>`Lecture — ${n}`,
       sumTpl:"Ton Life's Work est la Clé {label} — ombre : {o} → don : {d} → siddhi : {s}. Tes 11 sphères : {labels}.",
       styleTpl:"Ton style : Ligne {line} — {name}",
@@ -249,7 +250,7 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
       formTitle:"Datos de nacimiento", lblName:"Nombre (opcional)", phName:"¿Cómo te llamas?",
       lblDate:"Fecha de nacimiento", lblTime:"Hora de nacimiento", lblNoTime:"No sé la hora",
       lblPlace:"Lugar de nacimiento", phPlace:"Busca una ciudad… ej. Nápoles", placeHint:"Escribe y elige de la lista (necesario para la zona horaria).",
-      go:"Medir el perfil", modeSimple:"Síntesis", modeReport:"Informe completo",
+      go:"Medir el perfil", modeSimple:"Síntesis", modeReport:"Informe completo", modeHint:"Dos lecturas del mismo perfil — elige",
       resMine:"Lectura del perfil", resName:n=>`Lectura — ${n}`,
       sumTpl:"Tu Life's Work es la Llave {label} — sombra: {o} → don: {d} → siddhi: {s}. Tus 11 esferas: {labels}.",
       styleTpl:"Tu estilo: Línea {line} — {name}",
@@ -265,7 +266,7 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
       formTitle:"Dados de nascimento", lblName:"Nome (opcional)", phName:"Qual é o seu nome?",
       lblDate:"Data de nascimento", lblTime:"Hora de nascimento", lblNoTime:"Não sei a hora",
       lblPlace:"Local de nascimento", phPlace:"Busque uma cidade… ex. São Paulo", placeHint:"Digite e escolha da lista (necessário para o fuso horário).",
-      go:"Medir o perfil", modeSimple:"Síntese", modeReport:"Relatório completo",
+      go:"Medir o perfil", modeSimple:"Síntese", modeReport:"Relatório completo", modeHint:"Duas leituras do mesmo perfil — escolha",
       resMine:"Leitura do perfil", resName:n=>`Leitura — ${n}`,
       sumTpl:"Seu Life's Work é a Chave {label} — sombra: {o} → dom: {d} → siddhi: {s}. Suas 11 esferas: {labels}.",
       styleTpl:"Seu estilo: Linha {line} — {name}",
@@ -797,6 +798,7 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
     if(!chosenPlace) $("placeHint").textContent = u.placeHint;
     $("goBtn").textContent = u.go;
     $("modeSimple").textContent = u.modeSimple; $("modeReport").textContent = u.modeReport;
+    $("modeHint").textContent = u.modeHint;
     $("wheelTitle").textContent = u.wheelTitle; $("wheelSub").textContent = u.wheelSub;
     $("foot").innerHTML = u.foot;
     document.querySelectorAll(".pill[data-k]").forEach(p=>{ if(u.nav[p.dataset.k]) p.textContent = u.nav[p.dataset.k]; });
@@ -819,7 +821,7 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
         const hits = window.CITY.search(q.get("city"), 1);
         if(hits.length) pickPlace(hits[0]);
       }
-      if(q.get("view") === "report") viewMode = "report";
+      const vv = q.get("view"); if(vv === "simple") viewMode = "simple"; else if(vv === "report") viewMode = "report";
       $("goBtn").click();
     }
   }catch(e){}
