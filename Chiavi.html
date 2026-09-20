@@ -74,6 +74,12 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
 <script src="holo/extra.es.js"></script>
 <script src="holo/extra.pt.js"></script>
 <script src="holo/engine.js"></script>
+<script src="holo/gloss.it.js"></script>
+<script src="holo/gloss.en.js"></script>
+<script src="holo/gloss.fr.js"></script>
+<script src="holo/gloss.es.js"></script>
+<script src="holo/gloss.pt.js"></script>
+<script src="holo/gloss.js"></script>
 <script>
 (function(){
   const $ = id => document.getElementById(id);
@@ -105,6 +111,7 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
 
   function applyLang(){
     const X = E().LIB, L = D().LBL, RD = E().RINGS;
+    const G = (window.HOLO_GLOSS && (window.HOLO_GLOSS[langOf()] || window.HOLO_GLOSS.it)) || null;
     $("htitle").innerHTML = X.title.split(" ").length > 1
       ? X.title.split(" ").slice(0,-1).join(" ") + ' <span class="lit">' + X.title.split(" ").pop() + "</span>"
       : `<span class="lit">${X.title}</span>`;
@@ -120,6 +127,7 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
         ${band(K, L)}
         <div class="kt">${K.t}</div>
         <div class="klong">${K.long}</div>
+        ${G && G.PP[k] ? `<div class="kpp"><span class="pplbl">${G.ppLbl}</span>${G.PP[k]}</div>` : ""}
         <div class="kmeta">${X.ringLbl}: <b>${RD[ringId].n}</b> — ${RD[ringId].t}<br>
           ${X.partnerLbl}: <a href="#k${partner}">${partner} · ${D().KEYS[partner].d}</a></div>
       </div>`;

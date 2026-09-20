@@ -190,6 +190,33 @@ input[type="time"].inp::-webkit-calendar-picker-indicator{filter:invert(.75) sep
 .modebtn:hover{color:var(--txt)}
 .modebtn.on{background:var(--amber);color:var(--panel-0)}
 
+/* ---- glossario a fumetto ---- */
+.gl-term{border-bottom:1px dotted var(--amber-dn);cursor:help;outline-offset:2px}
+.gl-term:hover{border-bottom-color:var(--amber)}
+.gl-pop{
+  position:absolute;z-index:80;background:var(--panel-2);border:1px solid var(--etch-hi);
+  border-radius:3px;box-shadow:0 12px 28px rgba(0,0,0,.65), inset 0 1px 0 rgba(255,255,255,.04);
+  padding:10px 13px 11px;
+}
+.gl-pop::before{
+  content:"";position:absolute;top:-5px;left:var(--tail,18px);width:9px;height:9px;
+  background:var(--panel-2);border-left:1px solid var(--etch-hi);border-top:1px solid var(--etch-hi);
+  transform:rotate(45deg);
+}
+.gl-pop.above::before{top:auto;bottom:-5px;border-left:none;border-top:none;
+  border-right:1px solid var(--etch-hi);border-bottom:1px solid var(--etch-hi)}
+.gl-pop .gt{font-family:var(--f-engr);font-weight:600;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--amber);margin-bottom:4px}
+.gl-pop .gd{font-family:var(--f-text);font-size:12.5px;color:var(--txt);line-height:1.55}
+
+/* «in parole povere» */
+.rep p.pp, .kpp, .spp{
+  background:var(--panel-1);border:1px solid var(--etch);border-radius:3px;
+  padding:9px 12px;font-size:13.5px;color:var(--txt);line-height:1.55;
+}
+.pplbl{font-family:var(--f-engr);font-weight:600;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--mint);display:block;margin-bottom:3px}
+.kpp{margin-top:9px;font-size:13px}
+.spp{margin-top:9px;font-size:12.5px}
+
 /* ---- barra del link condivisibile ---- */
 .sharelbl{font-family:var(--f-engr);font-weight:600;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--dim);margin:16px 0 6px}
 .sharebar{display:flex;gap:8px;flex-wrap:wrap;align-items:stretch}

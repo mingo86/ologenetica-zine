@@ -171,6 +171,12 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
 <script src="holo/extra.pt.js"></script>
 <script src="holo/engine.js"></script>
 <script src="holo/compat.js"></script>
+<script src="holo/gloss.it.js"></script>
+<script src="holo/gloss.en.js"></script>
+<script src="holo/gloss.fr.js"></script>
+<script src="holo/gloss.es.js"></script>
+<script src="holo/gloss.pt.js"></script>
+<script src="holo/gloss.js"></script>
 <script>
 (function(){
   const $ = id => document.getElementById(id);
@@ -185,6 +191,7 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
   const langOf = () => window.ZI18N ? window.ZI18N.get() : "it";
   const D = () => window.HOLO_LANGS[langOf()] || window.HOLO_LANGS.it;
   const E = () => (window.HOLO_EXTRA && (window.HOLO_EXTRA[langOf()] || window.HOLO_EXTRA.it)) || null;
+  const GL = () => (window.HOLO_GLOSS && (window.HOLO_GLOSS[langOf()] || window.HOLO_GLOSS.it)) || null;
   function fmtD(d){ try{ return new Intl.DateTimeFormat(LOCALE[langOf()]||"it-IT",{dateStyle:"medium"}).format(d); }catch(e){ return ""; } }
   let chosenPlace = null, curR = null, curName = "", curStab = null, curDS = null, viewMode = "simple";
 
@@ -413,6 +420,7 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
       <div class="sdesc">${SP.d}</div>
       ${bandHTML(K)}
       <div class="sessenza">${K.t}</div>
+      ${GL() && GL().PP[s.key] ? `<div class="spp"><span class="pplbl">${GL().ppLbl}</span>${GL().PP[s.key]}</div>` : ""}
       <div class="sline"><b>${D().LBL.linea} ${s.line}</b> — ${L.n}: ${L.brevis}</div>
     </div>`;
   }
@@ -429,6 +437,7 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
       <p><b>${SP.d}</b> ${K.long}</p>
       <p>${L.long}</p>
       ${E() && E().LIS[s.k] && E().LIS[s.k][s.line] ? `<p class="lis">${E().LIS[s.k][s.line]}</p>` : ""}
+      ${GL() && GL().PP[s.key] ? `<p class="pp"><span class="pplbl">${GL().ppLbl}</span>${GL().PP[s.key]}</p>` : ""}
       <p class="ctx">${SP.ctx}</p>
     </div>`;
   }

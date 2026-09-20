@@ -2,7 +2,7 @@
    Documenti: network-first (mai HTML stantio dopo un deploy).
    Asset: cache-first con aggiornamento in background.
    Bumpare V a ogni deploy che tocca i file in CORE. */
-const V = "holo-v3";
+const V = "holo-v4";
 const CORE = [
   "index.html",
   "Profilo Ologenetico.html",
@@ -20,6 +20,7 @@ const CORE = [
   "holo/keys.it.js", "holo/keys.en.js", "holo/keys.fr.js", "holo/keys.es.js", "holo/keys.pt.js",
   "holo/guide.it.js", "holo/guide.en.js", "holo/guide.fr.js", "holo/guide.es.js", "holo/guide.pt.js",
   "holo/extra.it.js", "holo/extra.en.js", "holo/extra.fr.js", "holo/extra.es.js", "holo/extra.pt.js",
+  "holo/gloss.it.js", "holo/gloss.en.js", "holo/gloss.fr.js", "holo/gloss.es.js", "holo/gloss.pt.js", "holo/gloss.js",
   "manifest.json"
 ].map(u => encodeURI(u));
 
